@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - GameShop</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Tùy chỉnh thanh cuộn cho Sidebar */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #1e1e2d; }
+        ::-webkit-scrollbar-thumb { background: #3f4254; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #5e6278; }
+        
+        .sidebar-bg { background-color: #151521; }
+        .menu-item { color: #a1a5b7; transition: all 0.3s ease; }
+        .menu-item:hover, .menu-item.active { background-color: #1e1e2d; color: #ffffff; }
+        
+        /* Ẩn các phần nội dung không active */
+        .content-section { display: none; }
+        .content-section.active { display: block; }
+    </style>
+</head>
+<body class="bg-[#1e1e2d] text-gray-200 font-sans antialiased flex h-screen overflow-hidden">
+
+    <aside class="sidebar-bg w-64 h-full flex flex-col border-r border-gray-800 overflow-y-auto">
+        <div class="h-16 flex items-center justify-center border-b border-gray-800 sticky top-0 sidebar-bg z-10">
+            <div class="bg-gray-800 p-2 rounded text-white font-bold tracking-widest border border-gray-700">
+                <i class="fa-solid fa-gamepad"></i> ADMIN
+            </div>
+        </div>
+
+        <nav class="flex-1 px-3 py-4 space-y-1 text-sm font-medium">
+            <a href="#" onclick="switchTab('dashboard')" class="menu-item active flex items-center px-3 py-2.5 rounded-lg mb-2">
+                <i class="fa-solid fa-house text-blue-500 w-6"></i> Tổng Quan
+            </a>
+            <a href="#" class="menu-item flex items-center px-3 py-2.5 rounded-lg mb-2">
+                <i class="fa-solid fa-key text-yellow-500 w-6"></i> Quản Lý Giấy Phép
+            </a>
+            <a href="#" class="menu-item flex items-center px-3 py-2.5 rounded-lg mb-4">
+                <i class="fa-solid fa-cube text-purple-500 w-6"></i> Tiện Ích Mở Rộng
+            </a>
+
+            <div class="text-xs text-gray-500 font-bold uppercase tracking-wider mb-2 mt-4 px-3">Sản Phẩm</div>
+            <a href="#" onclick="switchTab('add-acc')" class="menu-item flex items-center justify-between px-3 py-2.5 rounded-lg">
+                <div class="flex items-center"><i class="fa-solid fa-store text-orange-400 w-6"></i> Thêm Acc Game</div>
+                <i class="fa-solid fa-chevron-right text-xs"></i>
+            </a>
+            <a href="#" class="menu-item flex items-center justify-between px-3 py-2.5 rounded-lg">
+                <div class="flex items-center"><i class="fa-solid fa-layer-group text-pink-500 w-6"></i> Shop Nick v2</div>
+                <i class="fa-solid fa-chevron-right text-xs"></i>
+            </a>
+            <a href="#" class="menu-item flex items-center justify-between px-3 py-2.5 rounded-lg">
+                <div class="flex items-center"><i class="fa-solid fa-box text-purple-400 w-6"></i> Vật Phẩm</div>
+                <span class="bg-red-400/20 text-red-400 text-xs px-2 py-0.5 rounded">0</span>
+            </a>
+            <a href="#" class="menu-item flex items-center justify-between px-3 py-2.5 rounded-lg">
+                <div class="flex items-center"><i class="fa-solid fa-briefcase text-green-400 w-6"></i> Dịch Vụ</div>
+                <span class="bg-blue-400/20 text-blue-400 text-xs px-2 py-0.5 rounded">0</span>
+            </a>
+            <a href="#" class="menu-item flex items-center justify-between px-3 py-2.5 rounded-lg">
+                <div class="flex items-center"><i class="fa-solid fa-gamepad text-cyan-400 w-6"></i> Trò Chơi</div>
+                <span class="bg-blue-900 text-blue-300 text-xs px-2 py-0.5 rounded">Beta</span>
+            </a>
+
+            <div class="text-xs text-gray-500 font-bold uppercase tracking-wider mb-2 mt-4 px-3">Tài Chính</div>
+            <a href="#" class="menu-item flex items-center justify-between px-3 py-2.5 rounded-lg">
+                <div class="flex items-center"><i class="fa-solid fa-file-invoice text-yellow-400 w-6"></i> Duyệt Hoá Đơn</div>
+                <span class="bg-orange-500/20 text-orange-400 text-xs px-2 py-0.5 rounded">Hot</span>
+            </a>
+            <a href="#" class="menu-item flex items-center justify-between px-3 py-2.5 rounded-lg">
+                <div class="flex items-center"><i class="fa-solid fa-wallet text-green-500 w-6"></i> Nạp Tiền Thẻ Cào</div>
+            </a>
+            <a href="#" class="menu-item flex items-center justify-between px-3 py-2.5 rounded-lg">
+                <div class="flex items-center"><i class="fa-solid fa-money-bill-transfer text-purple-500 w-6"></i> Cộng/Trừ Tiền</div>
+            </a>
+
+            <div class="text-xs text-gray-500 font-bold uppercase tracking-wider mb-2 mt-4 px-3">Người Dùng</div>
+            <a href="#" onclick="switchTab('users')" class="menu-item flex items-center px-3 py-2.5 rounded-lg mb-2">
+                <i class="fa-solid fa-user text-blue-400 w-6"></i> Quản Lý Thành Viên
+            </a>
+        </nav>
+    </aside>
+
+    <main class="flex-1 flex flex-col h-full overflow-hidden bg-[#151521]">
+        <header class="h-16 flex items-center justify-between px-6 bg-[#1e1e2d] border-b border-gray-800">
+            <h2 class="text-xl font-bold text-white" id="page-title">Tổng Quan Hệ Thống</h2>
+            <div class="flex items-center gap-4">
+                <button class="text-gray-400 hover:text-white"><i class="fa-regular fa-bell text-xl"></i></button>
+                <div class="flex items-center gap-2 cursor-pointer">
+                    <img src="https://ui-avatars.com/api/?name=Admin&background=random" alt="Avatar" class="w-8 h-8 rounded-full">
+                    <span class="font-semibold text-sm">Super Admin</span>
+                </div>
+            </div>
+        </header>
+
+        <div class="flex-1 p-6 overflow-y-auto">
+            
+            <div id="dashboard" class="content-section active">
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-6">
+                    <div class="bg-[#1e1e2d] p-6 rounded-xl border border-gray-800 shadow-sm">
+                        <div class="text-gray-400 text-sm font-semibold mb-1">Tổng Doanh Thu</div>
+                        <div class="text-2xl font-bold text-green-400">12,500,000đ</div>
+                    </div>
+                    <div class="bg-[#1e1e2d] p-6 rounded-xl border border-gray-800 shadow-sm">
+                        <div class="text-gray-400 text-sm font-semibold mb-1">Thành Viên Mới</div>
+                        <div class="text-2xl font-bold text-blue-400">1,240</div>
+                    </div>
+                    <div class="bg-[#1e1e2d] p-6 rounded-xl border border-gray-800 shadow-sm">
+                        <div class="text-gray-400 text-sm font-semibold mb-1">Tài Khoản Đang Bán</div>
+                        <div class="text-2xl font-bold text-orange-400">856</div>
+                    </div>
+                    <div class="bg-[#1e1e2d] p-6 rounded-xl border border-gray-800 shadow-sm">
+                        <div class="text-gray-400 text-sm font-semibold mb-1">Thẻ Cào Chờ Duyệt</div>
+                        <div class="text-2xl font-bold text-red-400">12</div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="add-acc" class="content-section">
+                <div class="bg-[#1e1e2d] rounded-xl border border-gray-800 p-6 max-w-3xl">
+                    <h3 class="text-lg font-bold mb-4 text-white border-b border-gray-700 pb-2">Thêm Tài Khoản Mới Lên Shop</h3>
+                    <form id="formAddAcc" onsubmit="xuLyThemAcc(event)">
+                        <div class="grid grid-cols-2 gap-4 mb-4">
+                            <div>
+                                <label class="block text-sm text-gray-400 mb-1">Chọn Game</label>
+                                <select class="w-full bg-[#151521] border border-gray-700 text-white rounded p-2 focus:border-blue-500 outline-none">
+                                    <option value="roblox">Roblox (Blox Fruits)</option>
+                                    <option value="minecraft">Minecraft Premium</option>
+                                    <option value="truykich">Truy Kích</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-sm text-gray-400 mb-1">Loại Đăng Nhập</label>
+                                <select class="w-full bg-[#151521] border border-gray-700 text-white rounded p-2 focus:border-blue-500 outline-none">
+                                    <option value="garena">Garena</option>
+                                    <option value="facebook">Facebook</option>
+                                    <option value="google">Google</option>
+                                    <option value="vk">VKontakte</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="mb-4">
+                            <label class="block text-sm text-gray-400 mb-1">Định dạng tài khoản (Mỗi acc 1 dòng)</label>
+                            <p class="text-xs text-yellow-500 mb-2">Hỗ trợ định dạng: <b>Tài_khoản:Mật_khẩu</b> hoặc <b>Tài_khoản|Mật_khẩu</b></p>
+                            <textarea id="accData" rows="6" class="w-full bg-[#151521] border border-gray-700 text-white rounded p-3 focus:border-blue-500 outline-none font-mono" placeholder="user123:pass123&#10;admin|admin1234"></textarea>
+                        </div>
+                        <div class="mb-6">
+                            <label class="block text-sm text-gray-400 mb-1">Giá bán (VNĐ)</label>
+                            <input type="number" class="w-full bg-[#151521] border border-gray-700 text-white rounded p-2 focus:border-blue-500 outline-none" placeholder="Ví dụ: 50000">
+                        </div>
+                        <button type="submit" class="bg-blue-600 hover:bg-blue-500 text-white font-bold py-2 px-6 rounded transition">
+                            <i class="fa-solid fa-plus mr-2"></i> Đăng Lên Shop
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <div id="users" class="content-section">
+                <div class="bg-[#1e1e2d] rounded-xl border border-gray-800 p-6">
+                    <div class="flex justify-between items-center mb-6">
+                        <h3 class="text-lg font-bold text-white">Danh Sách Thành Viên</h3>
+                        <input type="text" placeholder="Tìm ID hoặc Email..." class="bg-[#151521] border border-gray-700 rounded px-3 py-1.5 text-sm outline-none focus:border-blue-500">
+                    </div>
+                    
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left text-sm text-gray-400">
+                            <thead class="text-xs uppercase bg-[#151521] text-gray-300">
+                                <tr>
+                                    <th class="px-4 py-3 rounded-tl">ID</th>
+                                    <th class="px-4 py-3">Email</th>
+                                    <th class="px-4 py-3">Số Dư (VNĐ)</th>
+                                    <th class="px-4 py-3">Trạng Thái</th>
+                                    <th class="px-4 py-3 rounded-tr text-right">Hành Động</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="border-b border-gray-800 hover:bg-[#151521] transition">
+                                    <td class="px-4 py-3">#001</td>
+                                    <td class="px-4 py-3 text-white font-medium">khachhang1@gmail.com</td>
+                                    <td class="px-4 py-3 text-green-400 font-bold">150,000</td>
+                                    <td class="px-4 py-3"><span class="bg-green-500/20 text-green-500 px-2 py-1 rounded text-xs">Hoạt động</span></td>
+                                    <td class="px-4 py-3 text-right space-x-2">
+                                        <button class="text-blue-400 hover:text-blue-300 tooltip" title="Cộng/Trừ tiền"><i class="fa-solid fa-coins"></i></button>
+                                        <button class="text-yellow-400 hover:text-yellow-300 tooltip" title="Cấm tạm thời"><i class="fa-solid fa-lock"></i></button>
+                                        <button class="text-red-500 hover:text-red-400 tooltip" title="Cấm vĩnh viễn"><i class="fa-solid fa-ban"></i></button>
+                                    </td>
+                                </tr>
+                                <tr class="border-b border-gray-800 hover:bg-[#151521] transition">
+                                    <td class="px-4 py-3">#002</td>
+                                    <td class="px-4 py-3 text-white font-medium">spammer@gmail.com</td>
+                                    <td class="px-4 py-3 text-green-400 font-bold">0</td>
+                                    <td class="px-4 py-3"><span class="bg-red-500/20 text-red-500 px-2 py-1 rounded text-xs">Bị khoá</span></td>
+                                    <td class="px-4 py-3 text-right space-x-2">
+                                        <button class="text-blue-400 hover:text-blue-300 tooltip"><i class="fa-solid fa-coins"></i></button>
+                                        <button class="text-green-500 hover:text-green-400 tooltip" title="Mở khoá"><i class="fa-solid fa-unlock"></i></button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <script>
+        function switchTab(tabId) {
+            // Đổi active cho Menu
+            document.querySelectorAll('.menu-item').forEach(el => el.classList.remove('active'));
+            event.currentTarget.classList.add('active');
+
+            // Đổi nội dung hiển thị
+            document.querySelectorAll('.content-section').forEach(el => el.classList.remove('active'));
+            document.getElementById(tabId).classList.add('active');
+
+            // Đổi tiêu đề
+            const titles = {
+                'dashboard': 'Tổng Quan Hệ Thống',
+                'add-acc': 'Quản Lý Kho Tài Khoản',
+                'users': 'Quản Lý Thành Viên'
+            };
+            document.getElementById('page-title').innerText = titles[tabId];
+        }
+
+        // Mô phỏng xử lý chuỗi tk:mk hoặc tk|mk
+        function xuLyThemAcc(event) {
+            event.preventDefault();
+            const data = document.getElementById('accData').value;
+            if(!data.trim()) return alert("Vui lòng nhập tài khoản!");
+            
+            const lines = data.split('\n');
+            let successCount = 0;
+
+            lines.forEach(line => {
+                line = line.trim();
+                if(line) {
+                    // Cắt theo dấu : hoặc |
+                    let parts = line.split(/[:|]/); 
+                    if(parts.length >= 2) {
+                        let tk = parts[0].trim();
+                        let mk = parts[1].trim();
+                        console.log(`[Firebase Save Ready] User: ${tk}, Pass: ${mk}`);
+                        successCount++;
+                    }
+                }
+            });
+
+            alert(`Đã bóc tách và sẵn sàng đẩy lên Firebase ${successCount} tài khoản! (Mở F12 Console để xem log)`);
+            document.getElementById('formAddAcc').reset();
+        }
+    </script>
+</body>
+</html>
