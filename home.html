@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Cửa Hàng Tài Khoản - LQVN.VN</title>
+    
+    <link rel="icon" type="image/png" href="https://cdn.vn.garenanow.com/web/kg/home/images/logo-new.png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        lqvn: {
+                            dark: '#0B0E14',
+                            card: '#151A23',
+                            red: '#E11D48',
+                            gold: '#FBBF24'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #0B0E14; }
+        ::-webkit-scrollbar-thumb { background: #374151; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #E11D48; }
+
+        .menu-mobile-enter { max-height: 0; opacity: 0; overflow: hidden; transition: all 0.3s ease-in-out; }
+        .menu-mobile-enter-active { max-height: 400px; opacity: 1; }
+        
+        /* Hiệu ứng zoom ảnh card */
+        .card-zoom-image { transition: transform 0.5s ease; }
+        .group:hover .card-zoom-image { transform: scale(1.1); }
+        
+        /* Tab active */
+        .tab-active { border-bottom: 2px solid #E11D48; color: #E11D48; font-weight: bold; }
+    </style>
+</head>
+<body class="bg-lqvn-dark text-gray-200 font-sans antialiased overflow-x-hidden">
+
+    <!-- HEADER (Giữ nguyên như index.html) -->
+    <header class="bg-lqvn-dark/95 backdrop-blur-md border-b border-gray-800 sticky top-0 z-50 transition-all duration-300">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <a href="index.html" class="flex items-center gap-2 sm:gap-3 group z-50">
+                <img src="https://cdn.vn.garenanow.com/web/kg/home/images/logo-new.png" alt="Liên Quân Mobile" class="h-10 sm:h-12 md:h-14 object-contain drop-shadow-[0_0_8px_rgba(225,29,72,0.6)] group-hover:scale-105 transition duration-300">
+                <span class="text-xl md:text-2xl font-black text-white tracking-wider">LQVN.<span class="text-lqvn-red">VN</span></span>
+            </a>
+
+            <nav class="hidden md:flex space-x-8 font-semibold text-sm tracking-wide">
+                <a href="index.html" class="hover:text-lqvn-red transition">TRANG CHỦ</a>
+                <a href="home.html" class="text-lqvn-red border-b-2 border-lqvn-red pb-1">MUA TÀI KHOẢN</a>
+                <a href="#" class="hover:text-lqvn-red transition">VÒNG QUAY</a>
+                <a href="naptien.html" class="hover:text-lqvn-red transition">NẠP TIỀN</a>
+            </nav>
+
+            <div class="hidden md:flex items-center space-x-4">
+                <a href="dangnhap.html" class="text-gray-300 hover:text-white font-semibold transition">Đăng Nhập</a>
+                <a href="dangky.html" class="px-5 py-2.5 bg-lqvn-red hover:bg-red-700 text-white rounded-lg font-bold transition shadow-[0_0_15px_rgba(225,29,72,0.4)]">
+                    Đăng Ký
+                </a>
+            </div>
+
+            <button id="mobileMenuBtn" class="md:hidden text-gray-300 hover:text-white text-2xl p-2 z-50">
+                <i class="fa-solid fa-bars" id="menuIcon"></i>
+            </button>
+        </div>
+        
+        <div id="mobileMenu" class="md:hidden absolute top-full left-0 w-full bg-lqvn-card/95 backdrop-blur-xl border-b border-gray-800 shadow-2xl menu-mobile-enter">
+            <div class="flex flex-col px-6 py-6 space-y-5 font-semibold text-lg text-center">
+                <a href="index.html" class="block text-gray-300 hover:text-white transition">Trang Chủ</a>
+                <a href="home.html" class="block text-lqvn-red">Vào Cửa Hàng</a>
+                <a href="naptien.html" class="block text-gray-300 hover:text-white transition">Nạp Tiền</a>
+                <div class="h-px w-full bg-gray-800 my-2"></div>
+                <a href="dangnhap.html" class="block text-gray-300 hover:text-white transition">Đăng Nhập / Đăng Ký</a>
+            </div>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-4 py-6 md:py-8">
+        
+        <!-- TOP SECTION: FORM NẠP THẺ & BANNER -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-12">
+            
+            <!-- Cột Trái: Box Nạp Thẻ / Top Nạp -->
+            <div class="bg-lqvn-card border border-gray-800 rounded-xl overflow-hidden shadow-lg h-full flex flex-col">
+                <!-- Header Tabs -->
+                <div class="flex border-b border-gray-800 bg-[#0B0E14]">
+                    <button onclick="switchTab('napthe')" id="tab-napthe" class="flex-1 py-3 text-sm font-bold tab-active transition">NẠP THẺ</button>
+                    <button onclick="switchTab('topnap')" id="tab-topnap" class="flex-1 py-3 text-sm font-bold text-gray-400 hover:text-white transition">TOP NẠP</button>
+                </div>
+                
+                <!-- Nội dung Tab Nạp Thẻ -->
+                <div id="content-napthe" class="p-5 flex-1">
+                    <form onsubmit="event.preventDefault(); alert('Chức năng nạp thẻ đang bảo trì!');">
+                        <select class="w-full bg-[#1e2330] border border-gray-700 text-white rounded px-3 py-2.5 mb-3 outline-none focus:border-lqvn-red text-sm">
+                            <option value="">-- Chọn Nhà Mạng --</option>
+                            <option value="viettel">Viettel</option>
+                            <option value="mobifone">Mobifone</option>
+                            <option value="vinaphone">Vinaphone</option>
+                        </select>
+                        <select class="w-full bg-[#1e2330] border border-gray-700 text-white rounded px-3 py-2.5 mb-3 outline-none focus:border-lqvn-red text-sm">
+                            <option value="">-- Chọn Mệnh Giá --</option>
+                            <option value="10000">10,000 VNĐ</option>
+                            <option value="20000">20,000 VNĐ</option>
+                            <option value="50000">50,000 VNĐ</option>
+                            <option value="100000">100,000 VNĐ</option>
+                            <option value="200000">200,000 VNĐ</option>
+                            <option value="500000">500,000 VNĐ</option>
+                        </select>
+                        <input type="text" placeholder="Nhập Mã Thẻ" class="w-full bg-[#1e2330] border border-gray-700 text-white rounded px-3 py-2.5 mb-3 outline-none focus:border-lqvn-red text-sm">
+                        <input type="text" placeholder="Nhập Số Seri" class="w-full bg-[#1e2330] border border-gray-700 text-white rounded px-3 py-2.5 mb-4 outline-none focus:border-lqvn-red text-sm">
+                        <button class="w-full bg-lqvn-red hover:bg-red-700 text-white font-bold py-2.5 rounded transition shadow-[0_0_10px_rgba(225,29,72,0.4)]">
+                            NẠP NGAY
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Nội dung Tab Top Nạp (Ẩn mặc định) -->
+                <div id="content-topnap" class="p-5 hidden flex-1">
+                    <ul class="space-y-3">
+                        <li class="flex justify-between items-center bg-[#1e2330] p-2 rounded border border-yellow-500/30">
+                            <div class="flex items-center gap-2">
+                                <span class="bg-yellow-500 text-black font-black w-6 h-6 flex justify-center items-center rounded-full text-xs">1</span>
+                                <span class="font-bold text-sm text-yellow-500">nha***@gmail.com</span>
+                            </div>
+                            <span class="text-lqvn-red font-bold text-sm">5,500,000đ</span>
+                        </li>
+                        <li class="flex justify-between items-center bg-[#1e2330] p-2 rounded">
+                            <div class="flex items-center gap-2">
+                                <span class="bg-gray-400 text-black font-black w-6 h-6 flex justify-center items-center rounded-full text-xs">2</span>
+                                <span class="font-bold text-sm text-gray-300">pro***01</span>
+                            </div>
+                            <span class="text-lqvn-red font-bold text-sm">2,100,000đ</span>
+                        </li>
+                        <li class="flex justify-between items-center bg-[#1e2330] p-2 rounded">
+                            <div class="flex items-center gap-2">
+                                <span class="bg-[#cd7f32] text-black font-black w-6 h-6 flex justify-center items-center rounded-full text-xs">3</span>
+                                <span class="font-bold text-sm text-gray-300">lie***22</span>
+                            </div>
+                            <span class="text-lqvn-red font-bold text-sm">1,500,000đ</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Cột Phải: Slider/Banner lớn -->
+            <div class="lg:col-span-2 rounded-xl overflow-hidden shadow-[0_0_15px_rgba(225,29,72,0.2)] border border-gray-800 relative group h-64 lg:h-auto">
+                <img src="https://images.unsplash.com/photo-1542751371-adc38448a05e?q=80&w=2070&auto=format&fit=crop" alt="Banner Khuyến Mãi" class="w-full h-full object-cover transition duration-500 group-hover:scale-105">
+                <!-- Nội dung chữ đè lên ảnh banner -->
+                <div class="absolute inset-0 bg-gradient-to-r from-black/80 to-transparent flex flex-col justify-center p-6 sm:p-10">
+                    <span class="bg-lqvn-red text-white text-xs font-bold px-2 py-1 rounded w-max mb-3">HOT EVENT</span>
+                    <h2 class="text-2xl md:text-4xl font-black text-white uppercase mb-2">Vòng Quay <br><span class="text-lqvn-gold">Kho Báu</span></h2>
+                    <p class="text-gray-300 text-sm md:text-base max-w-sm mb-4">Tỉ lệ trúng acc VIP lên tới 80%. Chỉ từ 19K/Lượt quay.</p>
+                    <button class="bg-white text-black font-bold py-2 px-6 rounded-lg w-max hover:bg-gray-200 transition">Thử Ngay</button>
+                </div>
+            </div>
+            
+        </div>
+
+        <!-- CATEGORY: DANH MỤC GAME -->
+        <div class="mb-12">
+            <h2 class="text-xl md:text-2xl font-black text-white uppercase mb-6 border-l-4 border-lqvn-red pl-3">DANH MỤC <span class="text-lqvn-red">SẢN PHẨM</span></h2>
+            
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
+                <!-- Box Danh Mục 1 -->
+                <a href="#" class="bg-lqvn-card rounded-xl overflow-hidden shadow-lg border border-gray-800 hover:border-lqvn-red transition group block">
+                    <div class="relative overflow-hidden h-32 md:h-40">
+                        <img src="https://images.unsplash.com/photo-1605901309584-818e25960b8f?q=80&w=600&auto=format&fit=crop" alt="Acc Tự Chọn" class="w-full h-full object-cover card-zoom-image">
+                        <div class="absolute inset-0 bg-black/40"></div>
+                        <div class="absolute top-2 right-2 bg-red-600 text-white text-xs font-bold px-2 py-1 rounded">GIẢM 20%</div>
+                    </div>
+                    <div class="p-3 text-center">
+                        <h3 class="font-bold text-white text-sm md:text-base mb-1 group-hover:text-lqvn-red transition">Nick Liên Quân Tự Chọn</h3>
+                        <p class="text-xs text-gray-400 mb-2">Đã bán: <b class="text-white">1,502</b></p>
+                        <span class="inline-block border border-lqvn-red text-lqvn-red text-xs px-3 py-1 rounded group-hover:bg-lqvn-red group-hover:text-white transition">Xem Ngay</span>
+                    </div>
+                </a>
+
+                <!-- Box Danh Mục 2 -->
+                <a href="#" class="bg-lqvn-card rounded-xl overflow-hidden shadow-lg border border-gray-800 hover:border-lqvn-gold transition group block">
+                    <div class="relative overflow-hidden h-32 md:h-40">
+                        <img src="https://images.unsplash.com/photo-1552820728-8b83bb6b773f?q=80&w=600&auto=format&fit=crop" alt="Acc VIP" class="w-full h-full object-cover card-zoom-image">
+                        <div class="absolute inset-0 bg-black/40"></div>
+                        <div class="absolute top-2 left-2 bg-lqvn-gold text-black text-xs font-bold px-2 py-1 rounded shadow-[0_0_10px_rgba(251,191,36,0.5)]">VIP HOT</div>
+                    </div>
+                    <div class="p-3 text-center">
+                        <h3 class="font-bold text-white text-sm md:text-base mb-1 group-hover:text-lqvn-gold transition">Acc Liên Quân VIP</h3>
+                        <p class="text-xs text-gray-400 mb-2">Đã bán: <b class="text-white">850</b></p>
+                        <span class="inline-block border border-lqvn-gold text-lqvn-gold text-xs px-3 py-1 rounded group-hover:bg-lqvn-gold group-hover:text-black transition">Xem Ngay</span>
+                    </div>
+                </a>
+
+                <!-- Box Danh Mục 3 -->
+                <a href="#" class="bg-lqvn-card rounded-xl overflow-hidden shadow-lg border border-gray-800 hover:border-blue-500 transition group block">
+                    <div class="relative overflow-hidden h-32 md:h-40 flex items-center justify-center bg-gray-900 card-zoom-image">
+                        <i class="fa-solid fa-box-open text-6xl text-purple-500"></i>
+                    </div>
+                    <div class="p-3 text-center z-10 relative bg-lqvn-card">
+                        <h3 class="font-bold text-white text-sm md:text-base mb-1 group-hover:text-blue-400 transition">Thử Vận May 20K</h3>
+                        <p class="text-xs text-gray-400 mb-2">Đã chơi: <b class="text-white">12,040</b> lượt</p>
+                        <span class="inline-block border border-blue-500 text-blue-500 text-xs px-3 py-1 rounded group-hover:bg-blue-500 group-hover:text-white transition">Mở Túi</span>
+                    </div>
+                </a>
+
+                <!-- Box Danh Mục 4 -->
+                <a href="#" class="bg-lqvn-card rounded-xl overflow-hidden shadow-lg border border-gray-800 hover:border-green-500 transition group block">
+                    <div class="relative overflow-hidden h-32 md:h-40 flex items-center justify-center bg-gray-900 card-zoom-image">
+                        <i class="fa-solid fa-ranking-star text-6xl text-green-500"></i>
+                    </div>
+                    <div class="p-3 text-center z-10 relative bg-lqvn-card">
+                        <h3 class="font-bold text-white text-sm md:text-base mb-1 group-hover:text-green-400 transition">Cày Thuê Siêu Tốc</h3>
+                        <p class="text-xs text-gray-400 mb-2">Uy tín: <b class="text-white">100%</b></p>
+                        <span class="inline-block border border-green-500 text-green-500 text-xs px-3 py-1 rounded group-hover:bg-green-500 group-hover:text-white transition">Đặt Lịch</span>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        <!-- ACCOUNT LIST: TÀI KHOẢN MỚI LÊN KỆ -->
+        <div class="mb-16">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-xl md:text-2xl font-black text-white uppercase border-l-4 border-lqvn-red pl-3">TÀI KHOẢN <span class="text-lqvn-red">MỚI NHẤT</span></h2>
+                <a href="#" class="text-sm text-gray-400 hover:text-white transition">Xem tất cả <i class="fa-solid fa-angle-right"></i></a>
+            </div>
+            
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
+                
+                <!-- Acc Item 1 -->
+                <div class="bg-lqvn-card rounded-xl overflow-hidden border border-gray-800 hover:border-lqvn-red transition shadow-lg group">
+                    <div class="relative h-44 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1542751371-adc38448a05e?q=80&w=600&auto=format&fit=crop" class="w-full h-full object-cover card-zoom-image" alt="Thumbnail">
+                        <span class="absolute top-2 left-2 bg-black/80 text-white text-xs font-bold px-2 py-1 rounded">MS: #5102</span>
+                        <span class="absolute top-2 right-2 bg-green-500 text-white text-xs font-bold px-2 py-1 rounded">Trắng TT</span>
+                    </div>
+                    <div class="p-4">
+                        <div class="grid grid-cols-2 gap-2 text-sm mb-4">
+                            <div class="text-gray-400"><i class="fa-solid fa-user-ninja mr-1 text-gray-500"></i> Tướng: <b class="text-white">108</b></div>
+                            <div class="text-gray-400"><i class="fa-solid fa-shirt mr-1 text-gray-500"></i> Skin: <b class="text-white">250</b></div>
+                            <div class="text-gray-400 col-span-2"><i class="fa-solid fa-medal mr-1 text-lqvn-gold"></i> Rank: <b class="text-lqvn-gold">Chiến Tướng</b></div>
+                        </div>
+                        <div class="flex items-center justify-between border-t border-gray-800 pt-3">
+                            <div>
+                                <p class="text-xs text-gray-500 line-through">800,000đ</p>
+                                <p class="text-lg font-bold text-lqvn-red">500,000đ</p>
+                            </div>
+                            <button class="bg-lqvn-red hover:bg-red-700 text-white text-sm font-bold px-4 py-2 rounded transition">MUA NGAY</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Acc Item 2 -->
+                <div class="bg-lqvn-card rounded-xl overflow-hidden border border-gray-800 hover:border-lqvn-red transition shadow-lg group">
+                    <div class="relative h-44 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1605901309584-818e25960b8f?q=80&w=600&auto=format&fit=crop" class="w-full h-full object-cover card-zoom-image" alt="Thumbnail">
+                        <span class="absolute top-2 left-2 bg-black/80 text-white text-xs font-bold px-2 py-1 rounded">MS: #5103</span>
+                    </div>
+                    <div class="p-4">
+                        <div class="grid grid-cols-2 gap-2 text-sm mb-4">
+                            <div class="text-gray-400"><i class="fa-solid fa-user-ninja mr-1 text-gray-500"></i> Tướng: <b class="text-white">85</b></div>
+                            <div class="text-gray-400"><i class="fa-solid fa-shirt mr-1 text-gray-500"></i> Skin: <b class="text-white">120</b></div>
+                            <div class="text-gray-400 col-span-2"><i class="fa-solid fa-medal mr-1 text-purple-400"></i> Rank: <b class="text-purple-400">Cao Thủ</b></div>
+                        </div>
+                        <div class="flex items-center justify-between border-t border-gray-800 pt-3">
+                            <div>
+                                <p class="text-xs text-gray-500 line-through">250,000đ</p>
+                                <p class="text-lg font-bold text-lqvn-red">150,000đ</p>
+                            </div>
+                            <button class="bg-lqvn-red hover:bg-red-700 text-white text-sm font-bold px-4 py-2 rounded transition">MUA NGAY</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Các item copy tương tự để lấp đầy Grid -->
+                <!-- Acc Item 3 -->
+                <div class="bg-lqvn-card rounded-xl overflow-hidden border border-gray-800 hover:border-lqvn-red transition shadow-lg group">
+                    <div class="relative h-44 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1552820728-8b83bb6b773f?q=80&w=600&auto=format&fit=crop" class="w-full h-full object-cover card-zoom-image" alt="Thumbnail">
+                        <span class="absolute top-2 left-2 bg-black/80 text-white text-xs font-bold px-2 py-1 rounded">MS: #5104</span>
+                    </div>
+                    <div class="p-4">
+                        <div class="grid grid-cols-2 gap-2 text-sm mb-4">
+                            <div class="text-gray-400">Tướng: <b class="text-white">114</b></div>
+                            <div class="text-gray-400">Skin: <b class="text-white">302</b></div>
+                            <div class="text-gray-400 col-span-2">Rank: <b class="text-lqvn-gold">Chiến Tướng</b></div>
+                        </div>
+                        <div class="flex items-center justify-between border-t border-gray-800 pt-3">
+                            <div>
+                                <p class="text-xs text-transparent">.</p> <!-- Giữ layout -->
+                                <p class="text-lg font-bold text-lqvn-red">1,200,000đ</p>
+                            </div>
+                            <button class="bg-lqvn-red hover:bg-red-700 text-white text-sm font-bold px-4 py-2 rounded transition">MUA NGAY</button>
+                        </div>
+                    </div>
+                </div>
+                
+                 <!-- Acc Item 4 -->
+                 <div class="bg-lqvn-card rounded-xl overflow-hidden border border-gray-800 hover:border-lqvn-red transition shadow-lg group hidden md:block">
+                    <div class="relative h-44 overflow-hidden bg-gray-800 flex items-center justify-center">
+                        <i class="fa-solid fa-image text-4xl text-gray-600"></i>
+                        <span class="absolute top-2 left-2 bg-black/80 text-white text-xs font-bold px-2 py-1 rounded">MS: #5105</span>
+                    </div>
+                    <div class="p-4">
+                        <div class="grid grid-cols-2 gap-2 text-sm mb-4">
+                            <div class="text-gray-400">Tướng: <b class="text-white">60</b></div>
+                            <div class="text-gray-400">Skin: <b class="text-white">45</b></div>
+                            <div class="text-gray-400 col-span-2">Rank: <b class="text-blue-400">Tinh Anh</b></div>
+                        </div>
+                        <div class="flex items-center justify-between border-t border-gray-800 pt-3">
+                            <div>
+                                <p class="text-xs text-gray-500 line-through">100,000đ</p>
+                                <p class="text-lg font-bold text-lqvn-red">50,000đ</p>
+                            </div>
+                            <button class="bg-lqvn-red hover:bg-red-700 text-white text-sm font-bold px-4 py-2 rounded transition">MUA NGAY</button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+    <!-- FOOTER TINH GỌN (Giống index.html) -->
+    <footer class="bg-lqvn-card border-t border-gray-800 pt-10 pb-6">
+        <div class="container mx-auto px-4 text-center">
+            <img src="https://cdn.vn.garenanow.com/web/kg/home/images/logo-new.png" alt="Liên Quân Mobile" class="h-10 object-contain mx-auto mb-4">
+            <p class="text-sm text-gray-400 max-w-lg mx-auto mb-6">Hệ thống bán tài khoản tự động uy tín, chất lượng nhất Việt Nam. Hoạt động tự động 24/7.</p>
+            <div class="text-center text-gray-500 text-xs border-t border-gray-800 pt-4">
+                &copy; 2026 LQVN.VN. All Rights Reserved. Operated by Lê Nhân.
+            </div>
+        </div>
+    </footer>
+
+    <!-- WIDGET LIÊN HỆ -->
+    <div class="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 flex flex-col space-y-2 sm:space-y-3 z-50">
+        <a href="https://t.me/tolabimat" target="_blank" class="w-10 h-10 bg-[#2CA5E0] text-white rounded-full flex items-center justify-center text-lg shadow-lg hover:scale-110 transition"><i class="fa-brands fa-telegram"></i></a>
+        <a href="https://fb.com/lenhan.riel" target="_blank" class="w-10 h-10 bg-[#1877F2] text-white rounded-full flex items-center justify-center text-lg shadow-lg hover:scale-110 transition"><i class="fa-brands fa-facebook-f"></i></a>
+        <button onclick="window.scrollTo({top: 0, behavior: 'smooth'})" class="w-10 h-10 bg-gray-700 text-white rounded-full flex items-center justify-center text-lg shadow-lg hover:bg-lqvn-red hover:scale-110 transition mt-2"><i class="fa-solid fa-arrow-up"></i></button>
+    </div>
+
+    <!-- JS Xử lý Tab và Menu Mobile -->
+    <script>
+        // Xử lý Menu Mobile
+        const btn = document.getElementById('mobileMenuBtn');
+        const menu = document.getElementById('mobileMenu');
+        const menuIcon = document.getElementById('menuIcon');
+
+        btn.addEventListener('click', () => {
+            menu.classList.toggle('menu-mobile-enter-active');
+            if(menu.classList.contains('menu-mobile-enter-active')) {
+                menuIcon.classList.replace('fa-bars', 'fa-xmark');
+            } else {
+                menuIcon.classList.replace('fa-xmark', 'fa-bars');
+            }
+        });
+
+        // Xử lý chuyển Tab Nạp Thẻ / Top Nạp
+        function switchTab(tabName) {
+            // Đặt lại style
+            document.getElementById('tab-napthe').className = "flex-1 py-3 text-sm font-bold text-gray-400 hover:text-white transition";
+            document.getElementById('tab-topnap').className = "flex-1 py-3 text-sm font-bold text-gray-400 hover:text-white transition";
+            document.getElementById('content-napthe').classList.add('hidden');
+            document.getElementById('content-topnap').classList.add('hidden');
+
+            // Kích hoạt tab được chọn
+            if(tabName === 'napthe') {
+                document.getElementById('tab-napthe').className = "flex-1 py-3 text-sm font-bold tab-active transition";
+                document.getElementById('content-napthe').classList.remove('hidden');
+            } else {
+                document.getElementById('tab-topnap').className = "flex-1 py-3 text-sm font-bold tab-active transition";
+                document.getElementById('content-topnap').classList.remove('hidden');
+            }
+        }
+    </script>
+</body>
+</html>
