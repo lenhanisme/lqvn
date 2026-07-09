@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LQVN.VN - Hệ Thống Bán Acc Liên Quân VIP, Uy Tín</title>
+    
+    <link rel="icon" type="image/x-icon" href="https://cdn-icons-png.flaticon.com/512/808/808476.png">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        lqvn: {
+                            dark: '#0B0E14',
+                            card: '#151A23',
+                            red: '#E11D48',
+                            gold: '#FBBF24'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        /* Hiệu ứng nền Gradient cho Hero Section */
+        .hero-bg {
+            background: linear-gradient(to right, rgba(11, 14, 20, 0.95), rgba(11, 14, 20, 0.7)), 
+                        url('https://images.unsplash.com/photo-1542751371-adc38448a05e?q=80&w=2070&auto=format&fit=crop') no-repeat center center;
+            background-size: cover;
+        }
+        
+        /* Chữ mạ vàng */
+        .text-gold-gradient {
+            background: linear-gradient(to right, #FDE68A, #F59E0B);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Hiệu ứng nổi bồng bềnh cho ảnh */
+        .float-anim {
+            animation: floating 3s ease-in-out infinite;
+        }
+        @keyframes floating {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-12px); }
+            100% { transform: translateY(0px); }
+        }
+        
+        /* Custom thanh cuộn */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #0B0E14; }
+        ::-webkit-scrollbar-thumb { background: #374151; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #E11D48; }
+    </style>
+</head>
+<body class="bg-lqvn-dark text-gray-200 font-sans antialiased overflow-x-hidden">
+
+    <header class="bg-lqvn-dark/95 backdrop-blur-sm border-b border-gray-800 sticky top-0 z-50">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            
+            <a href="index.html" class="flex items-center gap-2 group">
+                <div class="w-10 h-10 bg-lqvn-red text-white flex items-center justify-center rounded-lg font-black text-xl group-hover:bg-red-700 transition shadow-[0_0_15px_rgba(225,29,72,0.5)]">
+                    LQ
+                </div>
+                <span class="text-2xl font-black text-white tracking-wider">LQVN.<span class="text-lqvn-red">VN</span></span>
+            </a>
+
+            <nav class="hidden md:flex space-x-8 font-semibold text-sm tracking-wide">
+                <a href="index.html" class="text-lqvn-red border-b-2 border-lqvn-red pb-1">TRANG CHỦ</a>
+                <a href="home.html" class="hover:text-lqvn-red transition">MUA TÀI KHOẢN</a>
+                <a href="home.html" class="hover:text-lqvn-red transition">VÒNG QUAY</a>
+                <a href="naptien.html" class="hover:text-lqvn-red transition">NẠP TIỀN</a>
+            </nav>
+
+            <div class="hidden md:flex items-center space-x-4">
+                <a href="dangnhap.html" class="text-gray-300 hover:text-white font-semibold transition">
+                    Đăng Nhập
+                </a>
+                <a href="home.html" class="px-5 py-2.5 bg-lqvn-red hover:bg-red-700 text-white rounded-lg font-bold transition flex items-center gap-2 shadow-[0_0_15px_rgba(225,29,72,0.4)]">
+                    <i class="fa-solid fa-cart-shopping"></i> Cửa Hàng
+                </a>
+            </div>
+
+            <button id="mobileMenuBtn" class="md:hidden text-gray-300 hover:text-white text-2xl">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+        </div>
+        
+        <div id="mobileMenu" class="hidden md:hidden bg-lqvn-card border-t border-gray-800 absolute w-full">
+            <div class="flex flex-col px-4 py-4 space-y-4 font-semibold">
+                <a href="home.html" class="block text-gray-300 hover:text-lqvn-red">Vào Cửa Hàng</a>
+                <a href="dangnhap.html" class="block text-gray-300 hover:text-lqvn-red">Đăng Nhập / Đăng Ký</a>
+                <a href="naptien.html" class="block text-gray-300 hover:text-lqvn-red">Nạp Tiền</a>
+            </div>
+        </div>
+    </header>
+
+    <div class="bg-gradient-to-r from-red-900 to-lqvn-red text-white py-1.5 text-sm font-medium border-b border-red-700 shadow-[0_0_10px_rgba(225,29,72,0.5)]">
+        <marquee behavior="scroll" direction="left" scrollamount="6">
+            <i class="fa-solid fa-bolt text-yellow-300 mr-2"></i> CHÀO MỪNG ĐẾN VỚI LQVN.VN - HỆ THỐNG BÁN TÀI KHOẢN LIÊN QUÂN TỰ ĐỘNG SỐ 1 VN! ĐANG CÓ KHUYẾN MÃI NẠP THẺ TẶNG THÊM 20% GIÁ TRỊ. MUA NGAY KẺO LỠ!
+        </marquee>
+    </div>
+
+    <main class="hero-bg min-h-[500px] flex items-center py-16 relative overflow-hidden border-b border-gray-800">
+        <div class="container mx-auto px-4 flex flex-col-reverse md:flex-row items-center gap-12 relative z-10">
+            
+            <div class="md:w-1/2 text-center md:text-left">
+                <div class="inline-block px-3 py-1 bg-red-500/20 border border-red-500/50 rounded-full text-lqvn-red font-bold text-sm mb-4">
+                    <i class="fa-solid fa-fire mr-1"></i> UY TÍN - TỰ ĐỘNG - BẢO MẬT
+                </div>
+                <h1 class="text-4xl md:text-5xl lg:text-6xl font-black mb-4 leading-tight uppercase text-white">
+                    SHOP TÀI KHOẢN <br> 
+                    <span class="text-gold-gradient">LIÊN QUÂN CAO CẤP</span>
+                </h1>
+                <p class="text-gray-400 text-lg mb-8 max-w-lg mx-auto md:mx-0">
+                    Hệ thống giao dịch hoàn toàn tự động 24/7. Hàng ngàn tài khoản VIP, Trắng thông tin, Đa dạng Rank đang chờ đón bạn. Lỗi 1 đổi 1 nhanh chóng.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
+                    <a href="home.html" class="px-8 py-4 bg-gradient-to-r from-lqvn-red to-red-600 hover:from-red-600 hover:to-red-700 text-white font-bold rounded-lg text-lg transition transform hover:scale-105 shadow-[0_0_20px_rgba(225,29,72,0.6)] flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-play"></i> MUA ACC NGAY
+                    </a>
+                    <a href="#uy-tin" class="px-8 py-4 bg-lqvn-card hover:bg-gray-800 text-white font-bold rounded-lg text-lg transition flex items-center justify-center gap-2 border border-gray-700">
+                        <i class="fa-solid fa-gift text-lqvn-gold"></i> Vòng Quay Nhận Quà
+                    </a>
+                </div>
+            </div>
+            
+            <div class="md:w-1/2 flex justify-center relative">
+                <div class="absolute inset-0 bg-lqvn-red opacity-20 blur-[100px] rounded-full"></div>
+                <img src="https://images.unsplash.com/photo-1605901309584-818e25960b8f?q=80&w=600&auto=format&fit=crop" alt="Hero Game" class="float-anim w-full max-w-md rounded-2xl border-2 border-gray-800 shadow-2xl relative z-10 object-cover h-[450px]">
+            </div>
+        </div>
+    </main>
+
+    <section id="uy-tin" class="bg-lqvn-dark py-16">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-black text-center mb-12 uppercase text-white">VÌ SAO BẠN NÊN CHỌN <span class="text-lqvn-red">LQVN.VN</span>?</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="bg-lqvn-card p-8 rounded-xl border border-gray-800 hover:border-lqvn-red transition group text-center">
+                    <div class="w-20 h-20 mx-auto bg-red-500/10 rounded-full flex items-center justify-center mb-6 group-hover:scale-110 transition">
+                        <i class="fa-solid fa-bolt text-4xl text-lqvn-gold"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3 text-white">Giao Dịch Tự Động 24/7</h3>
+                    <p class="text-gray-400">Nạp tiền và mua tài khoản tự động 100%. Nhận thông tin tài khoản ngay lập tức trên website mà không cần chờ đợi.</p>
+                </div>
+                
+                <div class="bg-lqvn-card p-8 rounded-xl border border-gray-800 hover:border-lqvn-red transition group text-center">
+                    <div class="w-20 h-20 mx-auto bg-blue-500/10 rounded-full flex items-center justify-center mb-6 group-hover:scale-110 transition">
+                        <i class="fa-solid fa-shield-halved text-4xl text-blue-500"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3 text-white">Bảo Mật Tuyệt Đối</h3>
+                    <p class="text-gray-400">Cam kết 100% tài khoản bán ra trắng thông tin, sạch sẽ. Hệ thống bảo mật dữ liệu khách hàng cực kỳ an toàn.</p>
+                </div>
+                
+                <div class="bg-lqvn-card p-8 rounded-xl border border-gray-800 hover:border-lqvn-red transition group text-center">
+                    <div class="w-20 h-20 mx-auto bg-green-500/10 rounded-full flex items-center justify-center mb-6 group-hover:scale-110 transition">
+                        <i class="fa-solid fa-headset text-4xl text-green-500"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3 text-white">Hỗ Trợ Tận Tâm</h3>
+                    <p class="text-gray-400">Đội ngũ Admin luôn sẵn sàng hỗ trợ bạn qua Zalo và Messenger để giải quyết mọi thắc mắc hoặc khiếu nại.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-lqvn-card border-t border-gray-800 pt-16 pb-6">
+        <div class="container mx-auto px-4 grid grid-cols-1 md:grid-cols-4 gap-8 mb-10">
+            
+            <div>
+                <a href="index.html" class="flex items-center gap-2 mb-6">
+                    <div class="w-8 h-8 bg-lqvn-red text-white flex items-center justify-center rounded font-black text-sm">LQ</div>
+                    <span class="text-xl font-black text-white">LQVN.<span class="text-lqvn-red">VN</span></span>
+                </a>
+                <p class="text-sm text-gray-400 mb-4 leading-relaxed">
+                    Hệ thống bán tài khoản tự động uy tín, chất lượng nhất Việt Nam. Chúng tôi luôn lấy trải nghiệm của game thủ đặt lên hàng đầu.
+                </p>
+                <div class="flex space-x-4">
+                    <a href="#" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center text-blue-500 hover:bg-blue-600 hover:text-white transition"><i class="fa-brands fa-facebook-f"></i></a>
+                    <a href="#" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center text-red-500 hover:bg-red-600 hover:text-white transition"><i class="fa-brands fa-youtube"></i></a>
+                    <a href="#" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center text-blue-400 hover:bg-blue-500 hover:text-white transition"><i class="fa-brands fa-telegram"></i></a>
+                </div>
+            </div>
+
+            <div>
+                <h3 class="text-white font-bold mb-5 uppercase tracking-wide">Hướng Dẫn Chung</h3>
+                <ul class="text-sm text-gray-400 space-y-3">
+                    <li><a href="naptien.html" class="hover:text-lqvn-red transition"><i class="fa-solid fa-angle-right text-xs mr-2"></i> Hướng Dẫn Nạp Tiền</a></li>
+                    <li><a href="home.html" class="hover:text-lqvn-red transition"><i class="fa-solid fa-angle-right text-xs mr-2"></i> Hướng Dẫn Mua Tài Khoản</a></li>
+                    <li><a href="#" class="hover:text-lqvn-red transition"><i class="fa-solid fa-angle-right text-xs mr-2"></i> Cách Đổi Mật Khẩu Game</a></li>
+                    <li><a href="#" class="hover:text-lqvn-red transition"><i class="fa-solid fa-angle-right text-xs mr-2"></i> Chính Sách Bảo Hành</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <h3 class="text-white font-bold mb-5 uppercase tracking-wide">Danh Mục Sản Phẩm</h3>
+                <ul class="text-sm text-gray-400 space-y-3">
+                    <li><a href="home.html" class="hover:text-lqvn-red transition"><i class="fa-solid fa-angle-right text-xs mr-2"></i> Acc Liên Quân Đồng Giá</a></li>
+                    <li><a href="home.html" class="hover:text-lqvn-red transition"><i class="fa-solid fa-angle-right text-xs mr-2"></i> Acc VIP Trắng Thông Tin</a></li>
+                    <li><a href="home.html" class="hover:text-lqvn-red transition"><i class="fa-solid fa-angle-right text-xs mr-2"></i> Thử Vận May (9K - 20K - 50K)</a></li>
+                    <li><a href="home.html" class="hover:text-lqvn-red transition"><i class="fa-solid fa-angle-right text-xs mr-2"></i> Cày Thuê Rank Siêu Tốc</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <h3 class="text-white font-bold mb-5 uppercase tracking-wide">Hỗ Trợ Khách Hàng</h3>
+                <div class="bg-[#0B0E14] p-4 rounded-lg border border-gray-800">
+                    <p class="text-sm text-gray-400 mb-2"><i class="fa-solid fa-clock text-lqvn-gold w-5"></i> Thời gian: 08:00 - 22:00 (Hàng ngày)</p>
+                    <p class="text-sm text-gray-400 mb-4"><i class="fa-solid fa-envelope text-lqvn-gold w-5"></i> Email: admin@lqvn.vn</p>
+                    
+                    <a href="https://m.me/yourfacebookpage" target="_blank" class="flex items-center justify-center w-full py-2.5 bg-blue-600 hover:bg-blue-500 text-white rounded-md font-bold transition text-sm">
+                        <i class="fa-brands fa-facebook-messenger text-lg mr-2"></i> Chat Với Admin
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="text-center text-gray-600 text-sm border-t border-gray-800 pt-6">
+            &copy; 2026 <strong class="text-gray-400">LQVN.VN</strong>. All Rights Reserved. Operated with ❤️.
+        </div>
+    </footer>
+
+    <div class="fixed bottom-6 right-6 flex flex-col space-y-3 z-50">
+        <a href="tel:0123456789" class="w-12 h-12 bg-green-500 text-white rounded-full flex items-center justify-center text-xl shadow-[0_0_15px_rgba(34,197,94,0.4)] hover:scale-110 transition">
+            <i class="fa-solid fa-phone"></i>
+        </a>
+        <a href="https://m.me/yourpage" target="_blank" class="w-12 h-12 bg-blue-600 text-white rounded-full flex items-center justify-center text-2xl shadow-[0_0_15px_rgba(37,99,235,0.4)] hover:scale-110 transition">
+            <i class="fa-brands fa-facebook-messenger"></i>
+        </a>
+        <button onclick="window.scrollTo({top: 0, behavior: 'smooth'})" class="w-12 h-12 bg-gray-700 text-white rounded-full flex items-center justify-center text-xl shadow-lg hover:bg-lqvn-red hover:scale-110 transition">
+            <i class="fa-solid fa-arrow-up"></i>
+        </button>
+    </div>
+
+    <script>
+        const btn = document.getElementById('mobileMenuBtn');
+        const menu = document.getElementById('mobileMenu');
+
+        btn.addEventListener('click', () => {
+            menu.classList.toggle('hidden');
+        });
+    </script>
+</body>
+</html>
