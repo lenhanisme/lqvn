@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Khôi Phục Mật Khẩu - ShopGame</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-[#121212] flex items-center justify-center min-h-screen font-sans antialiased px-4">
+
+    <div class="bg-[#1a1a1a] p-8 rounded-xl shadow-2xl border border-gray-800 w-full max-w-md relative">
+        <a href="dangnhap.html" class="absolute top-6 left-6 text-gray-400 hover:text-white transition">
+            <i class="fa-solid fa-arrow-left text-xl"></i>
+        </a>
+
+        <div class="text-center mb-8 mt-4">
+            <div class="inline-flex items-center justify-center w-16 h-16 bg-[#242424] rounded-full mb-4 border border-gray-700">
+                <i class="fa-solid fa-key text-3xl text-red-500"></i>
+            </div>
+            <h1 class="text-2xl font-bold text-white">Khôi phục mật khẩu</h1>
+            <p class="text-gray-400 text-sm mt-2 px-4">
+                Nhập email của bạn và chúng tôi sẽ gửi cho bạn một liên kết để đặt lại mật khẩu.
+            </p>
+        </div>
+
+        <form id="formKhoiPhuc">
+            <div class="mb-6">
+                <label class="block text-gray-400 text-sm font-semibold mb-2" for="emailReset">Địa chỉ Email</label>
+                <div class="relative">
+                    <i class="fa-solid fa-envelope absolute left-3 top-3.5 text-gray-500"></i>
+                    <input type="email" id="emailReset" class="w-full bg-[#242424] text-white border border-gray-700 rounded-lg pl-10 pr-4 py-3 focus:outline-none focus:border-red-500 transition" placeholder="Nhập email đã đăng ký..." required>
+                </div>
+            </div>
+
+            <button type="submit" class="w-full bg-gradient-to-r from-red-600 to-red-500 hover:from-red-500 hover:to-red-400 text-white font-bold py-3 rounded-lg transition transform hover:scale-[1.02] shadow-lg shadow-red-500/30">
+                GỬI LIÊN KẾT ĐẶT LẠI
+            </button>
+        </form>
+
+        <div id="successMsg" class="mt-4 p-3 bg-green-500/20 border border-green-500/50 rounded-lg text-green-400 text-sm text-center hidden">
+            <i class="fa-solid fa-circle-check mr-1"></i> Liên kết đặt lại mật khẩu đã được gửi đến email của bạn!
+        </div>
+    </div>
+
+    <script type="module">
+        document.getElementById('formKhoiPhuc').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const email = document.getElementById('emailReset').value;
+            console.log("Gửi yêu cầu reset mật khẩu tới:", email);
+            
+            // Xử lý Firebase sendPasswordResetEmail ở đây
+            // Giả lập hiển thị thông báo thành công:
+            document.getElementById('successMsg').classList.remove('hidden');
+            document.getElementById('emailReset').value = ''; // Xóa input sau khi gửi
+        });
+    </script>
+</body>
+</html>
