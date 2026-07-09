@@ -2,7 +2,7 @@
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>LQVN.VN - Hệ Thống Bán Acc Liên Quân VIP, Uy Tín</title>
     
     <link rel="icon" type="image/png" href="https://lienquan.garena.vn/wp-content/uploads/2024/05/b4563fbfd5756caeea04b7ef488ee39f60fffd803e9ab1.jpeg">
@@ -53,22 +53,36 @@
         }
         
         /* Custom thanh cuộn */
-        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar { width: 6px; } /* Thu nhỏ thanh cuộn trên mobile */
         ::-webkit-scrollbar-track { background: #0B0E14; }
         ::-webkit-scrollbar-thumb { background: #374151; border-radius: 10px; }
         ::-webkit-scrollbar-thumb:hover { background: #E11D48; }
+
+        /* Animation cho menu mobile */
+        .menu-mobile-enter {
+            max-height: 0;
+            opacity: 0;
+            overflow: hidden;
+            transition: all 0.3s ease-in-out;
+        }
+        .menu-mobile-enter-active {
+            max-height: 400px; /* Chiều cao tối đa khi mở */
+            opacity: 1;
+        }
     </style>
 </head>
-<body class="bg-lqvn-dark text-gray-200 font-sans antialiased overflow-x-hidden">
+<body class="bg-lqvn-dark text-gray-200 font-sans antialiased overflow-x-hidden relative">
 
-    <header class="bg-lqvn-dark/95 backdrop-blur-sm border-b border-gray-800 sticky top-0 z-50">
+    <!-- HEADER / NAVBAR -->
+    <header class="bg-lqvn-dark/95 backdrop-blur-md border-b border-gray-800 sticky top-0 z-50 transition-all duration-300">
         <div class="container mx-auto px-4 py-3 flex justify-between items-center">
             
-            <a href="index.html" class="flex items-center gap-3 group">
-                <img src="https://cdn.vn.garenanow.com/web/kg/home/images/logo-new.png" alt="Liên Quân Mobile" class="h-12 sm:h-14 object-contain drop-shadow-[0_0_8px_rgba(225,29,72,0.6)] group-hover:scale-105 transition duration-300">
-                <span class="text-2xl font-black text-white tracking-wider hidden sm:block">LQVN.<span class="text-lqvn-red">VN</span></span>
+            <a href="index.html" class="flex items-center gap-2 sm:gap-3 group z-50">
+                <img src="https://cdn.vn.garenanow.com/web/kg/home/images/logo-new.png" alt="Liên Quân Mobile" class="h-10 sm:h-12 md:h-14 object-contain drop-shadow-[0_0_8px_rgba(225,29,72,0.6)] group-hover:scale-105 transition duration-300">
+                <span class="text-xl md:text-2xl font-black text-white tracking-wider">LQVN.<span class="text-lqvn-red">VN</span></span>
             </a>
 
+            <!-- Desktop Menu -->
             <nav class="hidden md:flex space-x-8 font-semibold text-sm tracking-wide">
                 <a href="index.html" class="text-lqvn-red border-b-2 border-lqvn-red pb-1">TRANG CHỦ</a>
                 <a href="home.html" class="hover:text-lqvn-red transition">MUA TÀI KHOẢN</a>
@@ -80,158 +94,171 @@
                 <a href="dangnhap.html" class="text-gray-300 hover:text-white font-semibold transition">
                     Đăng Nhập
                 </a>
-                <a href="home.html" class="px-5 py-2.5 bg-lqvn-red hover:bg-red-700 text-white rounded-lg font-bold transition flex items-center gap-2 shadow-[0_0_15px_rgba(225,29,72,0.4)]">
+                <a href="home.html" class="px-5 py-2.5 bg-lqvn-red hover:bg-red-700 text-white rounded-lg font-bold transition flex items-center gap-2 shadow-[0_0_15px_rgba(225,29,72,0.4)] hover:scale-105">
                     <i class="fa-solid fa-cart-shopping"></i> Cửa Hàng
                 </a>
             </div>
 
-            <button id="mobileMenuBtn" class="md:hidden text-gray-300 hover:text-white text-2xl">
-                <i class="fa-solid fa-bars"></i>
+            <!-- Hamburger Button for Mobile -->
+            <button id="mobileMenuBtn" class="md:hidden text-gray-300 hover:text-white text-2xl p-2 z-50 focus:outline-none">
+                <i class="fa-solid fa-bars" id="menuIcon"></i>
             </button>
         </div>
         
-        <div id="mobileMenu" class="hidden md:hidden bg-lqvn-card border-t border-gray-800 absolute w-full">
-            <div class="flex flex-col px-4 py-4 space-y-4 font-semibold">
-                <a href="home.html" class="block text-gray-300 hover:text-lqvn-red">Vào Cửa Hàng</a>
-                <a href="dangnhap.html" class="block text-gray-300 hover:text-lqvn-red">Đăng Nhập / Đăng Ký</a>
-                <a href="naptien.html" class="block text-gray-300 hover:text-lqvn-red">Nạp Tiền</a>
+        <!-- Mobile Menu -->
+        <div id="mobileMenu" class="md:hidden absolute top-full left-0 w-full bg-lqvn-card/95 backdrop-blur-xl border-b border-gray-800 shadow-2xl menu-mobile-enter">
+            <div class="flex flex-col px-6 py-6 space-y-5 font-semibold text-lg text-center">
+                <a href="index.html" class="block text-lqvn-red">Trang Chủ</a>
+                <a href="home.html" class="block text-gray-300 hover:text-white transition">Vào Cửa Hàng</a>
+                <a href="naptien.html" class="block text-gray-300 hover:text-white transition">Nạp Tiền</a>
+                <div class="h-px w-full bg-gray-800 my-2"></div>
+                <a href="dangnhap.html" class="block text-gray-300 hover:text-white transition">Đăng Nhập / Đăng Ký</a>
+                <a href="home.html" class="block w-full py-3 bg-lqvn-red text-white rounded-lg mt-2 shadow-[0_0_15px_rgba(225,29,72,0.4)]">Mua Acc Ngay</a>
             </div>
         </div>
     </header>
 
-    <div class="bg-gradient-to-r from-red-900 to-lqvn-red text-white py-1.5 text-sm font-medium border-b border-red-700 shadow-[0_0_10px_rgba(225,29,72,0.5)]">
-        <marquee behavior="scroll" direction="left" scrollamount="6">
+    <!-- THANH THÔNG BÁO -->
+    <div class="bg-gradient-to-r from-red-900 to-lqvn-red text-white py-2 text-xs sm:text-sm font-medium border-b border-red-700 shadow-[0_0_10px_rgba(225,29,72,0.5)]">
+        <marquee behavior="scroll" direction="left" scrollamount="5">
             <i class="fa-solid fa-bolt text-yellow-300 mr-2"></i> CHÀO MỪNG ĐẾN VỚI LQVN.VN - HỆ THỐNG BÁN TÀI KHOẢN LIÊN QUÂN TỰ ĐỘNG SỐ 1 VN! ĐANG CÓ KHUYẾN MÃI NẠP THẺ TẶNG THÊM 20% GIÁ TRỊ. MUA NGAY KẺO LỠ!
         </marquee>
     </div>
 
-    <main class="hero-bg min-h-[500px] flex items-center py-16 relative overflow-hidden border-b border-gray-800">
-        <div class="container mx-auto px-4 flex flex-col-reverse md:flex-row items-center gap-12 relative z-10">
+    <!-- HERO SECTION -->
+    <main class="hero-bg min-h-[450px] md:min-h-[550px] flex items-center py-10 md:py-16 relative overflow-hidden border-b border-gray-800">
+        <div class="container mx-auto px-4 flex flex-col-reverse md:flex-row items-center gap-8 md:gap-12 relative z-10">
             
-            <div class="md:w-1/2 text-center md:text-left">
-                <div class="inline-block px-3 py-1 bg-red-500/20 border border-red-500/50 rounded-full text-lqvn-red font-bold text-sm mb-4">
+            <div class="md:w-1/2 text-center md:text-left mt-6 md:mt-0">
+                <div class="inline-block px-3 py-1.5 bg-red-500/20 border border-red-500/50 rounded-full text-lqvn-red font-bold text-xs sm:text-sm mb-4">
                     <i class="fa-solid fa-fire mr-1"></i> UY TÍN - TỰ ĐỘNG - BẢO MẬT
                 </div>
-                <h1 class="text-4xl md:text-5xl lg:text-6xl font-black mb-4 leading-tight uppercase text-white">
-                    SHOP TÀI KHOẢN <br> 
+                <h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black mb-4 leading-tight uppercase text-white">
+                    SHOP TÀI KHOẢN <br class="hidden sm:block"> 
                     <span class="text-gold-gradient">LIÊN QUÂN CAO CẤP</span>
                 </h1>
-                <p class="text-gray-400 text-lg mb-8 max-w-lg mx-auto md:mx-0">
+                <p class="text-gray-400 text-sm md:text-lg mb-8 max-w-lg mx-auto md:mx-0 px-2 md:px-0 leading-relaxed">
                     Hệ thống giao dịch hoàn toàn tự động 24/7. Hàng ngàn tài khoản VIP, Trắng thông tin, Đa dạng Rank đang chờ đón bạn. Lỗi 1 đổi 1 nhanh chóng.
                 </p>
-                <div class="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
-                    <a href="home.html" class="px-8 py-4 bg-gradient-to-r from-lqvn-red to-red-600 hover:from-red-600 hover:to-red-700 text-white font-bold rounded-lg text-lg transition transform hover:scale-105 shadow-[0_0_20px_rgba(225,29,72,0.6)] flex items-center justify-center gap-2">
+                <div class="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center md:justify-start px-4 sm:px-0">
+                    <a href="home.html" class="px-6 py-3.5 bg-gradient-to-r from-lqvn-red to-red-600 hover:from-red-600 hover:to-red-700 text-white font-bold rounded-lg text-base md:text-lg transition transform hover:scale-105 shadow-[0_0_20px_rgba(225,29,72,0.6)] flex items-center justify-center gap-2">
                         <i class="fa-solid fa-play"></i> MUA ACC NGAY
                     </a>
-                    <a href="#uy-tin" class="px-8 py-4 bg-lqvn-card hover:bg-gray-800 text-white font-bold rounded-lg text-lg transition flex items-center justify-center gap-2 border border-gray-700">
+                    <a href="#uy-tin" class="px-6 py-3.5 bg-lqvn-card hover:bg-gray-800 text-white font-bold rounded-lg text-base md:text-lg transition flex items-center justify-center gap-2 border border-gray-700">
                         <i class="fa-solid fa-gift text-lqvn-gold"></i> Vòng Quay Nhận Quà
                     </a>
                 </div>
             </div>
             
-            <div class="md:w-1/2 flex justify-center relative">
-                <div class="absolute inset-0 bg-lqvn-red opacity-20 blur-[100px] rounded-full"></div>
-                <img src="https://lienquan.garena.vn/wp-content/uploads/2024/05/b4563fbfd5756caeea04b7ef488ee39f60fffd803e9ab1.jpeg" alt="Hero Liên Quân" class="float-anim w-full max-w-md rounded-2xl border-2 border-gray-800 shadow-2xl relative z-10 object-cover h-[450px]">
+            <div class="w-full sm:w-2/3 md:w-1/2 flex justify-center relative mt-4 md:mt-0 px-4 sm:px-0">
+                <div class="absolute inset-0 bg-lqvn-red opacity-20 blur-[80px] rounded-full"></div>
+                <img src="https://lienquan.garena.vn/wp-content/uploads/2024/05/b4563fbfd5756caeea04b7ef488ee39f60fffd803e9ab1.jpeg" alt="Hero Liên Quân" class="float-anim w-full max-w-[280px] sm:max-w-sm md:max-w-md rounded-2xl border-2 border-gray-800 shadow-2xl relative z-10 object-cover h-[300px] sm:h-[350px] md:h-[450px]">
             </div>
         </div>
     </main>
 
-    <section id="uy-tin" class="bg-lqvn-dark py-16">
+    <!-- SECTION: TẠI SAO CHỌN -->
+    <section id="uy-tin" class="bg-lqvn-dark py-12 md:py-16">
         <div class="container mx-auto px-4">
-            <h2 class="text-3xl font-black text-center mb-12 uppercase text-white">VÌ SAO BẠN NÊN CHỌN <span class="text-lqvn-red">LQVN.VN</span>?</h2>
+            <h2 class="text-2xl md:text-3xl font-black text-center mb-8 md:mb-12 uppercase text-white">VÌ SAO BẠN NÊN CHỌN <span class="text-lqvn-red">LQVN.VN</span>?</h2>
             
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div class="bg-lqvn-card p-8 rounded-xl border border-gray-800 hover:border-lqvn-red transition group text-center">
-                    <div class="w-20 h-20 mx-auto bg-red-500/10 rounded-full flex items-center justify-center mb-6 group-hover:scale-110 transition">
-                        <i class="fa-solid fa-bolt text-4xl text-lqvn-gold"></i>
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 md:gap-6">
+                <div class="bg-lqvn-card p-6 md:p-8 rounded-xl border border-gray-800 hover:border-lqvn-red transition group text-center">
+                    <div class="w-16 h-16 md:w-20 md:h-20 mx-auto bg-red-500/10 rounded-full flex items-center justify-center mb-4 md:mb-6 group-hover:scale-110 transition">
+                        <i class="fa-solid fa-bolt text-3xl md:text-4xl text-lqvn-gold"></i>
                     </div>
-                    <h3 class="text-xl font-bold mb-3 text-white">Giao Dịch Tự Động 24/7</h3>
-                    <p class="text-gray-400">Nạp tiền và mua tài khoản tự động 100%. Nhận thông tin tài khoản ngay lập tức trên website mà không cần chờ đợi.</p>
+                    <h3 class="text-lg md:text-xl font-bold mb-2 md:mb-3 text-white">Giao Dịch Tự Động 24/7</h3>
+                    <p class="text-sm md:text-base text-gray-400">Nạp tiền và mua tài khoản tự động 100%. Nhận thông tin tài khoản ngay lập tức trên website mà không cần chờ đợi.</p>
                 </div>
                 
-                <div class="bg-lqvn-card p-8 rounded-xl border border-gray-800 hover:border-lqvn-red transition group text-center">
-                    <div class="w-20 h-20 mx-auto bg-blue-500/10 rounded-full flex items-center justify-center mb-6 group-hover:scale-110 transition">
-                        <i class="fa-solid fa-shield-halved text-4xl text-blue-500"></i>
+                <div class="bg-lqvn-card p-6 md:p-8 rounded-xl border border-gray-800 hover:border-lqvn-red transition group text-center">
+                    <div class="w-16 h-16 md:w-20 md:h-20 mx-auto bg-blue-500/10 rounded-full flex items-center justify-center mb-4 md:mb-6 group-hover:scale-110 transition">
+                        <i class="fa-solid fa-shield-halved text-3xl md:text-4xl text-blue-500"></i>
                     </div>
-                    <h3 class="text-xl font-bold mb-3 text-white">Bảo Mật Tuyệt Đối</h3>
-                    <p class="text-gray-400">Cam kết 100% tài khoản bán ra trắng thông tin, sạch sẽ. Hệ thống bảo mật dữ liệu khách hàng cực kỳ an toàn.</p>
+                    <h3 class="text-lg md:text-xl font-bold mb-2 md:mb-3 text-white">Bảo Mật Tuyệt Đối</h3>
+                    <p class="text-sm md:text-base text-gray-400">Cam kết 100% tài khoản bán ra trắng thông tin, sạch sẽ. Hệ thống bảo mật dữ liệu khách hàng cực kỳ an toàn.</p>
                 </div>
                 
-                <div class="bg-lqvn-card p-8 rounded-xl border border-gray-800 hover:border-lqvn-red transition group text-center">
-                    <div class="w-20 h-20 mx-auto bg-green-500/10 rounded-full flex items-center justify-center mb-6 group-hover:scale-110 transition">
-                        <i class="fa-solid fa-headset text-4xl text-green-500"></i>
+                <div class="bg-lqvn-card p-6 md:p-8 rounded-xl border border-gray-800 hover:border-lqvn-red transition group text-center sm:col-span-2 md:col-span-1">
+                    <div class="w-16 h-16 md:w-20 md:h-20 mx-auto bg-green-500/10 rounded-full flex items-center justify-center mb-4 md:mb-6 group-hover:scale-110 transition">
+                        <i class="fa-solid fa-headset text-3xl md:text-4xl text-green-500"></i>
                     </div>
-                    <h3 class="text-xl font-bold mb-3 text-white">Hỗ Trợ Tận Tâm</h3>
-                    <p class="text-gray-400">Đội ngũ Admin luôn sẵn sàng hỗ trợ bạn qua Zalo và Messenger để giải quyết mọi thắc mắc hoặc khiếu nại.</p>
+                    <h3 class="text-lg md:text-xl font-bold mb-2 md:mb-3 text-white">Hỗ Trợ Tận Tâm</h3>
+                    <p class="text-sm md:text-base text-gray-400">Đội ngũ Admin luôn sẵn sàng hỗ trợ bạn qua Telegram và Facebook để giải quyết mọi thắc mắc hoặc khiếu nại.</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <footer class="bg-lqvn-card border-t border-gray-800 pt-16 pb-6">
-        <div class="container mx-auto px-4 grid grid-cols-1 md:grid-cols-4 gap-8 mb-10">
+    <!-- FOOTER -->
+    <footer class="bg-lqvn-card border-t border-gray-800 pt-12 md:pt-16 pb-6">
+        <div class="container mx-auto px-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 mb-8 md:mb-10 text-center sm:text-left">
             
             <div>
-                <a href="index.html" class="flex items-center gap-3 mb-6 group">
+                <a href="index.html" class="flex items-center justify-center sm:justify-start gap-3 mb-6 group">
                     <img src="https://cdn.vn.garenanow.com/web/kg/home/images/logo-new.png" alt="Liên Quân Mobile" class="h-10 object-contain group-hover:scale-105 transition duration-300">
                     <span class="text-xl font-black text-white hidden sm:block">LQVN.<span class="text-lqvn-red">VN</span></span>
                 </a>
-                <p class="text-sm text-gray-400 mb-4 leading-relaxed">
+                <p class="text-sm text-gray-400 mb-6 leading-relaxed">
                     Hệ thống bán tài khoản tự động uy tín, chất lượng nhất Việt Nam. Chúng tôi luôn lấy trải nghiệm của game thủ đặt lên hàng đầu.
                 </p>
-                <div class="flex space-x-4">
-                    <a href="#" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center text-blue-500 hover:bg-blue-600 hover:text-white transition"><i class="fa-brands fa-facebook-f"></i></a>
-                    <a href="#" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center text-red-500 hover:bg-red-600 hover:text-white transition"><i class="fa-brands fa-youtube"></i></a>
-                    <a href="#" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center text-blue-400 hover:bg-blue-500 hover:text-white transition"><i class="fa-brands fa-telegram"></i></a>
+                <div class="flex justify-center sm:justify-start space-x-3 md:space-x-4">
+                    <a href="https://fb.com/lenhan.riel" target="_blank" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center text-blue-500 hover:bg-blue-600 hover:text-white transition shadow-sm"><i class="fa-brands fa-facebook-f"></i></a>
+                    <a href="https://t.me/tolabimat" target="_blank" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center text-blue-400 hover:bg-blue-500 hover:text-white transition shadow-sm"><i class="fa-brands fa-telegram"></i></a>
+                    <a href="#" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center text-red-500 hover:bg-red-600 hover:text-white transition shadow-sm"><i class="fa-brands fa-youtube"></i></a>
                 </div>
             </div>
 
             <div>
-                <h3 class="text-white font-bold mb-5 uppercase tracking-wide">Hướng Dẫn Chung</h3>
+                <h3 class="text-white font-bold mb-4 md:mb-5 uppercase tracking-wide">Hướng Dẫn Chung</h3>
                 <ul class="text-sm text-gray-400 space-y-3">
-                    <li><a href="naptien.html" class="hover:text-lqvn-red transition"><i class="fa-solid fa-angle-right text-xs mr-2"></i> Hướng Dẫn Nạp Tiền</a></li>
-                    <li><a href="home.html" class="hover:text-lqvn-red transition"><i class="fa-solid fa-angle-right text-xs mr-2"></i> Hướng Dẫn Mua Tài Khoản</a></li>
-                    <li><a href="#" class="hover:text-lqvn-red transition"><i class="fa-solid fa-angle-right text-xs mr-2"></i> Cách Đổi Mật Khẩu Game</a></li>
-                    <li><a href="#" class="hover:text-lqvn-red transition"><i class="fa-solid fa-angle-right text-xs mr-2"></i> Chính Sách Bảo Hành</a></li>
+                    <li><a href="naptien.html" class="hover:text-lqvn-red transition inline-flex items-center"><i class="fa-solid fa-angle-right text-xs mr-2"></i> Hướng Dẫn Nạp Tiền</a></li>
+                    <li><a href="home.html" class="hover:text-lqvn-red transition inline-flex items-center"><i class="fa-solid fa-angle-right text-xs mr-2"></i> Hướng Dẫn Mua Tài Khoản</a></li>
+                    <li><a href="#" class="hover:text-lqvn-red transition inline-flex items-center"><i class="fa-solid fa-angle-right text-xs mr-2"></i> Cách Đổi Mật Khẩu</a></li>
+                    <li><a href="#" class="hover:text-lqvn-red transition inline-flex items-center"><i class="fa-solid fa-angle-right text-xs mr-2"></i> Chính Sách Bảo Hành</a></li>
                 </ul>
             </div>
 
             <div>
-                <h3 class="text-white font-bold mb-5 uppercase tracking-wide">Danh Mục Sản Phẩm</h3>
+                <h3 class="text-white font-bold mb-4 md:mb-5 uppercase tracking-wide">Danh Mục Sản Phẩm</h3>
                 <ul class="text-sm text-gray-400 space-y-3">
-                    <li><a href="home.html" class="hover:text-lqvn-red transition"><i class="fa-solid fa-angle-right text-xs mr-2"></i> Acc Liên Quân Đồng Giá</a></li>
-                    <li><a href="home.html" class="hover:text-lqvn-red transition"><i class="fa-solid fa-angle-right text-xs mr-2"></i> Acc VIP Trắng Thông Tin</a></li>
-                    <li><a href="home.html" class="hover:text-lqvn-red transition"><i class="fa-solid fa-angle-right text-xs mr-2"></i> Thử Vận May (9K - 20K - 50K)</a></li>
-                    <li><a href="home.html" class="hover:text-lqvn-red transition"><i class="fa-solid fa-angle-right text-xs mr-2"></i> Cày Thuê Rank Siêu Tốc</a></li>
+                    <li><a href="home.html" class="hover:text-lqvn-red transition inline-flex items-center"><i class="fa-solid fa-angle-right text-xs mr-2"></i> Acc Liên Quân Đồng Giá</a></li>
+                    <li><a href="home.html" class="hover:text-lqvn-red transition inline-flex items-center"><i class="fa-solid fa-angle-right text-xs mr-2"></i> Acc VIP Trắng Thông Tin</a></li>
+                    <li><a href="home.html" class="hover:text-lqvn-red transition inline-flex items-center"><i class="fa-solid fa-angle-right text-xs mr-2"></i> Thử Vận May Cực Phẩm</a></li>
+                    <li><a href="home.html" class="hover:text-lqvn-red transition inline-flex items-center"><i class="fa-solid fa-angle-right text-xs mr-2"></i> Cày Thuê Siêu Tốc</a></li>
                 </ul>
             </div>
 
             <div>
-                <h3 class="text-white font-bold mb-5 uppercase tracking-wide">Hỗ Trợ Khách Hàng</h3>
-                <div class="bg-[#0B0E14] p-4 rounded-lg border border-gray-800">
-                    <p class="text-sm text-gray-400 mb-2"><i class="fa-solid fa-clock text-lqvn-gold w-5"></i> Thời gian: 08:00 - 22:00 (Hàng ngày)</p>
-                    <p class="text-sm text-gray-400 mb-4"><i class="fa-solid fa-envelope text-lqvn-gold w-5"></i> Email: admin@lqvn.vn</p>
+                <h3 class="text-white font-bold mb-4 md:mb-5 uppercase tracking-wide">Hỗ Trợ Khách Hàng</h3>
+                <div class="bg-[#0B0E14] p-4 rounded-lg border border-gray-800 text-left">
+                    <p class="text-sm text-gray-400 mb-2 flex items-center"><i class="fa-solid fa-clock text-lqvn-gold w-5"></i> Thời gian: 08:00 - 22:00</p>
+                    <p class="text-sm text-gray-400 mb-4 flex items-center"><i class="fa-solid fa-envelope text-lqvn-gold w-5"></i> Email: admin@lqvn.vn</p>
                     
-                    <a href="https://m.me/yourfacebookpage" target="_blank" class="flex items-center justify-center w-full py-2.5 bg-blue-600 hover:bg-blue-500 text-white rounded-md font-bold transition text-sm">
+                    <a href="https://m.me/lenhan.riel" target="_blank" class="flex items-center justify-center w-full py-3 bg-blue-600 hover:bg-blue-500 text-white rounded-md font-bold transition text-sm">
                         <i class="fa-brands fa-facebook-messenger text-lg mr-2"></i> Chat Với Admin
                     </a>
                 </div>
             </div>
         </div>
 
-        <div class="text-center text-gray-600 text-sm border-t border-gray-800 pt-6">
-            &copy; 2026 <strong class="text-gray-400">LQVN.VN</strong>. All Rights Reserved. Operated with ❤️.
+        <div class="text-center text-gray-500 text-xs sm:text-sm border-t border-gray-800 pt-6 px-4">
+            &copy; 2026 <strong class="text-gray-300">LQVN.VN</strong>. All Rights Reserved. Operated by Lê Nhân.
         </div>
     </footer>
 
-    <div class="fixed bottom-6 right-6 flex flex-col space-y-3 z-50">
-        <a href="tel:0123456789" class="w-12 h-12 bg-green-500 text-white rounded-full flex items-center justify-center text-xl shadow-[0_0_15px_rgba(34,197,94,0.4)] hover:scale-110 transition">
-            <i class="fa-solid fa-phone"></i>
+    <!-- WIDGET HỖ TRỢ TRÔI NỔI TỐI ƯU MOBILE -->
+    <div class="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 flex flex-col space-y-2 sm:space-y-3 z-50">
+        <a href="https://t.me/tolabimat" target="_blank" class="w-10 h-10 sm:w-12 sm:h-12 bg-[#2CA5E0] text-white rounded-full flex items-center justify-center text-lg sm:text-2xl shadow-lg hover:scale-110 transition tooltip-trigger">
+            <i class="fa-brands fa-telegram"></i>
         </a>
-        <a href="https://m.me/yourpage" target="_blank" class="w-12 h-12 bg-blue-600 text-white rounded-full flex items-center justify-center text-2xl shadow-[0_0_15px_rgba(37,99,235,0.4)] hover:scale-110 transition">
+        <a href="https://fb.com/lenhan.riel" target="_blank" class="w-10 h-10 sm:w-12 sm:h-12 bg-[#1877F2] text-white rounded-full flex items-center justify-center text-lg sm:text-2xl shadow-lg hover:scale-110 transition tooltip-trigger">
+            <i class="fa-brands fa-facebook-f"></i>
+        </a>
+        <a href="https://m.me/lenhan.riel" target="_blank" class="w-10 h-10 sm:w-12 sm:h-12 bg-[#00B2FF] text-white rounded-full flex items-center justify-center text-xl sm:text-2xl shadow-lg hover:scale-110 transition tooltip-trigger">
             <i class="fa-brands fa-facebook-messenger"></i>
         </a>
-        <button onclick="window.scrollTo({top: 0, behavior: 'smooth'})" class="w-12 h-12 bg-gray-700 text-white rounded-full flex items-center justify-center text-xl shadow-lg hover:bg-lqvn-red hover:scale-110 transition">
+        <button onclick="window.scrollTo({top: 0, behavior: 'smooth'})" class="w-10 h-10 sm:w-12 sm:h-12 bg-gray-700 text-white rounded-full flex items-center justify-center text-lg sm:text-xl shadow-lg hover:bg-lqvn-red hover:scale-110 transition mt-2">
             <i class="fa-solid fa-arrow-up"></i>
         </button>
     </div>
@@ -239,9 +266,28 @@
     <script>
         const btn = document.getElementById('mobileMenuBtn');
         const menu = document.getElementById('mobileMenu');
+        const menuIcon = document.getElementById('menuIcon');
 
         btn.addEventListener('click', () => {
-            menu.classList.toggle('hidden');
+            menu.classList.toggle('menu-mobile-enter-active');
+            
+            // Đổi icon menu sang icon dấu X và ngược lại
+            if(menu.classList.contains('menu-mobile-enter-active')) {
+                menuIcon.classList.remove('fa-bars');
+                menuIcon.classList.add('fa-xmark');
+            } else {
+                menuIcon.classList.remove('fa-xmark');
+                menuIcon.classList.add('fa-bars');
+            }
+        });
+
+        // Đóng menu khi click ra ngoài
+        document.addEventListener('click', (event) => {
+            if (!menu.contains(event.target) && !btn.contains(event.target)) {
+                menu.classList.remove('menu-mobile-enter-active');
+                menuIcon.classList.remove('fa-xmark');
+                menuIcon.classList.add('fa-bars');
+            }
         });
     </script>
 </body>
