@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đăng Ký - ShopGame</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-[#121212] flex items-center justify-center min-h-screen font-sans antialiased px-4 py-8">
+
+    <div class="bg-[#1a1a1a] p-8 rounded-xl shadow-2xl border border-gray-800 w-full max-w-md">
+        <div class="text-center mb-8">
+            <a href="index.html" class="inline-flex items-center gap-2 transition hover:scale-105">
+                <i class="fa-solid fa-gamepad text-4xl text-red-500"></i>
+            </a>
+            <h1 class="text-2xl font-bold text-white mt-4">Tạo Tài Khoản Mới</h1>
+            <p class="text-gray-400 text-sm mt-1">Gia nhập cộng đồng game thủ ngay hôm nay</p>
+        </div>
+
+        <form id="formDangKy">
+            <div class="mb-4">
+                <label class="block text-gray-400 text-sm font-semibold mb-2" for="nameRegister">Họ và Tên</label>
+                <div class="relative">
+                    <i class="fa-solid fa-user absolute left-3 top-3.5 text-gray-500"></i>
+                    <input type="text" id="nameRegister" class="w-full bg-[#242424] text-white border border-gray-700 rounded-lg pl-10 pr-4 py-3 focus:outline-none focus:border-red-500 transition" placeholder="Tên hiển thị của bạn" required>
+                </div>
+            </div>
+
+            <div class="mb-4">
+                <label class="block text-gray-400 text-sm font-semibold mb-2" for="emailRegister">Địa chỉ Email</label>
+                <div class="relative">
+                    <i class="fa-solid fa-envelope absolute left-3 top-3.5 text-gray-500"></i>
+                    <input type="email" id="emailRegister" class="w-full bg-[#242424] text-white border border-gray-700 rounded-lg pl-10 pr-4 py-3 focus:outline-none focus:border-red-500 transition" placeholder="Địa chỉ email hợp lệ" required>
+                </div>
+            </div>
+
+            <div class="mb-4">
+                <label class="block text-gray-400 text-sm font-semibold mb-2" for="passRegister">Mật khẩu</label>
+                <div class="relative">
+                    <i class="fa-solid fa-lock absolute left-3 top-3.5 text-gray-500"></i>
+                    <input type="password" id="passRegister" class="w-full bg-[#242424] text-white border border-gray-700 rounded-lg pl-10 pr-4 py-3 focus:outline-none focus:border-red-500 transition" placeholder="Mật khẩu (ít nhất 6 ký tự)" required minlength="6">
+                </div>
+            </div>
+
+            <div class="mb-6">
+                <label class="block text-gray-400 text-sm font-semibold mb-2" for="confirmPassRegister">Xác nhận mật khẩu</label>
+                <div class="relative">
+                    <i class="fa-solid fa-shield-check absolute left-3 top-3.5 text-gray-500"></i>
+                    <input type="password" id="confirmPassRegister" class="w-full bg-[#242424] text-white border border-gray-700 rounded-lg pl-10 pr-4 py-3 focus:outline-none focus:border-red-500 transition" placeholder="Nhập lại mật khẩu" required>
+                </div>
+                <p id="errorMsg" class="text-red-500 text-xs mt-2 hidden">Mật khẩu không khớp. Vui lòng kiểm tra lại!</p>
+            </div>
+
+            <button type="submit" class="w-full bg-gradient-to-r from-red-600 to-red-500 hover:from-red-500 hover:to-red-400 text-white font-bold py-3 rounded-lg transition transform hover:scale-[1.02] shadow-lg shadow-red-500/30">
+                ĐĂNG KÝ TÀI KHOẢN
+            </button>
+        </form>
+
+        <p class="text-center text-gray-400 mt-8 text-sm">
+            Đã có tài khoản? <a href="dangnhap.html" class="text-red-500 font-bold hover:underline">Đăng nhập</a>
+        </p>
+    </div>
+
+    <script type="module">
+        document.getElementById('formDangKy').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const pass = document.getElementById('passRegister').value;
+            const confirmPass = document.getElementById('confirmPassRegister').value;
+            const errorMsg = document.getElementById('errorMsg');
+
+            if (pass !== confirmPass) {
+                errorMsg.classList.remove('hidden');
+                return;
+            }
+            errorMsg.classList.add('hidden');
+            
+            const email = document.getElementById('emailRegister').value;
+            const name = document.getElementById('nameRegister').value;
+            console.log("Xử lý đăng ký Firebase cho:", email, name);
+            // Code Firebase createUserWithEmailAndPassword ở đây
+        });
+    </script>
+</body>
+</html>
