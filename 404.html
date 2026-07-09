@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>404 - Không Tìm Thấy Trang | LQVN.VN</title>
+    
+    <!-- Favicon Liên Quân -->
+    <link rel="icon" type="image/png" href="https://lienquan.garena.vn/wp-content/uploads/2024/05/b4563fbfd5756caeea04b7ef488ee39f60fffd803e9ab1.jpeg">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Cấu hình màu sắc đồng bộ với website -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        lqvn: {
+                            dark: '#0B0E14',
+                            card: '#151A23',
+                            red: '#E11D48',
+                            gold: '#FBBF24'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        /* Hiệu ứng nền 404 */
+        .bg-404 {
+            background: url('https://images.unsplash.com/photo-1542751371-adc38448a05e?q=80&w=2070&auto=format&fit=crop') center center no-repeat;
+            background-size: cover;
+        }
+        
+        /* Hiệu ứng nổi cho nút */
+        .float-anim {
+            animation: floating 3s ease-in-out infinite;
+        }
+        @keyframes floating {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+    </style>
+</head>
+<body class="bg-lqvn-dark text-gray-200 font-sans antialiased h-screen flex flex-col overflow-hidden">
+
+    <!-- HEADER TINH GỌN -->
+    <header class="bg-lqvn-dark/95 backdrop-blur-md border-b border-gray-800 relative z-50">
+        <div class="container mx-auto px-4 py-4 flex justify-center">
+            <!-- Logo -->
+            <a href="index.html" class="flex items-center gap-3 group hover:scale-105 transition duration-300">
+                <img src="https://cdn.vn.garenanow.com/web/kg/home/images/logo-new.png" alt="Liên Quân Mobile" class="h-10 md:h-12 object-contain drop-shadow-[0_0_8px_rgba(225,29,72,0.6)]">
+                <span class="text-2xl font-black text-white tracking-wider">LQVN.<span class="text-lqvn-red">VN</span></span>
+            </a>
+        </div>
+    </header>
+
+    <!-- NỘI DUNG 404 -->
+    <main class="flex-grow relative bg-404 flex items-center justify-center">
+        <!-- Lớp phủ tối (Overlay) -->
+        <div class="absolute inset-0 bg-lqvn-dark/90 backdrop-blur-sm"></div>
+        
+        <!-- Content -->
+        <div class="relative z-10 text-center px-4 max-w-2xl mx-auto float-anim">
+            <!-- Số 404 Phát sáng -->
+            <h1 class="text-8xl md:text-[150px] font-black text-transparent bg-clip-text bg-gradient-to-b from-lqvn-red to-red-900 drop-shadow-[0_0_30px_rgba(225,29,72,0.8)] leading-none mb-2">
+                404
+            </h1>
+            
+            <!-- Biểu tượng -->
+            <div class="text-lqvn-gold text-4xl md:text-5xl mb-6 drop-shadow-[0_0_15px_rgba(251,191,36,0.6)]">
+                <i class="fa-solid fa-map-location-dot"></i>
+            </div>
+            
+            <!-- Tiêu đề -->
+            <h2 class="text-2xl md:text-4xl font-black text-white uppercase mb-4 tracking-wide">
+                Lạc Đường Rồi Kiện Tướng!
+            </h2>
+            
+            <!-- Mô tả -->
+            <p class="text-gray-400 text-sm md:text-lg mb-10 leading-relaxed px-4">
+                Khu vực này hiện không tồn tại hoặc đã bị bay màu khỏi Bản Đồ Athanor. Đừng đi lang thang trong rừng một mình nữa, hãy quay về Căn Cứ ngay lập tức!
+            </p>
+            
+            <!-- Nút hành động -->
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+                <button onclick="history.back()" class="w-full sm:w-auto px-8 py-3.5 bg-gray-800 hover:bg-gray-700 text-white font-bold rounded-lg text-base md:text-lg transition border border-gray-700 flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-arrow-left"></i> QUAY LẠI TRANG TRƯỚC
+                </button>
+                
+                <a href="index.html" class="w-full sm:w-auto px-8 py-3.5 bg-gradient-to-r from-lqvn-red to-red-600 hover:from-red-600 hover:to-red-700 text-white font-bold rounded-lg text-base md:text-lg transition transform hover:scale-105 shadow-[0_0_20px_rgba(225,29,72,0.6)] flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-house"></i> TRỞ VỀ CĂN CỨ
+                </a>
+            </div>
+        </div>
+    </main>
+
+</body>
+</html>
