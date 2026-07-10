@@ -8,7 +8,6 @@
     <link rel="icon" type="image/png" href="https://cdn.vn.garenanow.com/web/kg/home/images/logo-new.png">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&display=swap" rel="stylesheet">
     
     <script>
@@ -17,12 +16,7 @@
                 extend: {
                     fontFamily: { sans: ['Inter', 'sans-serif'] },
                     colors: {
-                        lqvn: {
-                            dark: '#0B0E14',
-                            card: '#151A23',
-                            red: '#E11D48',
-                            gold: '#FBBF24'
-                        }
+                        lqvn: { dark: '#0B0E14', card: '#151A23', red: '#E11D48', gold: '#FBBF24' }
                     }
                 }
             }
@@ -35,104 +29,73 @@
         ::-webkit-scrollbar-thumb { background: #374151; border-radius: 10px; }
         ::-webkit-scrollbar-thumb:hover { background: #E11D48; }
 
-        .glass {
-            background: rgba(21, 26, 35, 0.7);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-        }
-
+        .glass { background: rgba(21, 26, 35, 0.85); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.05); }
         .card-zoom-image { transition: transform 0.5s ease; }
         .group:hover .card-zoom-image { transform: scale(1.1); }
-        
         .tab-active { border-bottom: 2px solid #E11D48; color: #E11D48; font-weight: bold; background: linear-gradient(to top, rgba(225,29,72,0.1), transparent); }
-        
         .hide-scroll::-webkit-scrollbar { display: none; }
         .hide-scroll { -ms-overflow-style: none; scrollbar-width: none; }
-
-        /* Animation cho dropdown user */
-        .dropdown-menu {
-            transform-origin: top right;
-            transition: all 0.2s ease-in-out;
-        }
+        .dropdown-menu { transform-origin: top right; transition: all 0.2s ease-in-out; }
     </style>
 </head>
-<body class="bg-lqvn-dark text-gray-200 antialiased overflow-x-hidden pb-20 md:pb-0">
+<body class="bg-lqvn-dark text-gray-200 antialiased overflow-x-hidden pb-20 md:pb-0 relative">
 
-    <!-- HEADER PC -->
     <header class="glass sticky top-0 z-50 transition-all duration-300">
         <div class="container mx-auto px-4 py-3 flex justify-between items-center">
-            <!-- Logo -->
             <a href="/" class="flex items-center gap-2 sm:gap-3 group z-50">
                 <img src="https://cdn.vn.garenanow.com/web/kg/home/images/logo-new.png" alt="Liên Quân" class="h-10 md:h-12 object-contain drop-shadow-[0_0_8px_rgba(225,29,72,0.6)] group-hover:scale-105 transition">
                 <span class="text-xl md:text-2xl font-black text-white tracking-wider hidden sm:block">LQVN.<span class="text-lqvn-red">VN</span></span>
             </a>
 
-            <!-- Menu PC -->
             <nav class="hidden md:flex space-x-8 font-semibold text-sm tracking-wide">
                 <a href="/" class="hover:text-lqvn-red transition">TRANG CHỦ</a>
                 <a href="/home" class="text-lqvn-red border-b-2 border-lqvn-red pb-1">MUA TÀI KHOẢN</a>
-                <a href="#" class="hover:text-lqvn-red transition">VÒNG QUAY</a>
-                <a href="/naptien" class="hover:text-lqvn-red transition">NẠP TIỀN</a>
+                <a href="#nick-noi-bat" class="hover:text-lqvn-red transition">NICK NỔI BẬT</a>
+                <a href="/napthe" class="hover:text-lqvn-red transition">NẠP TIỀN</a>
             </nav>
 
-            <!-- KHU VỰC AUTH (Đăng Nhập / Profile) -->
             <div class="flex items-center space-x-3">
-                
-                <!-- 1. Giao diện khi CHƯA đăng nhập -->
                 <div id="logged-out-ui" class="hidden sm:flex items-center space-x-3">
                     <a href="/dangnhap" class="text-gray-300 hover:text-white font-semibold transition text-sm">Đăng Nhập</a>
-                    <a href="/dangky" class="px-5 py-2 bg-gradient-to-r from-lqvn-red to-red-600 hover:from-red-600 hover:to-red-700 text-white rounded-lg font-bold transition shadow-[0_0_15px_rgba(225,29,72,0.4)] text-sm">
-                        Đăng Ký
-                    </a>
+                    <a href="/dangky" class="px-5 py-2 bg-gradient-to-r from-lqvn-red to-red-600 hover:from-red-600 hover:to-red-700 text-white rounded-lg font-bold transition shadow-[0_0_15px_rgba(225,29,72,0.4)] text-sm">Đăng Ký</a>
                 </div>
 
-                <!-- 2. Giao diện khi ĐÃ đăng nhập (User Profile) -->
                 <div id="logged-in-ui" class="hidden items-center gap-3 relative group cursor-pointer">
-                    <!-- Text Info -->
                     <div class="flex flex-col text-right hidden md:block">
                         <span id="userNameDisplay" class="text-white font-bold text-sm leading-tight">...</span>
                         <span class="text-lqvn-gold font-black text-xs drop-shadow-[0_0_5px_rgba(251,191,36,0.3)]">Số dư: 0đ</span>
                     </div>
-                    <!-- Avatar -->
-                    <img id="userAvatar" src="https://ui-avatars.com/api/?name=User&background=E11D48&color=fff" class="w-10 h-10 rounded-full border-2 border-lqvn-red shadow-[0_0_10px_rgba(225,29,72,0.5)] transition group-hover:scale-105" alt="Avatar">
+                    <img id="userAvatar" src="https://ui-avatars.com/api/?name=U&background=E11D48&color=fff" class="w-10 h-10 rounded-full border-2 border-lqvn-red shadow-[0_0_10px_rgba(225,29,72,0.5)] transition group-hover:scale-105">
                     
-                    <!-- Dropdown Menu -->
                     <div class="dropdown-menu absolute top-full right-0 mt-3 w-52 bg-lqvn-card border border-gray-800 rounded-xl shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible z-50">
                         <div class="p-2 flex flex-col">
-                            <a href="#" class="px-4 py-2.5 text-sm text-gray-300 hover:bg-gray-800 hover:text-white rounded-lg transition font-medium"><i class="fa-solid fa-user w-5 text-gray-500"></i> Hồ sơ cá nhân</a>
-                            <a href="#" class="px-4 py-2.5 text-sm text-gray-300 hover:bg-gray-800 hover:text-white rounded-lg transition font-medium"><i class="fa-solid fa-clock-rotate-left w-5 text-gray-500"></i> Lịch sử mua nick</a>
-                            <a href="/naptien" class="px-4 py-2.5 text-sm text-gray-300 hover:bg-gray-800 hover:text-white rounded-lg transition font-medium"><i class="fa-solid fa-wallet w-5 text-gray-500"></i> Lịch sử nạp thẻ</a>
+                            <a href="/hoso" class="px-4 py-2.5 text-sm text-gray-300 hover:bg-gray-800 hover:text-white rounded-lg transition font-medium"><i class="fa-solid fa-user w-5 text-gray-500"></i> Hồ sơ cá nhân</a>
+                            <a href="/lichsugiaodich" class="px-4 py-2.5 text-sm text-gray-300 hover:bg-gray-800 hover:text-white rounded-lg transition font-medium"><i class="fa-solid fa-cart-shopping w-5 text-gray-500"></i> Lịch sử mua nick</a>
+                            <a href="/lichsu-napthe" class="px-4 py-2.5 text-sm text-gray-300 hover:bg-gray-800 hover:text-white rounded-lg transition font-medium"><i class="fa-solid fa-clock-rotate-left w-5 text-gray-500"></i> Lịch sử nạp thẻ</a>
                             <div class="h-px w-full bg-gray-800 my-1"></div>
                             <button id="btnLogout" class="px-4 py-2.5 text-sm text-lqvn-red hover:bg-red-500/10 hover:text-red-400 rounded-lg transition text-left font-bold"><i class="fa-solid fa-right-from-bracket w-5"></i> Đăng xuất</button>
                         </div>
                     </div>
                 </div>
 
-                <!-- Nút nạp nhanh cho mobile (Ẩn khi PC) -->
-                <a href="/naptien" class="sm:hidden px-4 py-1.5 bg-lqvn-red text-white text-xs font-bold rounded-full shadow-[0_0_10px_rgba(225,29,72,0.5)]">
-                    Nạp thẻ
-                </a>
+                <a href="/napthe" class="sm:hidden px-4 py-1.5 bg-lqvn-red text-white text-xs font-bold rounded-full shadow-[0_0_10px_rgba(225,29,72,0.5)]">Nạp thẻ</a>
             </div>
         </div>
     </header>
 
     <main class="container mx-auto px-4 py-6">
         
-        <!-- TOP SECTION: BANNER & TOP NẠP -->
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-10">
-            
             <div class="lg:col-span-2 rounded-2xl overflow-hidden shadow-2xl border border-gray-800 relative group h-[200px] md:h-[300px]">
                 <img src="https://images.unsplash.com/photo-1542751371-adc38448a05e?q=80&w=2070&auto=format&fit=crop" class="w-full h-full object-cover transition duration-700 group-hover:scale-105" alt="Banner">
                 <div class="absolute inset-0 bg-gradient-to-r from-lqvn-dark via-lqvn-dark/80 to-transparent flex flex-col justify-center p-6 md:p-10">
-                    <span class="bg-gradient-to-r from-yellow-500 to-yellow-600 text-black text-xs md:text-sm font-black px-3 py-1 rounded-full w-max mb-3 shadow-[0_0_15px_rgba(251,191,36,0.5)]">SỰ KIỆN MỚI</span>
-                    <h2 class="text-2xl md:text-4xl font-black text-white uppercase mb-2 leading-tight">Mở Bán Rương <br><span class="text-lqvn-red">Siêu Việt</span></h2>
-                    <p class="text-gray-300 text-xs md:text-sm max-w-[250px] md:max-w-sm mb-5">Cơ hội trúng ngay acc Chiến Tướng, Full Tướng Full Skin chỉ với 50K.</p>
-                    <button class="bg-white text-black font-bold py-2 px-6 rounded-lg w-max hover:bg-gray-200 transition text-sm md:text-base shadow-lg">Khám Phá Ngay</button>
+                    <span class="bg-gradient-to-r from-yellow-500 to-yellow-600 text-black text-xs md:text-sm font-black px-3 py-1 rounded-full w-max mb-3 shadow-[0_0_15px_rgba(251,191,36,0.5)]">HOT EVENT</span>
+                    <h2 class="text-2xl md:text-4xl font-black text-white uppercase mb-2 leading-tight">Vòng Quay <br><span class="text-lqvn-red">Siêu Việt</span></h2>
+                    <p class="text-gray-300 text-xs md:text-sm max-w-[250px] md:max-w-sm mb-5">Cơ hội trúng ngay acc Chiến Tướng, Full Tướng Full Skin chỉ với 20K.</p>
+                    <a href="#nick-noi-bat" class="bg-white text-black font-bold py-2 px-6 rounded-lg w-max hover:bg-gray-200 transition text-sm md:text-base shadow-lg">Khám Phá Ngay</a>
                 </div>
             </div>
 
-            <!-- Box Nạp Thẻ Nhanh -->
             <div class="glass rounded-2xl overflow-hidden shadow-lg h-full flex flex-col relative">
                 <div class="flex border-b border-gray-800 bg-[#0B0E14]/50">
                     <button onclick="switchTab('napthe')" id="tab-napthe" class="flex-1 py-3.5 text-sm font-bold tab-active transition">NẠP THẺ</button>
@@ -140,34 +103,10 @@
                 </div>
                 
                 <div id="content-napthe" class="p-5 flex-1 flex flex-col justify-center">
-                    <form onsubmit="event.preventDefault();">
-                        <select class="w-full bg-lqvn-dark/80 border border-gray-700 text-white rounded-xl px-4 py-3 mb-3 outline-none focus:border-lqvn-red text-sm transition">
-                            <option value="">-- Chọn Nhà Mạng --</option>
-                            <option value="viettel">Viettel</option>
-                            <option value="mobifone">Mobifone</option>
-                            <option value="mobifone">Vinaphone</option>
-                            <option value="mobifone">Vietnamobile</option>
-                            <option value="mobifone">Wintel</option>
-                            <option value="mobifone">Gmobile</option>
-                        </select>
-                        <select class="w-full bg-lqvn-dark/80 border border-gray-700 text-white rounded-xl px-4 py-3 mb-3 outline-none focus:border-lqvn-red text-sm transition">
-                            <option value="">-- Mệnh Giá --</option>
-                            <option value="50000">10,000 VNĐ</option>
-                            <option value="50000">20,000 VNĐ</option>
-                            <option value="50000">30,000 VNĐ</option>
-                            <option value="50000">50,000 VNĐ</option>
-                            <option value="50000">100,000 VNĐ</option>
-                            <option value="100000">200,000 VNĐ</option>
-                            <option value="50000">500,000 VNĐ</option>
-                        </select>
-                        <div class="grid grid-cols-2 gap-3 mb-4">
-                            <input type="text" placeholder="Mã Thẻ" class="w-full bg-lqvn-dark/80 border border-gray-700 text-white rounded-xl px-3 py-3 outline-none focus:border-lqvn-red text-sm transition">
-                            <input type="text" placeholder="Số Seri" class="w-full bg-lqvn-dark/80 border border-gray-700 text-white rounded-xl px-3 py-3 outline-none focus:border-lqvn-red text-sm transition">
-                        </div>
-                        <button class="w-full bg-gradient-to-r from-lqvn-red to-red-600 hover:to-red-700 text-white font-bold py-3 rounded-xl transition shadow-[0_0_15px_rgba(225,29,72,0.3)]">
-                            NẠP NGAY
-                        </button>
-                    </form>
+                    <div class="text-center mb-4 text-sm text-gray-400">Mua acc bằng số dư tiện lợi. Hãy nạp thẻ tại đây.</div>
+                    <a href="/napthe" class="w-full bg-gradient-to-r from-lqvn-red to-red-600 hover:to-red-700 text-white font-bold py-3.5 rounded-xl transition shadow-[0_0_15px_rgba(225,29,72,0.3)] text-center flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-wallet"></i> VÀO TRANG NẠP THẺ
+                    </a>
                 </div>
 
                 <div id="content-topnap" class="p-5 hidden flex-1 overflow-y-auto hide-scroll">
@@ -175,7 +114,7 @@
                         <li class="flex justify-between items-center bg-gradient-to-r from-yellow-500/10 to-transparent p-3 rounded-lg border border-yellow-500/20">
                             <div class="flex items-center gap-3">
                                 <span class="bg-yellow-500 text-black font-black w-7 h-7 flex justify-center items-center rounded-full text-xs shadow-[0_0_10px_rgba(251,191,36,0.5)]">1</span>
-                                <span class="font-bold text-sm text-yellow-500">nha***@...</span>
+                                <span class="font-bold text-sm text-yellow-500">nha***@gmail.com</span>
                             </div>
                             <span class="text-white font-black text-sm">5,500,000đ</span>
                         </li>
@@ -189,10 +128,8 @@
                     </ul>
                 </div>
             </div>
-            
         </div>
 
-        <!-- BỘ LỌC TÌM KIẾM -->
         <div class="glass p-4 rounded-2xl mb-8 flex flex-col md:flex-row gap-4 items-center justify-between border border-gray-800">
             <div class="w-full md:w-1/3 relative">
                 <i class="fa-solid fa-magnifying-glass absolute left-4 top-3.5 text-gray-500"></i>
@@ -216,8 +153,7 @@
             </div>
         </div>
 
-        <!-- DANH SÁCH TÀI KHOẢN -->
-        <div class="mb-10">
+        <div id="nick-noi-bat" class="mb-10 scroll-mt-24">
             <div class="flex justify-between items-end mb-6">
                 <div>
                     <h2 class="text-2xl md:text-3xl font-black text-white uppercase flex items-center gap-2">
@@ -228,62 +164,52 @@
             </div>
             
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-                <!-- Acc Item 1 -->
                 <div class="glass rounded-2xl overflow-hidden border border-gray-800 hover:border-lqvn-red transition shadow-lg group flex flex-col">
                     <div class="relative h-48 overflow-hidden bg-lqvn-dark">
-                        <img src="https://images.unsplash.com/photo-1542751371-adc38448a05e?q=80&w=600&auto=format&fit=crop" class="w-full h-full object-cover card-zoom-image opacity-90 group-hover:opacity-100" alt="Thumbnail">
+                        <img src="https://images.unsplash.com/photo-1542751371-adc38448a05e?q=80&w=600&auto=format&fit=crop" class="w-full h-full object-cover card-zoom-image opacity-90 group-hover:opacity-100" alt="Thumb">
                         <div class="absolute inset-0 bg-gradient-to-t from-lqvn-card to-transparent opacity-80"></div>
                         <span class="absolute top-3 left-3 bg-black/60 backdrop-blur border border-gray-700 text-white text-xs font-bold px-2.5 py-1 rounded-md">#5102</span>
                         <span class="absolute top-3 right-3 bg-green-500/20 border border-green-500 text-green-400 text-xs font-bold px-2.5 py-1 rounded-md flex items-center gap-1"><i class="fa-solid fa-check-circle"></i> Trắng TT</span>
                     </div>
-                    
                     <div class="p-4 flex-1 flex flex-col">
                         <div class="grid grid-cols-2 gap-3 mb-4">
-                            <div class="flex items-center gap-2 bg-lqvn-dark p-2 rounded-lg border border-gray-800">
-                                <i class="fa-solid fa-masks-theater text-blue-400"></i>
-                                <div>
-                                    <p class="text-[10px] text-gray-500 uppercase font-bold">Tướng</p>
-                                    <p class="text-sm text-white font-bold leading-none">108</p>
-                                </div>
-                            </div>
-                            <div class="flex items-center gap-2 bg-lqvn-dark p-2 rounded-lg border border-gray-800">
-                                <i class="fa-solid fa-shirt text-pink-400"></i>
-                                <div>
-                                    <p class="text-[10px] text-gray-500 uppercase font-bold">Trang Phục</p>
-                                    <p class="text-sm text-white font-bold leading-none">250</p>
-                                </div>
-                            </div>
-                            <div class="col-span-2 flex items-center gap-2 bg-lqvn-dark p-2 rounded-lg border border-gray-800">
-                                <i class="fa-solid fa-medal text-lqvn-gold text-lg"></i>
-                                <div>
-                                    <p class="text-[10px] text-gray-500 uppercase font-bold">Rank Hiện Tại</p>
-                                    <p class="text-sm text-lqvn-gold font-bold leading-none">Chiến Tướng 50 Sao</p>
-                                </div>
-                            </div>
+                            <div class="flex items-center gap-2 bg-lqvn-dark p-2 rounded-lg border border-gray-800"><i class="fa-solid fa-masks-theater text-blue-400"></i><div><p class="text-[10px] text-gray-500 uppercase font-bold">Tướng</p><p class="text-sm text-white font-bold leading-none">108</p></div></div>
+                            <div class="flex items-center gap-2 bg-lqvn-dark p-2 rounded-lg border border-gray-800"><i class="fa-solid fa-shirt text-pink-400"></i><div><p class="text-[10px] text-gray-500 uppercase font-bold">Skin</p><p class="text-sm text-white font-bold leading-none">250</p></div></div>
+                            <div class="col-span-2 flex items-center gap-2 bg-lqvn-dark p-2 rounded-lg border border-gray-800"><i class="fa-solid fa-medal text-lqvn-gold text-lg"></i><div><p class="text-[10px] text-gray-500 uppercase font-bold">Rank</p><p class="text-sm text-lqvn-gold font-bold leading-none">Chiến Tướng 50 Sao</p></div></div>
                         </div>
-                        
                         <div class="mt-auto flex items-center justify-between pt-2">
-                            <div>
-                                <p class="text-xs text-gray-500 line-through">800,000đ</p>
-                                <p class="text-xl font-black text-lqvn-red drop-shadow-[0_0_5px_rgba(225,29,72,0.3)]">500,000đ</p>
-                            </div>
-                            <button class="bg-lqvn-red hover:bg-red-700 text-white w-10 h-10 rounded-xl flex items-center justify-center transition shadow-lg">
-                                <i class="fa-solid fa-cart-shopping"></i>
-                            </button>
+                            <div><p class="text-xs text-gray-500 line-through">800,000đ</p><p class="text-xl font-black text-lqvn-red drop-shadow-[0_0_5px_rgba(225,29,72,0.3)]">500,000đ</p></div>
+                            <button onclick="showPopup('error', 'Chưa Mở Bán', 'Chức năng thanh toán đang được nâng cấp, vui lòng quay lại sau!')" class="bg-lqvn-red hover:bg-red-700 text-white w-10 h-10 rounded-xl flex items-center justify-center transition shadow-lg"><i class="fa-solid fa-cart-shopping"></i></button>
                         </div>
                     </div>
                 </div>
 
-                <!-- Các Acc Item khác... -->
                 <div class="rounded-2xl overflow-hidden border border-blue-500/50 bg-gradient-to-b from-blue-900/40 to-lqvn-card transition shadow-[0_0_20px_rgba(59,130,246,0.15)] hover:shadow-[0_0_20px_rgba(59,130,246,0.3)] flex flex-col relative group cursor-pointer">
                     <div class="absolute top-0 right-0 bg-blue-500 text-white text-[10px] font-black px-3 py-1 rounded-bl-lg z-10">TỈ LỆ CAO</div>
                     <div class="flex-1 flex flex-col items-center justify-center p-6 text-center">
                         <i class="fa-solid fa-gift text-6xl text-blue-400 mb-4 group-hover:scale-110 transition duration-300"></i>
                         <h3 class="text-xl font-black text-white mb-2">Thử Vận May 20K</h3>
                         <p class="text-sm text-blue-200/70 mb-4">Nhận ngay nick Trắng TT, 90% trúng acc có skin SSS.</p>
-                        <button class="bg-blue-600 hover:bg-blue-500 text-white font-bold py-2.5 w-full rounded-xl transition shadow-lg">
-                            MỞ TÚI NGAY
-                        </button>
+                        <button onclick="showPopup('error', 'Chưa Mở Bán', 'Chức năng thanh toán đang được nâng cấp!')" class="bg-blue-600 hover:bg-blue-500 text-white font-bold py-2.5 w-full rounded-xl transition shadow-lg">MỞ TÚI NGAY</button>
+                    </div>
+                </div>
+                
+                <div class="glass rounded-2xl overflow-hidden border border-gray-800 hover:border-lqvn-red transition shadow-lg group flex flex-col">
+                    <div class="relative h-48 overflow-hidden bg-lqvn-dark">
+                        <img src="https://images.unsplash.com/photo-1605901309584-818e25960b8f?q=80&w=600&auto=format&fit=crop" class="w-full h-full object-cover card-zoom-image opacity-90 group-hover:opacity-100" alt="Thumb">
+                        <div class="absolute inset-0 bg-gradient-to-t from-lqvn-card to-transparent opacity-80"></div>
+                        <span class="absolute top-3 left-3 bg-black/60 backdrop-blur border border-gray-700 text-white text-xs font-bold px-2.5 py-1 rounded-md">#5105</span>
+                    </div>
+                    <div class="p-4 flex-1 flex flex-col">
+                        <div class="grid grid-cols-2 gap-3 mb-4">
+                            <div class="flex items-center gap-2 bg-lqvn-dark p-2 rounded-lg border border-gray-800"><i class="fa-solid fa-masks-theater text-blue-400"></i><div><p class="text-[10px] text-gray-500 uppercase font-bold">Tướng</p><p class="text-sm text-white font-bold leading-none">45</p></div></div>
+                            <div class="flex items-center gap-2 bg-lqvn-dark p-2 rounded-lg border border-gray-800"><i class="fa-solid fa-shirt text-pink-400"></i><div><p class="text-[10px] text-gray-500 uppercase font-bold">Skin</p><p class="text-sm text-white font-bold leading-none">12</p></div></div>
+                            <div class="col-span-2 flex items-center gap-2 bg-lqvn-dark p-2 rounded-lg border border-gray-800"><i class="fa-solid fa-medal text-gray-400 text-lg"></i><div><p class="text-[10px] text-gray-500 uppercase font-bold">Rank</p><p class="text-sm text-gray-300 font-bold leading-none">Bạch Kim</p></div></div>
+                        </div>
+                        <div class="mt-auto flex items-center justify-between pt-2">
+                            <div><p class="text-xs text-transparent line-through">.</p><p class="text-xl font-black text-lqvn-red drop-shadow-[0_0_5px_rgba(225,29,72,0.3)]">50,000đ</p></div>
+                            <button onclick="showPopup('error', 'Chưa Mở Bán', 'Chức năng thanh toán đang được nâng cấp, vui lòng quay lại sau!')" class="bg-lqvn-red hover:bg-red-700 text-white w-10 h-10 rounded-xl flex items-center justify-center transition shadow-lg"><i class="fa-solid fa-cart-shopping"></i></button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -296,58 +222,97 @@
         </div>
     </main>
 
-    <!-- FOOTER TINH GỌN PC -->
-    <footer class="bg-lqvn-card border-t border-gray-800 pt-8 pb-24 md:pb-6 mt-10">
-        <div class="container mx-auto px-4 text-center">
-            <span class="text-xl font-black text-white tracking-wider opacity-50">LQVN.<span class="text-lqvn-red">VN</span></span>
-            <p class="text-xs text-gray-500 mt-2">&copy; 2026. All Rights Reserved.</p>
+    <footer class="glass border-t border-gray-800 pt-12 md:pt-16 pb-24 md:pb-6 mt-10">
+        <div class="container mx-auto px-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 mb-8 text-center sm:text-left">
+            <div>
+                <a href="/" class="flex items-center justify-center sm:justify-start gap-3 mb-6 group">
+                    <img src="https://cdn.vn.garenanow.com/web/kg/home/images/logo-new.png" alt="Liên Quân Mobile" class="h-10 object-contain group-hover:scale-105 transition">
+                    <span class="text-xl font-black text-white hidden sm:block">LQVN.<span class="text-lqvn-red">VN</span></span>
+                </a>
+                <p class="text-sm text-gray-400 mb-6 leading-relaxed">Hệ thống bán tài khoản tự động uy tín, chất lượng nhất Việt Nam. Giao dịch tự động 24/7.</p>
+                <div class="flex justify-center sm:justify-start space-x-3 md:space-x-4">
+                    <a href="https://fb.com/lenhan.riel" target="_blank" class="w-10 h-10 rounded-full bg-lqvn-dark border border-gray-700 flex items-center justify-center text-blue-500 hover:bg-blue-600 hover:text-white transition"><i class="fa-brands fa-facebook-f"></i></a>
+                    <a href="https://t.me/tolabimat" target="_blank" class="w-10 h-10 rounded-full bg-lqvn-dark border border-gray-700 flex items-center justify-center text-blue-400 hover:bg-blue-500 hover:text-white transition"><i class="fa-brands fa-telegram"></i></a>
+                </div>
+            </div>
+
+            <div>
+                <h3 class="text-white font-bold mb-4 uppercase tracking-wide">Hướng Dẫn Chung</h3>
+                <ul class="text-sm text-gray-400 space-y-3">
+                    <li><a href="/napthe" class="hover:text-lqvn-red transition"><i class="fa-solid fa-angle-right text-xs mr-2"></i> Hướng Dẫn Nạp Tiền</a></li>
+                    <li><a href="/home" class="hover:text-lqvn-red transition"><i class="fa-solid fa-angle-right text-xs mr-2"></i> Hướng Dẫn Mua Tài Khoản</a></li>
+                    <li><a href="#" class="hover:text-lqvn-red transition"><i class="fa-solid fa-angle-right text-xs mr-2"></i> Chính Sách Bảo Hành</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <h3 class="text-white font-bold mb-4 uppercase tracking-wide">Danh Mục Sản Phẩm</h3>
+                <ul class="text-sm text-gray-400 space-y-3">
+                    <li><a href="/home" class="hover:text-lqvn-red transition"><i class="fa-solid fa-angle-right text-xs mr-2"></i> Acc Liên Quân VIP</a></li>
+                    <li><a href="/home" class="hover:text-lqvn-red transition"><i class="fa-solid fa-angle-right text-xs mr-2"></i> Thử Vận May Cực Phẩm</a></li>
+                    <li><a href="/home" class="hover:text-lqvn-red transition"><i class="fa-solid fa-angle-right text-xs mr-2"></i> Cày Thuê Siêu Tốc</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <h3 class="text-white font-bold mb-4 uppercase tracking-wide">Hỗ Trợ Khách Hàng</h3>
+                <div class="bg-lqvn-dark p-4 rounded-xl border border-gray-800 text-left">
+                    <p class="text-sm text-gray-400 mb-2 flex items-center"><i class="fa-solid fa-clock text-lqvn-gold w-5"></i> Thời gian: 08:00 - 22:00</p>
+                    <p class="text-sm text-gray-400 mb-4 flex items-center"><i class="fa-solid fa-envelope text-lqvn-gold w-5"></i> Email: admin@lqvn.vn</p>
+                    <a href="https://m.me/lenhan.riel" target="_blank" class="flex items-center justify-center w-full py-3 bg-blue-600 hover:bg-blue-500 text-white rounded-lg font-bold transition text-sm">
+                        <i class="fa-brands fa-facebook-messenger text-lg mr-2"></i> Chat Với Admin
+                    </a>
+                </div>
+            </div>
         </div>
+        <div class="text-center text-gray-500 text-xs sm:text-sm border-t border-gray-800 pt-6 px-4">&copy; 2026 LQVN.VN. All Rights Reserved. Operated by Lê Nhân.</div>
     </footer>
 
-    <!-- WIDGET BOTTOM NAVIGATION (Dành cho Mobile, Tự động thay đổi theo Auth) -->
     <div class="md:hidden fixed bottom-0 left-0 w-full glass border-t border-gray-800 z-50 pb-safe">
         <div class="flex justify-around items-center h-16 relative">
             <a href="/" class="flex flex-col items-center justify-center w-1/4 text-gray-400 hover:text-white transition">
-                <i class="fa-solid fa-house text-xl mb-1"></i>
-                <span class="text-[10px] font-semibold">Trang chủ</span>
+                <i class="fa-solid fa-house text-xl mb-1"></i><span class="text-[10px] font-semibold">Trang chủ</span>
             </a>
             <a href="/home" class="flex flex-col items-center justify-center w-1/4 text-lqvn-red transition">
-                <i class="fa-solid fa-store text-xl mb-1 drop-shadow-[0_0_5px_rgba(225,29,72,0.5)]"></i>
-                <span class="text-[10px] font-bold">Cửa hàng</span>
+                <i class="fa-solid fa-store text-xl mb-1 drop-shadow-[0_0_5px_rgba(225,29,72,0.5)]"></i><span class="text-[10px] font-bold">Cửa hàng</span>
             </a>
-            <a href="/naptien" class="flex flex-col items-center justify-center w-1/4 text-gray-400 hover:text-white transition">
-                <i class="fa-solid fa-wallet text-xl mb-1"></i>
-                <span class="text-[10px] font-semibold">Nạp tiền</span>
+            <a href="/napthe" class="flex flex-col items-center justify-center w-1/4 text-gray-400 hover:text-white transition">
+                <i class="fa-solid fa-wallet text-xl mb-1"></i><span class="text-[10px] font-semibold">Nạp tiền</span>
             </a>
-
-            <!-- Nút Account Mobile (Sẽ đổi nếu đã login) -->
             <div id="mobileAccountBtn" class="flex flex-col items-center justify-center w-1/4 text-gray-400 hover:text-white transition cursor-pointer">
                 <i class="fa-solid fa-user text-xl mb-1" id="mobileAccountIcon"></i>
                 <img id="mobileUserAvatar" src="" class="w-6 h-6 rounded-full mb-1 hidden border border-lqvn-red">
                 <span class="text-[10px] font-semibold" id="mobileAccountText">Tài khoản</span>
             </div>
 
-            <!-- Menu xổ lên cho Mobile khi đã login -->
             <div id="mobileUserMenu" class="absolute bottom-full right-2 mb-2 w-48 bg-lqvn-card border border-gray-800 rounded-xl shadow-2xl p-2 hidden flex-col z-50">
                 <div class="flex items-center gap-2 p-2 border-b border-gray-800 mb-1">
                     <div class="text-left">
-                        <p id="mobileUserNameDisplay" class="text-white font-bold text-sm leading-tight">...</p>
+                        <p id="mobileUserNameDisplay" class="text-white font-bold text-sm">...</p>
                         <p class="text-lqvn-gold font-black text-xs">Số dư: 0đ</p>
                     </div>
                 </div>
-                <a href="#" class="px-3 py-2 text-sm text-gray-300 hover:bg-gray-800 rounded-lg"><i class="fa-solid fa-user w-5"></i> Hồ sơ</a>
-                <a href="/naptien" class="px-3 py-2 text-sm text-gray-300 hover:bg-gray-800 rounded-lg"><i class="fa-solid fa-wallet w-5"></i> Nạp tiền</a>
+                <a href="/hoso" class="px-3 py-2 text-sm text-gray-300 hover:bg-gray-800 rounded-lg"><i class="fa-solid fa-user w-5"></i> Hồ sơ</a>
+                <a href="/lichsu-napthe" class="px-3 py-2 text-sm text-gray-300 hover:bg-gray-800 rounded-lg"><i class="fa-solid fa-clock-rotate-left w-5"></i> Lịch sử nạp</a>
+                <a href="/lichsugiaodich" class="px-3 py-2 text-sm text-gray-300 hover:bg-gray-800 rounded-lg"><i class="fa-solid fa-cart-shopping w-5"></i> Lịch sử mua</a>
                 <button id="btnMobileLogout" class="px-3 py-2 text-sm text-lqvn-red hover:bg-red-500/10 rounded-lg text-left font-bold mt-1"><i class="fa-solid fa-right-from-bracket w-5"></i> Đăng xuất</button>
             </div>
         </div>
     </div>
 
-    <!-- JS Xử lý UI và FIREBASE -->
+    <div id="customPopup" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-lqvn-card border border-gray-800 rounded-2xl shadow-[0_0_30px_rgba(225,29,72,0.3)] max-w-sm w-full p-6 text-center transform transition-all duration-300 scale-95 opacity-0" id="popupContent">
+            <div id="popupIcon" class="text-6xl mb-4"></div>
+            <h3 id="popupTitle" class="text-xl font-black text-white mb-2 uppercase"></h3>
+            <p id="popupMessage" class="text-gray-400 text-sm mb-6"></p>
+            <button id="popupBtn" class="w-full bg-lqvn-red hover:bg-red-700 text-white font-bold py-3 rounded-xl transition">ĐỒNG Ý</button>
+        </div>
+    </div>
+
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
         import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
-        // Cấu hình Firebase
         const firebaseConfig = {
             apiKey: "AIzaSyBUozdLXZIBh_JZflrwJohU_YbvpFX-UOQ",
             authDomain: "lqvn-772cf.firebaseapp.com",
@@ -358,91 +323,30 @@
             appId: "1:110517027124:web:c0ac3216be505323f86561",
             measurementId: "G-PBW4QVR4GL"
         };
-
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
 
-        // Theo dõi trạng thái Đăng Nhập
-        onAuthStateChanged(auth, (user) => {
-            const loggedOutUI = document.getElementById('logged-out-ui');
-            const loggedInUI = document.getElementById('logged-in-ui');
+        // Hiển thị Custom Popup
+        window.showPopup = function(type, title, message, callback = null) {
+            const popup = document.getElementById('customPopup');
+            const content = document.getElementById('popupContent');
+            const icon = document.getElementById('popupIcon');
             
-            // Mobile elements
-            const mobileAccountBtn = document.getElementById('mobileAccountBtn');
-            const mobileAccountIcon = document.getElementById('mobileAccountIcon');
-            const mobileUserAvatar = document.getElementById('mobileUserAvatar');
-            const mobileAccountText = document.getElementById('mobileAccountText');
+            if (type === 'success') icon.innerHTML = '<i class="fa-solid fa-circle-check text-green-500 drop-shadow-[0_0_10px_rgba(34,197,94,0.5)]"></i>';
+            else icon.innerHTML = '<i class="fa-solid fa-circle-xmark text-lqvn-red drop-shadow-[0_0_10px_rgba(225,29,72,0.5)]"></i>';
 
-            if (user) {
-                // ĐÃ ĐĂNG NHẬP
-                const displayName = user.displayName || 'Kiện Tướng';
-                const avatarUrl = `https://ui-avatars.com/api/?name=${encodeURIComponent(displayName)}&background=E11D48&color=fff&bold=true`;
-                
-                // Cập nhật PC
-                document.getElementById('userNameDisplay').textContent = displayName;
-                document.getElementById('userAvatar').src = avatarUrl;
-                
-                loggedOutUI.classList.add('hidden');
-                loggedOutUI.classList.remove('sm:flex');
-                loggedInUI.classList.remove('hidden');
-                loggedInUI.classList.add('flex');
+            document.getElementById('popupTitle').innerText = title;
+            document.getElementById('popupMessage').innerText = message;
+            popup.classList.remove('hidden');
 
-                // Cập nhật Mobile
-                mobileAccountIcon.classList.add('hidden');
-                mobileUserAvatar.src = avatarUrl;
-                mobileUserAvatar.classList.remove('hidden');
-                mobileAccountText.textContent = "Hồ sơ";
-                document.getElementById('mobileUserNameDisplay').textContent = displayName;
-
-                // Sự kiện click Mobile Menu
-                mobileAccountBtn.onclick = () => {
-                    const menu = document.getElementById('mobileUserMenu');
-                    menu.classList.toggle('hidden');
-                    menu.classList.toggle('flex');
-                };
-
-            } else {
-                // CHƯA ĐĂNG NHẬP
-                loggedOutUI.classList.remove('hidden');
-                loggedOutUI.classList.add('sm:flex');
-                loggedInUI.classList.add('hidden');
-                loggedInUI.classList.remove('flex');
-
-                mobileAccountIcon.classList.remove('hidden');
-                mobileUserAvatar.classList.add('hidden');
-                mobileAccountText.textContent = "Tài khoản";
-                
-                mobileAccountBtn.onclick = () => {
-                    window.location.href = "/dangnhap";
-                };
-            }
-        });
-
-        // Xử lý Đăng Xuất
-        const handleLogout = () => {
-            signOut(auth).then(() => {
-                window.location.reload(); // Tải lại trang sau khi đăng xuất
-            }).catch((error) => {
-                console.error("Lỗi đăng xuất:", error);
-            });
+            setTimeout(() => { content.classList.remove('scale-95', 'opacity-0'); content.classList.add('scale-100', 'opacity-100'); }, 10);
+            document.getElementById('popupBtn').onclick = () => {
+                content.classList.remove('scale-100', 'opacity-100'); content.classList.add('scale-95', 'opacity-0');
+                setTimeout(() => { popup.classList.add('hidden'); if (callback) callback(); }, 300);
+            };
         };
 
-        document.getElementById('btnLogout').addEventListener('click', handleLogout);
-        document.getElementById('btnMobileLogout').addEventListener('click', handleLogout);
-
-        // Đóng mobile menu khi click ra ngoài
-        document.addEventListener('click', (e) => {
-            const menu = document.getElementById('mobileUserMenu');
-            const btn = document.getElementById('mobileAccountBtn');
-            if (menu && !menu.classList.contains('hidden') && !menu.contains(e.target) && !btn.contains(e.target)) {
-                menu.classList.add('hidden');
-                menu.classList.remove('flex');
-            }
-        });
-    </script>
-    
-    <script>
-        // Xử lý chuyển Tab Nạp Thẻ / Top Nạp (Giao diện)
+        // Tab Switcher Nạp Nhanh
         window.switchTab = function(tabName) {
             document.getElementById('tab-napthe').className = "flex-1 py-3.5 text-sm font-bold text-gray-400 hover:text-white transition bg-transparent";
             document.getElementById('tab-topnap').className = "flex-1 py-3.5 text-sm font-bold text-gray-400 hover:text-white transition bg-transparent";
@@ -457,7 +361,66 @@
                 document.getElementById('tab-topnap').className = "flex-1 py-3.5 text-sm font-bold tab-active transition";
                 document.getElementById('content-topnap').classList.remove('hidden');
             }
-        }
+        };
+
+        // Firebase Auth State
+        onAuthStateChanged(auth, (user) => {
+            const loggedOutUI = document.getElementById('logged-out-ui');
+            const loggedInUI = document.getElementById('logged-in-ui');
+            const mobileAccountBtn = document.getElementById('mobileAccountBtn');
+            const mobileAccountIcon = document.getElementById('mobileAccountIcon');
+            const mobileUserAvatar = document.getElementById('mobileUserAvatar');
+            const mobileAccountText = document.getElementById('mobileAccountText');
+
+            if (user) {
+                const displayName = user.displayName || 'Kiện Tướng';
+                const avatarUrl = `https://ui-avatars.com/api/?name=${encodeURIComponent(displayName)}&background=E11D48&color=fff&bold=true`;
+                
+                // PC
+                document.getElementById('userNameDisplay').textContent = displayName;
+                document.getElementById('userAvatar').src = avatarUrl;
+                loggedOutUI.classList.add('hidden'); loggedOutUI.classList.remove('sm:flex');
+                loggedInUI.classList.remove('hidden'); loggedInUI.classList.add('flex');
+
+                // Mobile
+                mobileAccountIcon.classList.add('hidden');
+                mobileUserAvatar.src = avatarUrl;
+                mobileUserAvatar.classList.remove('hidden');
+                mobileAccountText.textContent = "Hồ sơ";
+                document.getElementById('mobileUserNameDisplay').textContent = displayName;
+
+                mobileAccountBtn.onclick = () => {
+                    const menu = document.getElementById('mobileUserMenu');
+                    menu.classList.toggle('hidden'); menu.classList.toggle('flex');
+                };
+            } else {
+                // PC
+                loggedOutUI.classList.remove('hidden'); loggedOutUI.classList.add('sm:flex');
+                loggedInUI.classList.add('hidden'); loggedInUI.classList.remove('flex');
+                
+                // Mobile
+                mobileAccountIcon.classList.remove('hidden');
+                mobileUserAvatar.classList.add('hidden');
+                mobileAccountText.textContent = "Tài khoản";
+                mobileAccountBtn.onclick = () => window.location.href = "/dangnhap";
+            }
+        });
+
+        // Logout
+        const handleLogout = () => {
+            signOut(auth).then(() => window.location.reload()).catch(err => console.error(err));
+        };
+        document.getElementById('btnLogout').addEventListener('click', handleLogout);
+        document.getElementById('btnMobileLogout').addEventListener('click', handleLogout);
+
+        // Click outside mobile menu to close
+        document.addEventListener('click', (e) => {
+            const menu = document.getElementById('mobileUserMenu');
+            const btn = document.getElementById('mobileAccountBtn');
+            if (menu && !menu.classList.contains('hidden') && !menu.contains(e.target) && !btn.contains(e.target)) {
+                menu.classList.add('hidden'); menu.classList.remove('flex');
+            }
+        });
     </script>
 </body>
 </html>
