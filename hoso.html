@@ -9,9 +9,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&display=swap" rel="stylesheet">
     <script>
-        tailwind.config = {
-            theme: { extend: { fontFamily: { sans: ['Inter', 'sans-serif'] }, colors: { lqvn: { dark: '#0B0E14', card: '#151A23', red: '#E11D48', gold: '#FBBF24' } } } }
-        }
+        tailwind.config = { theme: { extend: { fontFamily: { sans: ['Inter', 'sans-serif'] }, colors: { lqvn: { dark: '#0B0E14', card: '#151A23', red: '#E11D48', gold: '#FBBF24' } } } } }
     </script>
     <style>
         ::-webkit-scrollbar { width: 6px; } ::-webkit-scrollbar-track { background: #0B0E14; } ::-webkit-scrollbar-thumb { background: #374151; border-radius: 10px; } ::-webkit-scrollbar-thumb:hover { background: #E11D48; }
@@ -24,20 +22,15 @@
     <header class="glass sticky top-0 z-50">
         <div class="container mx-auto px-4 py-3 flex justify-between items-center">
             <a href="/home" class="flex items-center gap-2 group">
-                <img src="https://cdn.vn.garenanow.com/web/kg/home/images/logo-new.png" alt="Liên Quân" class="h-10 object-contain drop-shadow-[0_0_8px_rgba(225,29,72,0.6)]">
+                <img src="https://cdn.vn.garenanow.com/web/kg/home/images/logo-new.png" class="h-10 object-contain drop-shadow-[0_0_8px_rgba(225,29,72,0.6)]">
                 <span class="text-xl font-black text-white hidden sm:block">LQVN.<span class="text-lqvn-red">VN</span></span>
             </a>
-            <nav class="hidden md:flex space-x-8 font-semibold text-sm">
-                <a href="/home" class="hover:text-lqvn-red transition">TRANG CHỦ</a>
-                <a href="/home" class="hover:text-lqvn-red transition">CỬA HÀNG</a>
-                <a href="/napthe" class="hover:text-lqvn-red transition">NẠP TIỀN</a>
-            </nav>
             <div class="flex items-center gap-3">
                 <div class="text-right hidden sm:block">
-                    <p class="text-white font-bold text-sm">Kiện Tướng</p>
+                    <p id="topName" class="text-white font-bold text-sm">...</p>
                     <p class="text-lqvn-gold font-black text-xs">Số dư: 0đ</p>
                 </div>
-                <img src="https://ui-avatars.com/api/?name=User&background=E11D48&color=fff" class="w-10 h-10 rounded-full border-2 border-lqvn-red shadow-[0_0_10px_rgba(225,29,72,0.5)]">
+                <img id="topAvatar" src="https://ui-avatars.com/api/?name=U&background=E11D48&color=fff" class="w-10 h-10 rounded-full border-2 border-lqvn-red shadow-[0_0_10px_rgba(225,29,72,0.5)]">
             </div>
         </div>
     </header>
@@ -48,9 +41,8 @@
             <div class="w-full md:w-1/4">
                 <div class="glass rounded-2xl overflow-hidden border border-gray-800 p-2">
                     <div class="p-4 text-center border-b border-gray-800 mb-2">
-                        <img src="https://ui-avatars.com/api/?name=User&background=E11D48&color=fff" class="w-16 h-16 rounded-full mx-auto border-2 border-lqvn-red mb-2">
-                        <h3 class="text-lg font-bold text-white">Kiện Tướng</h3>
-                        <p class="text-sm text-gray-400">ID: 889922</p>
+                        <img id="sideAvatar" src="https://ui-avatars.com/api/?name=U&background=E11D48&color=fff" class="w-16 h-16 rounded-full mx-auto border-2 border-lqvn-red mb-2">
+                        <h3 id="sideName" class="text-lg font-bold text-white">...</h3>
                     </div>
                     <div class="flex flex-col space-y-1">
                         <a href="/hoso" class="menu-active px-4 py-3 rounded-lg font-semibold flex items-center gap-3 transition">
@@ -65,7 +57,7 @@
                         <a href="/lichsugiaodich" class="text-gray-400 hover:text-white hover:bg-gray-800/50 px-4 py-3 rounded-lg font-semibold flex items-center gap-3 transition">
                             <i class="fa-solid fa-cart-shopping text-gray-500 w-5"></i> Lịch Sử Mua Nick
                         </a>
-                        <button class="text-red-400 hover:text-red-300 hover:bg-red-500/10 px-4 py-3 rounded-lg font-semibold flex items-center gap-3 transition text-left mt-2">
+                        <button id="btnLogout" class="text-red-400 hover:text-red-300 hover:bg-red-500/10 px-4 py-3 rounded-lg font-semibold flex items-center gap-3 transition text-left mt-2">
                             <i class="fa-solid fa-right-from-bracket w-5"></i> Đăng Xuất
                         </button>
                     </div>
@@ -75,29 +67,115 @@
             <div class="w-full md:w-3/4">
                 <div class="glass rounded-2xl border border-gray-800 p-6 shadow-lg">
                     <h2 class="text-2xl font-black text-white uppercase border-l-4 border-lqvn-red pl-3 mb-6">Thông Tin <span class="text-lqvn-red">Tài Khoản</span></h2>
-                    
-                    <form class="space-y-5 max-w-lg">
+                    <form class="space-y-5 max-w-lg" id="profileForm">
                         <div>
                             <label class="block text-gray-400 text-sm font-semibold mb-2">Tên hiển thị</label>
-                            <input type="text" value="Kiện Tướng" class="w-full bg-lqvn-dark border border-gray-700 text-white rounded-xl px-4 py-3 outline-none focus:border-lqvn-red transition">
+                            <input type="text" id="profileName" class="w-full bg-lqvn-dark border border-gray-700 text-white rounded-xl px-4 py-3 outline-none focus:border-lqvn-red transition">
                         </div>
                         <div>
                             <label class="block text-gray-400 text-sm font-semibold mb-2">Email (Không thể thay đổi)</label>
-                            <input type="email" value="kientuong@gmail.com" disabled class="w-full bg-gray-900 border border-gray-800 text-gray-500 rounded-xl px-4 py-3 cursor-not-allowed">
+                            <input type="email" id="profileEmail" disabled class="w-full bg-gray-900 border border-gray-800 text-gray-500 rounded-xl px-4 py-3 cursor-not-allowed">
                         </div>
                         <div>
                             <label class="block text-gray-400 text-sm font-semibold mb-2">Mật khẩu mới (Bỏ trống nếu không đổi)</label>
-                            <input type="password" placeholder="••••••••" class="w-full bg-lqvn-dark border border-gray-700 text-white rounded-xl px-4 py-3 outline-none focus:border-lqvn-red transition">
+                            <input type="password" id="profilePass" placeholder="••••••••" class="w-full bg-lqvn-dark border border-gray-700 text-white rounded-xl px-4 py-3 outline-none focus:border-lqvn-red transition">
                         </div>
-                        <button type="button" class="bg-lqvn-red hover:bg-red-700 text-white font-bold py-3 px-8 rounded-xl transition shadow-[0_0_15px_rgba(225,29,72,0.3)]">
+                        <button type="button" id="btnUpdateProfile" class="bg-lqvn-red hover:bg-red-700 text-white font-bold py-3 px-8 rounded-xl transition shadow-[0_0_15px_rgba(225,29,72,0.3)]">
                             LƯU THAY ĐỔI
                         </button>
                     </form>
                 </div>
             </div>
-            
         </div>
     </main>
 
+    <!-- CUSTOM POPUP -->
+    <div id="customPopup" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-lqvn-card border border-gray-800 rounded-2xl shadow-[0_0_30px_rgba(225,29,72,0.3)] max-w-sm w-full p-6 text-center transform transition-all duration-300 scale-95 opacity-0" id="popupContent">
+            <div id="popupIcon" class="text-6xl mb-4"></div>
+            <h3 id="popupTitle" class="text-xl font-black text-white mb-2 uppercase"></h3>
+            <p id="popupMessage" class="text-gray-400 text-sm mb-6"></p>
+            <button id="popupBtn" class="w-full bg-lqvn-red hover:bg-red-700 text-white font-bold py-3 rounded-xl transition">ĐỒNG Ý</button>
+        </div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+        import { getAuth, onAuthStateChanged, updateProfile, updatePassword, signOut } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyBUozdLXZIBh_JZflrwJohU_YbvpFX-UOQ",
+            authDomain: "lqvn-772cf.firebaseapp.com",
+            databaseURL: "https://lqvn-772cf-default-rtdb.asia-southeast1.firebasedatabase.app",
+            projectId: "lqvn-772cf",
+            storageBucket: "lqvn-772cf.firebasestorage.app",
+            messagingSenderId: "110517027124",
+            appId: "1:110517027124:web:c0ac3216be505323f86561",
+            measurementId: "G-PBW4QVR4GL"
+        };
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+
+        function showPopup(type, title, message, callback = null) {
+            const popup = document.getElementById('customPopup');
+            const content = document.getElementById('popupContent');
+            const icon = document.getElementById('popupIcon');
+            if (type === 'success') {
+                icon.innerHTML = '<i class="fa-solid fa-circle-check text-green-500"></i>';
+            } else {
+                icon.innerHTML = '<i class="fa-solid fa-circle-xmark text-lqvn-red"></i>';
+            }
+            document.getElementById('popupTitle').innerText = title;
+            document.getElementById('popupMessage').innerText = message;
+            popup.classList.remove('hidden');
+            setTimeout(() => { content.classList.remove('scale-95', 'opacity-0'); content.classList.add('scale-100', 'opacity-100'); }, 10);
+            document.getElementById('popupBtn').onclick = () => {
+                content.classList.remove('scale-100', 'opacity-100'); content.classList.add('scale-95', 'opacity-0');
+                setTimeout(() => { popup.classList.add('hidden'); if (callback) callback(); }, 300);
+            };
+        }
+
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                const name = user.displayName || "Kiện Tướng";
+                document.getElementById('profileName').value = name;
+                document.getElementById('profileEmail').value = user.email;
+                document.getElementById('topName').innerText = name;
+                document.getElementById('sideName').innerText = name;
+                const avatar = `https://ui-avatars.com/api/?name=${encodeURIComponent(name)}&background=E11D48&color=fff`;
+                document.getElementById('topAvatar').src = avatar;
+                document.getElementById('sideAvatar').src = avatar;
+            } else {
+                window.location.href = "/dangnhap";
+            }
+        });
+
+        document.getElementById('btnUpdateProfile').addEventListener('click', async () => {
+            const user = auth.currentUser;
+            const newName = document.getElementById('profileName').value;
+            const newPass = document.getElementById('profilePass').value;
+            const btn = document.getElementById('btnUpdateProfile');
+
+            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> ĐANG LƯU...';
+            btn.disabled = true;
+
+            try {
+                if (newName !== user.displayName) await updateProfile(user, { displayName: newName });
+                if (newPass.length > 0) {
+                    if (newPass.length < 6) throw new Error("Mật khẩu phải từ 6 ký tự trở lên!");
+                    await updatePassword(user, newPass);
+                }
+                showPopup('success', 'Thành Công', 'Đã cập nhật hồ sơ cá nhân!', () => window.location.reload());
+            } catch (error) {
+                showPopup('error', 'Cập nhật thất bại', error.message);
+                btn.innerHTML = 'LƯU THAY ĐỔI';
+                btn.disabled = false;
+            }
+        });
+
+        document.getElementById('btnLogout').addEventListener('click', () => {
+            signOut(auth).then(() => window.location.href = "/dangnhap");
+        });
+    </script>
 </body>
 </html>
