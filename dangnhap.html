@@ -2,74 +2,132 @@
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Đăng Nhập - ShopGame</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Đăng Nhập - LQVN.VN</title>
+    
+    <link rel="icon" type="image/png" href="https://cdn.vn.garenanow.com/web/kg/home/images/logo-new.png">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        lqvn: { dark: '#0B0E14', card: '#151A23', red: '#E11D48' }
+                    }
+                }
+            }
+        }
+    </script>
 </head>
-<body class="bg-[#121212] flex items-center justify-center min-h-screen font-sans antialiased px-4">
+<body class="bg-lqvn-dark flex items-center justify-center min-h-screen font-sans antialiased px-4 relative">
 
-    <div class="bg-[#1a1a1a] p-8 rounded-xl shadow-2xl border border-gray-800 w-full max-w-md">
+    <a href="/home" class="absolute top-4 left-4 sm:top-6 sm:left-6 text-gray-400 hover:text-white transition bg-lqvn-card p-3 rounded-full border border-gray-800">
+        <i class="fa-solid fa-arrow-left"></i>
+    </a>
+
+    <div class="bg-lqvn-card p-8 rounded-2xl shadow-[0_0_30px_rgba(225,29,72,0.15)] border border-gray-800 w-full max-w-md">
         <div class="text-center mb-8">
-            <a href="index.html" class="inline-flex items-center gap-2 transition hover:scale-105">
-                <i class="fa-solid fa-gamepad text-4xl text-red-500"></i>
+            <a href="/" class="inline-flex items-center gap-2 transition hover:scale-105">
+                <img src="https://cdn.vn.garenanow.com/web/kg/home/images/logo-new.png" alt="LQVN" class="h-12 drop-shadow-[0_0_8px_rgba(225,29,72,0.6)]">
             </a>
-            <h1 class="text-2xl font-bold text-white mt-4">Chào mừng trở lại!</h1>
-            <p class="text-gray-400 text-sm mt-1">Đăng nhập để tiếp tục mua sắm</p>
+            <h1 class="text-2xl font-black text-white mt-4 uppercase tracking-wide">Đăng Nhập</h1>
+            <p class="text-gray-400 text-sm mt-1">Chào mừng Kiện Tướng trở lại</p>
         </div>
 
         <form id="formDangNhap">
             <div class="mb-5">
                 <label class="block text-gray-400 text-sm font-semibold mb-2" for="emailLogin">Địa chỉ Email</label>
                 <div class="relative">
-                    <i class="fa-solid fa-envelope absolute left-3 top-3.5 text-gray-500"></i>
-                    <input type="email" id="emailLogin" class="w-full bg-[#242424] text-white border border-gray-700 rounded-lg pl-10 pr-4 py-3 focus:outline-none focus:border-red-500 transition" placeholder="nhan@example.com" required>
+                    <i class="fa-solid fa-envelope absolute left-3.5 top-3.5 text-gray-500"></i>
+                    <input type="email" id="emailLogin" class="w-full bg-lqvn-dark text-white border border-gray-700 rounded-xl pl-10 pr-4 py-3 focus:outline-none focus:border-lqvn-red transition" placeholder="Nhập email của bạn" required>
                 </div>
             </div>
 
             <div class="mb-6">
                 <div class="flex justify-between mb-2">
                     <label class="block text-gray-400 text-sm font-semibold" for="passLogin">Mật khẩu</label>
-                    <a href="khoiphuctaikhoan.html" class="text-sm text-red-500 hover:text-red-400 font-semibold transition">Quên mật khẩu?</a>
+                    <a href="/khoiphuctaikhoan" class="text-sm text-lqvn-red hover:text-red-400 font-semibold transition">Quên mật khẩu?</a>
                 </div>
                 <div class="relative">
-                    <i class="fa-solid fa-lock absolute left-3 top-3.5 text-gray-500"></i>
-                    <input type="password" id="passLogin" class="w-full bg-[#242424] text-white border border-gray-700 rounded-lg pl-10 pr-4 py-3 focus:outline-none focus:border-red-500 transition" placeholder="••••••••" required>
+                    <i class="fa-solid fa-lock absolute left-3.5 top-3.5 text-gray-500"></i>
+                    <input type="password" id="passLogin" class="w-full bg-lqvn-dark text-white border border-gray-700 rounded-xl pl-10 pr-4 py-3 focus:outline-none focus:border-lqvn-red transition" placeholder="••••••••" required>
                 </div>
+                <p id="errorMsgLogin" class="text-lqvn-red text-xs mt-2 hidden font-medium"></p>
             </div>
 
-            <button type="submit" class="w-full bg-gradient-to-r from-red-600 to-red-500 hover:from-red-500 hover:to-red-400 text-white font-bold py-3 rounded-lg transition transform hover:scale-[1.02] shadow-lg shadow-red-500/30">
-                ĐĂNG NHẬP
+            <button type="submit" id="btnLogin" class="w-full bg-gradient-to-r from-lqvn-red to-red-600 hover:to-red-700 text-white font-bold py-3.5 rounded-xl transition shadow-[0_0_15px_rgba(225,29,72,0.3)] flex items-center justify-center gap-2">
+                <span>ĐĂNG NHẬP VÀO SHOP</span>
             </button>
         </form>
 
         <div class="mt-6 flex items-center justify-between">
-            <hr class="w-full border-gray-700">
-            <span class="p-2 text-gray-500 text-sm font-semibold">HOẶC</span>
-            <hr class="w-full border-gray-700">
+            <hr class="w-full border-gray-800">
+            <span class="p-3 text-gray-600 text-xs font-bold uppercase">Hoặc</span>
+            <hr class="w-full border-gray-800">
         </div>
 
         <div class="mt-4 grid grid-cols-2 gap-4">
-            <button id="btnGoogleLogin" class="bg-[#242424] hover:bg-gray-700 text-white py-2.5 rounded-lg transition flex items-center justify-center gap-2 border border-gray-700 font-semibold">
+            <button class="bg-lqvn-dark hover:bg-gray-800 text-white py-3 rounded-xl transition flex items-center justify-center gap-2 border border-gray-800 font-semibold text-sm">
                 <i class="fa-brands fa-google text-red-400"></i> Google
             </button>
-            <button id="btnFacebookLogin" class="bg-[#242424] hover:bg-gray-700 text-white py-2.5 rounded-lg transition flex items-center justify-center gap-2 border border-gray-700 font-semibold">
+            <button class="bg-lqvn-dark hover:bg-gray-800 text-white py-3 rounded-xl transition flex items-center justify-center gap-2 border border-gray-800 font-semibold text-sm">
                 <i class="fa-brands fa-facebook text-blue-500"></i> Facebook
             </button>
         </div>
 
         <p class="text-center text-gray-400 mt-8 text-sm">
-            Chưa có tài khoản? <a href="dangky.html" class="text-red-500 font-bold hover:underline">Đăng ký ngay</a>
+            Chưa có tài khoản? <a href="/dangky" class="text-lqvn-red font-bold hover:underline">Đăng ký ngay</a>
         </p>
     </div>
 
     <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+        import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyBUozdLXZIBh_JZflrwJohU_YbvpFX-UOQ",
+            authDomain: "lqvn-772cf.firebaseapp.com",
+            databaseURL: "https://lqvn-772cf-default-rtdb.asia-southeast1.firebasedatabase.app",
+            projectId: "lqvn-772cf",
+            storageBucket: "lqvn-772cf.firebasestorage.app",
+            messagingSenderId: "110517027124",
+            appId: "1:110517027124:web:c0ac3216be505323f86561",
+            measurementId: "G-PBW4QVR4GL"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+
         document.getElementById('formDangNhap').addEventListener('submit', (e) => {
             e.preventDefault();
+            const btnLogin = document.getElementById('btnLogin');
+            const errorMsg = document.getElementById('errorMsgLogin');
             const email = document.getElementById('emailLogin').value;
             const pass = document.getElementById('passLogin').value;
-            console.log("Xử lý đăng nhập Firebase cho:", email);
-            // Code Firebase signInWithEmailAndPassword ở đây
+
+            errorMsg.classList.add('hidden');
+            btnLogin.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> ĐANG XỬ LÝ...';
+            btnLogin.disabled = true;
+
+            signInWithEmailAndPassword(auth, email, pass)
+                .then((userCredential) => {
+                    window.location.href = "/home";
+                })
+                .catch((error) => {
+                    btnLogin.innerHTML = 'ĐĂNG NHẬP VÀO SHOP';
+                    btnLogin.disabled = false;
+                    
+                    if (error.code === 'auth/invalid-credential' || error.code === 'auth/user-not-found' || error.code === 'auth/wrong-password') {
+                        errorMsg.innerText = "Tài khoản hoặc mật khẩu không chính xác!";
+                    } else if (error.code === 'auth/too-many-requests') {
+                        errorMsg.innerText = "Quá nhiều lần đăng nhập sai. Vui lòng thử lại sau.";
+                    } else {
+                        errorMsg.innerText = "Lỗi: " + error.message;
+                    }
+                    errorMsg.classList.remove('hidden');
+                });
         });
     </script>
 </body>
