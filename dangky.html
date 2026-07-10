@@ -80,6 +80,18 @@
         </p>
     </div>
 
+    <!-- CUSTOM POPUP (Thay thế Alert) -->
+    <div id="customPopup" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-lqvn-card border border-gray-800 rounded-2xl shadow-[0_0_30px_rgba(225,29,72,0.3)] max-w-sm w-full p-6 text-center transform transition-all duration-300 scale-95 opacity-0" id="popupContent">
+            <div id="popupIcon" class="text-6xl mb-4"></div>
+            <h3 id="popupTitle" class="text-xl font-black text-white mb-2 uppercase"></h3>
+            <p id="popupMessage" class="text-gray-400 text-sm mb-6"></p>
+            <button id="popupBtn" class="w-full bg-lqvn-red hover:bg-red-700 text-white font-bold py-3 rounded-xl transition">
+                ĐỒNG Ý
+            </button>
+        </div>
+    </div>
+
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
         import { getAuth, createUserWithEmailAndPassword, updateProfile } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
@@ -97,6 +109,37 @@
 
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
+
+        // HÀM HIỂN THỊ POPUP
+        function showPopup(type, title, message, callback = null) {
+            const popup = document.getElementById('customPopup');
+            const content = document.getElementById('popupContent');
+            const icon = document.getElementById('popupIcon');
+            
+            if (type === 'success') {
+                icon.innerHTML = '<i class="fa-solid fa-circle-check text-green-500 drop-shadow-[0_0_10px_rgba(34,197,94,0.5)]"></i>';
+            } else {
+                icon.innerHTML = '<i class="fa-solid fa-circle-xmark text-lqvn-red drop-shadow-[0_0_10px_rgba(225,29,72,0.5)]"></i>';
+            }
+
+            document.getElementById('popupTitle').innerText = title;
+            document.getElementById('popupMessage').innerText = message;
+            popup.classList.remove('hidden');
+
+            setTimeout(() => {
+                content.classList.remove('scale-95', 'opacity-0');
+                content.classList.add('scale-100', 'opacity-100');
+            }, 10);
+
+            document.getElementById('popupBtn').onclick = () => {
+                content.classList.remove('scale-100', 'opacity-100');
+                content.classList.add('scale-95', 'opacity-0');
+                setTimeout(() => {
+                    popup.classList.add('hidden');
+                    if (callback) callback();
+                }, 300);
+            };
+        }
 
         document.getElementById('formDangKy').addEventListener('submit', (e) => {
             e.preventDefault();
@@ -123,21 +166,22 @@
                     return updateProfile(userCredential.user, { displayName: name });
                 })
                 .then(() => {
-                    alert("Tạo tài khoản thành công!");
-                    window.location.href = "/dangnhap"; 
+                    // Gọi Popup thay vì Alert
+                    showPopup('success', 'Thành Công!', 'Tạo tài khoản thành công! Đang chuyển hướng...', () => {
+                        window.location.href = "/dangnhap"; 
+                    });
                 })
                 .catch((error) => {
                     btnSubmit.innerHTML = 'ĐĂNG KÝ TÀI KHOẢN';
                     btnSubmit.disabled = false;
                     
                     if (error.code === 'auth/email-already-in-use') {
-                        errorMsg.innerText = "Email này đã được sử dụng!";
+                        showPopup('error', 'Lỗi Đăng Ký', 'Email này đã được sử dụng!');
                     } else if (error.code === 'auth/weak-password') {
-                        errorMsg.innerText = "Mật khẩu quá yếu.";
+                        showPopup('error', 'Lỗi Đăng Ký', 'Mật khẩu quá yếu. Vui lòng thử mật khẩu khác.');
                     } else {
-                        errorMsg.innerText = "Lỗi: " + error.message;
+                        showPopup('error', 'Đã xảy ra lỗi', error.message);
                     }
-                    errorMsg.classList.remove('hidden');
                 });
         });
     </script>
