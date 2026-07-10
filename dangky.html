@@ -2,83 +2,143 @@
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Đăng Ký - ShopGame</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Đăng Ký - LQVN.VN</title>
+    
+    <link rel="icon" type="image/png" href="https://cdn.vn.garenanow.com/web/kg/home/images/logo-new.png">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        lqvn: { dark: '#0B0E14', card: '#151A23', red: '#E11D48' }
+                    }
+                }
+            }
+        }
+    </script>
 </head>
-<body class="bg-[#121212] flex items-center justify-center min-h-screen font-sans antialiased px-4 py-8">
+<body class="bg-lqvn-dark flex items-center justify-center min-h-screen font-sans antialiased px-4 py-8 relative">
 
-    <div class="bg-[#1a1a1a] p-8 rounded-xl shadow-2xl border border-gray-800 w-full max-w-md">
+    <a href="/home" class="absolute top-4 left-4 sm:top-6 sm:left-6 text-gray-400 hover:text-white transition bg-lqvn-card p-3 rounded-full border border-gray-800">
+        <i class="fa-solid fa-arrow-left"></i>
+    </a>
+
+    <div class="bg-lqvn-card p-8 rounded-2xl shadow-[0_0_30px_rgba(225,29,72,0.15)] border border-gray-800 w-full max-w-md">
         <div class="text-center mb-8">
-            <a href="index.html" class="inline-flex items-center gap-2 transition hover:scale-105">
-                <i class="fa-solid fa-gamepad text-4xl text-red-500"></i>
+            <a href="/" class="inline-flex items-center gap-2 transition hover:scale-105">
+                <img src="https://cdn.vn.garenanow.com/web/kg/home/images/logo-new.png" alt="LQVN" class="h-12 drop-shadow-[0_0_8px_rgba(225,29,72,0.6)]">
             </a>
-            <h1 class="text-2xl font-bold text-white mt-4">Tạo Tài Khoản Mới</h1>
-            <p class="text-gray-400 text-sm mt-1">Gia nhập cộng đồng game thủ ngay hôm nay</p>
+            <h1 class="text-2xl font-black text-white mt-4 uppercase tracking-wide">Tạo Tài Khoản Mới</h1>
+            <p class="text-gray-400 text-sm mt-1">Gia nhập cộng đồng LQVN.VN ngay hôm nay</p>
         </div>
 
         <form id="formDangKy">
             <div class="mb-4">
-                <label class="block text-gray-400 text-sm font-semibold mb-2" for="nameRegister">Họ và Tên</label>
+                <label class="block text-gray-400 text-sm font-semibold mb-2" for="nameRegister">Tên hiển thị</label>
                 <div class="relative">
-                    <i class="fa-solid fa-user absolute left-3 top-3.5 text-gray-500"></i>
-                    <input type="text" id="nameRegister" class="w-full bg-[#242424] text-white border border-gray-700 rounded-lg pl-10 pr-4 py-3 focus:outline-none focus:border-red-500 transition" placeholder="Tên hiển thị của bạn" required>
+                    <i class="fa-solid fa-user absolute left-3.5 top-3.5 text-gray-500"></i>
+                    <input type="text" id="nameRegister" class="w-full bg-lqvn-dark text-white border border-gray-700 rounded-xl pl-10 pr-4 py-3 focus:outline-none focus:border-lqvn-red transition" placeholder="VD: Kiện Tướng" required>
                 </div>
             </div>
 
             <div class="mb-4">
                 <label class="block text-gray-400 text-sm font-semibold mb-2" for="emailRegister">Địa chỉ Email</label>
                 <div class="relative">
-                    <i class="fa-solid fa-envelope absolute left-3 top-3.5 text-gray-500"></i>
-                    <input type="email" id="emailRegister" class="w-full bg-[#242424] text-white border border-gray-700 rounded-lg pl-10 pr-4 py-3 focus:outline-none focus:border-red-500 transition" placeholder="Địa chỉ email hợp lệ" required>
+                    <i class="fa-solid fa-envelope absolute left-3.5 top-3.5 text-gray-500"></i>
+                    <input type="email" id="emailRegister" class="w-full bg-lqvn-dark text-white border border-gray-700 rounded-xl pl-10 pr-4 py-3 focus:outline-none focus:border-lqvn-red transition" placeholder="email@example.com" required>
                 </div>
             </div>
 
             <div class="mb-4">
                 <label class="block text-gray-400 text-sm font-semibold mb-2" for="passRegister">Mật khẩu</label>
                 <div class="relative">
-                    <i class="fa-solid fa-lock absolute left-3 top-3.5 text-gray-500"></i>
-                    <input type="password" id="passRegister" class="w-full bg-[#242424] text-white border border-gray-700 rounded-lg pl-10 pr-4 py-3 focus:outline-none focus:border-red-500 transition" placeholder="Mật khẩu (ít nhất 6 ký tự)" required minlength="6">
+                    <i class="fa-solid fa-lock absolute left-3.5 top-3.5 text-gray-500"></i>
+                    <input type="password" id="passRegister" class="w-full bg-lqvn-dark text-white border border-gray-700 rounded-xl pl-10 pr-4 py-3 focus:outline-none focus:border-lqvn-red transition" placeholder="Ít nhất 6 ký tự" required minlength="6">
                 </div>
             </div>
 
             <div class="mb-6">
                 <label class="block text-gray-400 text-sm font-semibold mb-2" for="confirmPassRegister">Xác nhận mật khẩu</label>
                 <div class="relative">
-                    <i class="fa-solid fa-shield-check absolute left-3 top-3.5 text-gray-500"></i>
-                    <input type="password" id="confirmPassRegister" class="w-full bg-[#242424] text-white border border-gray-700 rounded-lg pl-10 pr-4 py-3 focus:outline-none focus:border-red-500 transition" placeholder="Nhập lại mật khẩu" required>
+                    <i class="fa-solid fa-shield-check absolute left-3.5 top-3.5 text-gray-500"></i>
+                    <input type="password" id="confirmPassRegister" class="w-full bg-lqvn-dark text-white border border-gray-700 rounded-xl pl-10 pr-4 py-3 focus:outline-none focus:border-lqvn-red transition" placeholder="Nhập lại mật khẩu" required>
                 </div>
-                <p id="errorMsg" class="text-red-500 text-xs mt-2 hidden">Mật khẩu không khớp. Vui lòng kiểm tra lại!</p>
+                <p id="errorMsg" class="text-lqvn-red text-xs mt-2 hidden font-medium"></p>
             </div>
 
-            <button type="submit" class="w-full bg-gradient-to-r from-red-600 to-red-500 hover:from-red-500 hover:to-red-400 text-white font-bold py-3 rounded-lg transition transform hover:scale-[1.02] shadow-lg shadow-red-500/30">
-                ĐĂNG KÝ TÀI KHOẢN
+            <button type="submit" id="btnSubmit" class="w-full bg-gradient-to-r from-lqvn-red to-red-600 hover:to-red-700 text-white font-bold py-3.5 rounded-xl transition shadow-[0_0_15px_rgba(225,29,72,0.3)] flex items-center justify-center gap-2">
+                <span>ĐĂNG KÝ TÀI KHOẢN</span>
             </button>
         </form>
 
         <p class="text-center text-gray-400 mt-8 text-sm">
-            Đã có tài khoản? <a href="dangnhap.html" class="text-red-500 font-bold hover:underline">Đăng nhập</a>
+            Đã có tài khoản? <a href="/dangnhap" class="text-lqvn-red font-bold hover:underline">Đăng nhập</a>
         </p>
     </div>
 
     <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+        import { getAuth, createUserWithEmailAndPassword, updateProfile } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyBUozdLXZIBh_JZflrwJohU_YbvpFX-UOQ",
+            authDomain: "lqvn-772cf.firebaseapp.com",
+            databaseURL: "https://lqvn-772cf-default-rtdb.asia-southeast1.firebasedatabase.app",
+            projectId: "lqvn-772cf",
+            storageBucket: "lqvn-772cf.firebasestorage.app",
+            messagingSenderId: "110517027124",
+            appId: "1:110517027124:web:c0ac3216be505323f86561",
+            measurementId: "G-PBW4QVR4GL"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+
         document.getElementById('formDangKy').addEventListener('submit', (e) => {
             e.preventDefault();
+            const btnSubmit = document.getElementById('btnSubmit');
+            const errorMsg = document.getElementById('errorMsg');
+            
+            const name = document.getElementById('nameRegister').value;
+            const email = document.getElementById('emailRegister').value;
             const pass = document.getElementById('passRegister').value;
             const confirmPass = document.getElementById('confirmPassRegister').value;
-            const errorMsg = document.getElementById('errorMsg');
 
             if (pass !== confirmPass) {
+                errorMsg.innerText = "Mật khẩu không khớp. Vui lòng kiểm tra lại!";
                 errorMsg.classList.remove('hidden');
                 return;
             }
-            errorMsg.classList.add('hidden');
             
-            const email = document.getElementById('emailRegister').value;
-            const name = document.getElementById('nameRegister').value;
-            console.log("Xử lý đăng ký Firebase cho:", email, name);
-            // Code Firebase createUserWithEmailAndPassword ở đây
+            errorMsg.classList.add('hidden');
+            btnSubmit.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> ĐANG XỬ LÝ...';
+            btnSubmit.disabled = true;
+
+            createUserWithEmailAndPassword(auth, email, pass)
+                .then((userCredential) => {
+                    return updateProfile(userCredential.user, { displayName: name });
+                })
+                .then(() => {
+                    alert("Tạo tài khoản thành công!");
+                    window.location.href = "/dangnhap"; 
+                })
+                .catch((error) => {
+                    btnSubmit.innerHTML = 'ĐĂNG KÝ TÀI KHOẢN';
+                    btnSubmit.disabled = false;
+                    
+                    if (error.code === 'auth/email-already-in-use') {
+                        errorMsg.innerText = "Email này đã được sử dụng!";
+                    } else if (error.code === 'auth/weak-password') {
+                        errorMsg.innerText = "Mật khẩu quá yếu.";
+                    } else {
+                        errorMsg.innerText = "Lỗi: " + error.message;
+                    }
+                    errorMsg.classList.remove('hidden');
+                });
         });
     </script>
 </body>
