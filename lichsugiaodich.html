@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Lịch Sử Mua Nick - LQVN.VN</title>
+    <link rel="icon" type="image/png" href="https://cdn.vn.garenanow.com/web/kg/home/images/logo-new.png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = { theme: { extend: { fontFamily: { sans: ['Inter', 'sans-serif'] }, colors: { lqvn: { dark: '#0B0E14', card: '#151A23', red: '#E11D48', gold: '#FBBF24' } } } } }
+    </script>
+    <style>
+        ::-webkit-scrollbar { width: 6px; } ::-webkit-scrollbar-track { background: #0B0E14; } ::-webkit-scrollbar-thumb { background: #374151; border-radius: 10px; } ::-webkit-scrollbar-thumb:hover { background: #E11D48; }
+        .glass { background: rgba(21, 26, 35, 0.7); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.05); }
+        .menu-active { background: linear-gradient(to right, rgba(225,29,72,0.15), transparent); border-left: 3px solid #E11D48; color: #fff; }
+    </style>
+</head>
+<body class="bg-lqvn-dark text-gray-200 antialiased pb-20 md:pb-0">
+
+    <header class="glass sticky top-0 z-50">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <a href="/home" class="flex items-center gap-2 group">
+                <img src="https://cdn.vn.garenanow.com/web/kg/home/images/logo-new.png" class="h-10 object-contain drop-shadow-[0_0_8px_rgba(225,29,72,0.6)]">
+                <span class="text-xl font-black text-white hidden sm:block">LQVN.<span class="text-lqvn-red">VN</span></span>
+            </a>
+            <div class="flex items-center gap-3">
+                <div class="text-right hidden sm:block">
+                    <p id="topName" class="text-white font-bold text-sm">...</p>
+                    <p class="text-lqvn-gold font-black text-xs">Số dư: 0đ</p>
+                </div>
+                <img id="topAvatar" src="https://ui-avatars.com/api/?name=U&background=E11D48&color=fff" class="w-10 h-10 rounded-full border-2 border-lqvn-red">
+            </div>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-4 py-8">
+        <div class="flex flex-col md:flex-row gap-6">
+            <div class="w-full md:w-1/4">
+                <div class="glass rounded-2xl overflow-hidden border border-gray-800 p-2">
+                    <div class="flex flex-col space-y-1 pt-2">
+                        <a href="/hoso" class="text-gray-400 hover:text-white hover:bg-gray-800/50 px-4 py-3 rounded-lg font-semibold flex items-center gap-3 transition">
+                            <i class="fa-solid fa-user text-gray-500 w-5"></i> Hồ Sơ Cá Nhân
+                        </a>
+                        <a href="/napthe" class="text-gray-400 hover:text-white hover:bg-gray-800/50 px-4 py-3 rounded-lg font-semibold flex items-center gap-3 transition">
+                            <i class="fa-solid fa-wallet text-gray-500 w-5"></i> Nạp Tiền
+                        </a>
+                        <a href="/lichsu-napthe" class="text-gray-400 hover:text-white hover:bg-gray-800/50 px-4 py-3 rounded-lg font-semibold flex items-center gap-3 transition">
+                            <i class="fa-solid fa-clock-rotate-left text-gray-500 w-5"></i> Lịch Sử Nạp Thẻ
+                        </a>
+                        <a href="/lichsugiaodich" class="menu-active px-4 py-3 rounded-lg font-semibold flex items-center gap-3 transition">
+                            <i class="fa-solid fa-cart-shopping text-lqvn-red w-5"></i> Lịch Sử Mua Nick
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="w-full md:w-3/4">
+                <div class="glass rounded-2xl border border-gray-800 p-6 shadow-lg">
+                    <h2 class="text-2xl font-black text-white uppercase border-l-4 border-lqvn-red pl-3 mb-6">Lịch Sử <span class="text-lqvn-red">Mua Acc</span></h2>
+                    
+                    <div class="overflow-x-auto rounded-xl border border-gray-800">
+                        <table class="w-full text-left text-sm text-gray-400">
+                            <thead class="text-xs uppercase bg-[#151A23] text-gray-300 border-b border-gray-800">
+                                <tr>
+                                    <th class="px-6 py-4">Mã Sản Phẩm</th>
+                                    <th class="px-6 py-4">Giá tiền</th>
+                                    <th class="px-6 py-4">Thời gian</th>
+                                    <th class="px-6 py-4 text-right">Thao tác</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tableLichSuMua" class="bg-lqvn-dark/50">
+                                <tr><td colspan="4" class="text-center py-6"><i class="fa-solid fa-spinner fa-spin text-lqvn-red text-xl"></i> Đang tải dữ liệu...</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- CUSTOM POPUP Xem Mật Khẩu -->
+    <div id="customPopup" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-lqvn-card border border-gray-800 rounded-2xl shadow-[0_0_30px_rgba(225,29,72,0.3)] max-w-sm w-full p-6 text-center transform transition-all duration-300 scale-95 opacity-0" id="popupContent">
+            <h3 id="popupTitle" class="text-xl font-black text-white mb-4 uppercase">Thông tin Acc</h3>
+            <div id="popupMessage" class="bg-lqvn-dark border border-gray-700 p-4 rounded-xl text-left font-mono text-sm mb-6 text-gray-300 select-all overflow-x-auto whitespace-pre-wrap"></div>
+            <button id="popupBtn" class="w-full bg-lqvn-red hover:bg-red-700 text-white font-bold py-3 rounded-xl transition">ĐÓNG</button>
+        </div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+        import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+        import { getDatabase, ref, get, child } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyBUozdLXZIBh_JZflrwJohU_YbvpFX-UOQ", authDomain: "lqvn-772cf.firebaseapp.com",
+            databaseURL: "https://lqvn-772cf-default-rtdb.asia-southeast1.firebasedatabase.app", projectId: "lqvn-772cf", appId: "1:110517027124:web:c0ac3216be505323f86561"
+        };
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getDatabase(app);
+
+        // Logic Popup (Để xem tài khoản/mật khẩu)
+        window.showAccInfo = function(accData) {
+            const popup = document.getElementById('customPopup');
+            const content = document.getElementById('popupContent');
+            document.getElementById('popupMessage').innerText = accData;
+            popup.classList.remove('hidden');
+            setTimeout(() => { content.classList.remove('scale-95', 'opacity-0'); content.classList.add('scale-100', 'opacity-100'); }, 10);
+            document.getElementById('popupBtn').onclick = () => {
+                content.classList.remove('scale-100', 'opacity-100'); content.classList.add('scale-95', 'opacity-0');
+                setTimeout(() => { popup.classList.add('hidden'); }, 300);
+            };
+        };
+
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                const name = user.displayName || "Kiện Tướng";
+                document.getElementById('topName').innerText = name;
+                document.getElementById('topAvatar').src = `https://ui-avatars.com/api/?name=${encodeURIComponent(name)}&background=E11D48&color=fff`;
+
+                const tbody = document.getElementById('tableLichSuMua');
+                get(child(ref(db), `mua_acc_requests/${user.uid}`)).then((snapshot) => {
+                    if (snapshot.exists()) {
+                        tbody.innerHTML = '';
+                        const data = snapshot.val();
+                        const records = Object.keys(data).map(key => ({ id: key, ...data[key] })).reverse();
+
+                        records.forEach(item => {
+                            const date = new Date(item.timestamp).toLocaleString('vi-VN');
+                            // Chống XSS đơn giản khi parse data vào onclick
+                            const safeAccData = item.accData ? item.accData.replace(/"/g, '&quot;').replace(/'/g, '&#39;') : "Đang chờ xử lý...";
+
+                            tbody.innerHTML += `
+                                <tr class="border-b border-gray-800 hover:bg-[#151A23] transition">
+                                    <td class="px-6 py-4 font-bold text-white">${item.tenSanPham || 'Sản phẩm game'}</td>
+                                    <td class="px-6 py-4"><span class="text-lqvn-red font-bold">${parseInt(item.giaTien || 0).toLocaleString()}đ</span></td>
+                                    <td class="px-6 py-4">${date}</td>
+                                    <td class="px-6 py-4 text-right">
+                                        <button onclick="showAccInfo('${safeAccData}')" class="bg-blue-600 hover:bg-blue-500 text-white px-4 py-1.5 rounded-lg text-xs font-bold transition shadow-md whitespace-nowrap">
+                                            XEM THÔNG TIN
+                                        </button>
+                                    </td>
+                                </tr>
+                            `;
+                        });
+                    } else {
+                        tbody.innerHTML = '<tr><td colspan="4" class="text-center py-6 text-gray-500">Bạn chưa mua tài khoản nào!</td></tr>';
+                    }
+                }).catch((error) => {
+                    tbody.innerHTML = `<tr><td colspan="4" class="text-center py-6 text-red-500">Lỗi tải dữ liệu: ${error.message}</td></tr>`;
+                });
+            } else {
+                window.location.href = "/dangnhap";
+            }
+        });
+    </script>
+</body>
+</html>
