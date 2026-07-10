@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Hồ Sơ Cá Nhân - LQVN.VN</title>
+    <link rel="icon" type="image/png" href="https://cdn.vn.garenanow.com/web/kg/home/images/logo-new.png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: { extend: { fontFamily: { sans: ['Inter', 'sans-serif'] }, colors: { lqvn: { dark: '#0B0E14', card: '#151A23', red: '#E11D48', gold: '#FBBF24' } } } }
+        }
+    </script>
+    <style>
+        ::-webkit-scrollbar { width: 6px; } ::-webkit-scrollbar-track { background: #0B0E14; } ::-webkit-scrollbar-thumb { background: #374151; border-radius: 10px; } ::-webkit-scrollbar-thumb:hover { background: #E11D48; }
+        .glass { background: rgba(21, 26, 35, 0.7); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.05); }
+        .menu-active { background: linear-gradient(to right, rgba(225,29,72,0.15), transparent); border-left: 3px solid #E11D48; color: #fff; }
+    </style>
+</head>
+<body class="bg-lqvn-dark text-gray-200 antialiased pb-20 md:pb-0">
+
+    <header class="glass sticky top-0 z-50">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <a href="/home" class="flex items-center gap-2 group">
+                <img src="https://cdn.vn.garenanow.com/web/kg/home/images/logo-new.png" alt="Liên Quân" class="h-10 object-contain drop-shadow-[0_0_8px_rgba(225,29,72,0.6)]">
+                <span class="text-xl font-black text-white hidden sm:block">LQVN.<span class="text-lqvn-red">VN</span></span>
+            </a>
+            <nav class="hidden md:flex space-x-8 font-semibold text-sm">
+                <a href="/home" class="hover:text-lqvn-red transition">TRANG CHỦ</a>
+                <a href="/home" class="hover:text-lqvn-red transition">CỬA HÀNG</a>
+                <a href="/napthe" class="hover:text-lqvn-red transition">NẠP TIỀN</a>
+            </nav>
+            <div class="flex items-center gap-3">
+                <div class="text-right hidden sm:block">
+                    <p class="text-white font-bold text-sm">Kiện Tướng</p>
+                    <p class="text-lqvn-gold font-black text-xs">Số dư: 0đ</p>
+                </div>
+                <img src="https://ui-avatars.com/api/?name=User&background=E11D48&color=fff" class="w-10 h-10 rounded-full border-2 border-lqvn-red shadow-[0_0_10px_rgba(225,29,72,0.5)]">
+            </div>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-4 py-8">
+        <div class="flex flex-col md:flex-row gap-6">
+            
+            <div class="w-full md:w-1/4">
+                <div class="glass rounded-2xl overflow-hidden border border-gray-800 p-2">
+                    <div class="p-4 text-center border-b border-gray-800 mb-2">
+                        <img src="https://ui-avatars.com/api/?name=User&background=E11D48&color=fff" class="w-16 h-16 rounded-full mx-auto border-2 border-lqvn-red mb-2">
+                        <h3 class="text-lg font-bold text-white">Kiện Tướng</h3>
+                        <p class="text-sm text-gray-400">ID: 889922</p>
+                    </div>
+                    <div class="flex flex-col space-y-1">
+                        <a href="/hoso" class="menu-active px-4 py-3 rounded-lg font-semibold flex items-center gap-3 transition">
+                            <i class="fa-solid fa-user text-lqvn-red w-5"></i> Hồ Sơ Cá Nhân
+                        </a>
+                        <a href="/napthe" class="text-gray-400 hover:text-white hover:bg-gray-800/50 px-4 py-3 rounded-lg font-semibold flex items-center gap-3 transition">
+                            <i class="fa-solid fa-wallet text-gray-500 w-5"></i> Nạp Tiền
+                        </a>
+                        <a href="/lichsu-napthe" class="text-gray-400 hover:text-white hover:bg-gray-800/50 px-4 py-3 rounded-lg font-semibold flex items-center gap-3 transition">
+                            <i class="fa-solid fa-clock-rotate-left text-gray-500 w-5"></i> Lịch Sử Nạp Thẻ
+                        </a>
+                        <a href="/lichsugiaodich" class="text-gray-400 hover:text-white hover:bg-gray-800/50 px-4 py-3 rounded-lg font-semibold flex items-center gap-3 transition">
+                            <i class="fa-solid fa-cart-shopping text-gray-500 w-5"></i> Lịch Sử Mua Nick
+                        </a>
+                        <button class="text-red-400 hover:text-red-300 hover:bg-red-500/10 px-4 py-3 rounded-lg font-semibold flex items-center gap-3 transition text-left mt-2">
+                            <i class="fa-solid fa-right-from-bracket w-5"></i> Đăng Xuất
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="w-full md:w-3/4">
+                <div class="glass rounded-2xl border border-gray-800 p-6 shadow-lg">
+                    <h2 class="text-2xl font-black text-white uppercase border-l-4 border-lqvn-red pl-3 mb-6">Thông Tin <span class="text-lqvn-red">Tài Khoản</span></h2>
+                    
+                    <form class="space-y-5 max-w-lg">
+                        <div>
+                            <label class="block text-gray-400 text-sm font-semibold mb-2">Tên hiển thị</label>
+                            <input type="text" value="Kiện Tướng" class="w-full bg-lqvn-dark border border-gray-700 text-white rounded-xl px-4 py-3 outline-none focus:border-lqvn-red transition">
+                        </div>
+                        <div>
+                            <label class="block text-gray-400 text-sm font-semibold mb-2">Email (Không thể thay đổi)</label>
+                            <input type="email" value="kientuong@gmail.com" disabled class="w-full bg-gray-900 border border-gray-800 text-gray-500 rounded-xl px-4 py-3 cursor-not-allowed">
+                        </div>
+                        <div>
+                            <label class="block text-gray-400 text-sm font-semibold mb-2">Mật khẩu mới (Bỏ trống nếu không đổi)</label>
+                            <input type="password" placeholder="••••••••" class="w-full bg-lqvn-dark border border-gray-700 text-white rounded-xl px-4 py-3 outline-none focus:border-lqvn-red transition">
+                        </div>
+                        <button type="button" class="bg-lqvn-red hover:bg-red-700 text-white font-bold py-3 px-8 rounded-xl transition shadow-[0_0_15px_rgba(225,29,72,0.3)]">
+                            LƯU THAY ĐỔI
+                        </button>
+                    </form>
+                </div>
+            </div>
+            
+        </div>
+    </main>
+
+</body>
+</html>
