@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Nạp Tiền - LQVN.VN</title>
+    <link rel="icon" type="image/png" href="https://cdn.vn.garenanow.com/web/kg/home/images/logo-new.png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = { theme: { extend: { fontFamily: { sans: ['Inter', 'sans-serif'] }, colors: { lqvn: { dark: '#0B0E14', card: '#151A23', red: '#E11D48', gold: '#FBBF24' } } } } }
+    </script>
+    <style>
+        ::-webkit-scrollbar { width: 6px; } ::-webkit-scrollbar-track { background: #0B0E14; } ::-webkit-scrollbar-thumb { background: #374151; border-radius: 10px; } ::-webkit-scrollbar-thumb:hover { background: #E11D48; }
+        .glass { background: rgba(21, 26, 35, 0.7); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.05); }
+        .menu-active { background: linear-gradient(to right, rgba(225,29,72,0.15), transparent); border-left: 3px solid #E11D48; color: #fff; }
+    </style>
+</head>
+<body class="bg-lqvn-dark text-gray-200 antialiased pb-20 md:pb-0">
+
+    <header class="glass sticky top-0 z-50">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <a href="/home" class="flex items-center gap-2 group">
+                <img src="https://cdn.vn.garenanow.com/web/kg/home/images/logo-new.png" class="h-10 object-contain drop-shadow-[0_0_8px_rgba(225,29,72,0.6)]">
+                <span class="text-xl font-black text-white hidden sm:block">LQVN.<span class="text-lqvn-red">VN</span></span>
+            </a>
+            <div class="flex items-center gap-3">
+                <div class="text-right hidden sm:block">
+                    <p id="topName" class="text-white font-bold text-sm">...</p>
+                    <p class="text-lqvn-gold font-black text-xs">Số dư: 0đ</p>
+                </div>
+                <img id="topAvatar" src="https://ui-avatars.com/api/?name=U&background=E11D48&color=fff" class="w-10 h-10 rounded-full border-2 border-lqvn-red">
+            </div>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-4 py-8">
+        <div class="flex flex-col md:flex-row gap-6">
+            
+            <div class="w-full md:w-1/4">
+                <div class="glass rounded-2xl overflow-hidden border border-gray-800 p-2">
+                    <div class="flex flex-col space-y-1 pt-2">
+                        <a href="/hoso" class="text-gray-400 hover:text-white hover:bg-gray-800/50 px-4 py-3 rounded-lg font-semibold flex items-center gap-3 transition">
+                            <i class="fa-solid fa-user text-gray-500 w-5"></i> Hồ Sơ Cá Nhân
+                        </a>
+                        <a href="/napthe" class="menu-active px-4 py-3 rounded-lg font-semibold flex items-center gap-3 transition">
+                            <i class="fa-solid fa-wallet text-lqvn-red w-5"></i> Nạp Tiền
+                        </a>
+                        <a href="/lichsu-napthe" class="text-gray-400 hover:text-white hover:bg-gray-800/50 px-4 py-3 rounded-lg font-semibold flex items-center gap-3 transition">
+                            <i class="fa-solid fa-clock-rotate-left text-gray-500 w-5"></i> Lịch Sử Nạp Thẻ
+                        </a>
+                        <a href="/lichsugiaodich" class="text-gray-400 hover:text-white hover:bg-gray-800/50 px-4 py-3 rounded-lg font-semibold flex items-center gap-3 transition">
+                            <i class="fa-solid fa-cart-shopping text-gray-500 w-5"></i> Lịch Sử Mua Nick
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="w-full md:w-3/4">
+                <div class="glass rounded-2xl border border-gray-800 p-6 shadow-lg">
+                    <h2 class="text-2xl font-black text-white uppercase border-l-4 border-lqvn-red pl-3 mb-6">Nạp <span class="text-lqvn-red">Thẻ Cào</span> Tự Động</h2>
+                    <div class="bg-yellow-500/10 border border-yellow-500/30 rounded-xl p-4 mb-6">
+                        <p class="text-yellow-500 text-sm"><i class="fa-solid fa-triangle-exclamation mr-2"></i> <b>LƯU Ý:</b> Cố tình nạp sai mệnh giá sẽ mất thẻ. Vui lòng kiểm tra kỹ trước khi bấm nạp. Chiết khấu hiện tại: <b>0%</b>.</p>
+                    </div>
+
+                    <form class="space-y-4 max-w-lg" id="formNapThe">
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-gray-400 text-sm font-semibold mb-2">Nhà Mạng</label>
+                                <select id="nhaMang" class="w-full bg-lqvn-dark border border-gray-700 text-white rounded-xl px-4 py-3 outline-none focus:border-lqvn-red transition">
+                                    <option value="Viettel">Viettel</option>
+                                    <option value="Mobifone">Mobifone</option>
+                                    <option value="Vinaphone">Vinaphone</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-gray-400 text-sm font-semibold mb-2">Mệnh Giá</label>
+                                <select id="menhGia" class="w-full bg-lqvn-dark border border-gray-700 text-white rounded-xl px-4 py-3 outline-none focus:border-lqvn-red transition">
+                                    <option value="10000">10,000đ</option>
+                                    <option value="20000">20,000đ</option>
+                                    <option value="50000">50,000đ</option>
+                                    <option value="100000">100,000đ</option>
+                                    <option value="200000">200,000đ</option>
+                                    <option value="500000">500,000đ</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-gray-400 text-sm font-semibold mb-2">Mã Thẻ (Mã PIN)</label>
+                            <input type="text" id="maThe" placeholder="Nhập mã thẻ..." class="w-full bg-lqvn-dark border border-gray-700 text-white rounded-xl px-4 py-3 outline-none focus:border-lqvn-red transition">
+                        </div>
+                        <div>
+                            <label class="block text-gray-400 text-sm font-semibold mb-2">Số Seri</label>
+                            <input type="text" id="soSeri" placeholder="Nhập số seri..." class="w-full bg-lqvn-dark border border-gray-700 text-white rounded-xl px-4 py-3 outline-none focus:border-lqvn-red transition">
+                        </div>
+                        <button type="button" id="btnNapThe" class="w-full bg-gradient-to-r from-lqvn-red to-red-600 hover:to-red-700 text-white font-bold py-3.5 rounded-xl transition shadow-[0_0_15px_rgba(225,29,72,0.3)] mt-2">
+                            XÁC NHẬN NẠP THẺ
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- CUSTOM POPUP -->
+    <div id="customPopup" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-lqvn-card border border-gray-800 rounded-2xl shadow-[0_0_30px_rgba(225,29,72,0.3)] max-w-sm w-full p-6 text-center transform transition-all duration-300 scale-95 opacity-0" id="popupContent">
+            <div id="popupIcon" class="text-6xl mb-4"></div>
+            <h3 id="popupTitle" class="text-xl font-black text-white mb-2 uppercase"></h3>
+            <p id="popupMessage" class="text-gray-400 text-sm mb-6"></p>
+            <button id="popupBtn" class="w-full bg-lqvn-red hover:bg-red-700 text-white font-bold py-3 rounded-xl transition">ĐỒNG Ý</button>
+        </div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+        import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+        import { getDatabase, ref, push, set } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyBUozdLXZIBh_JZflrwJohU_YbvpFX-UOQ",
+            authDomain: "lqvn-772cf.firebaseapp.com",
+            databaseURL: "https://lqvn-772cf-default-rtdb.asia-southeast1.firebasedatabase.app",
+            projectId: "lqvn-772cf",
+            storageBucket: "lqvn-772cf.firebasestorage.app",
+            messagingSenderId: "110517027124",
+            appId: "1:110517027124:web:c0ac3216be505323f86561"
+        };
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getDatabase(app);
+        let currentUser = null;
+
+        function showPopup(type, title, message, callback = null) {
+            const popup = document.getElementById('customPopup');
+            const content = document.getElementById('popupContent');
+            const icon = document.getElementById('popupIcon');
+            if (type === 'success') icon.innerHTML = '<i class="fa-solid fa-circle-check text-green-500"></i>';
+            else icon.innerHTML = '<i class="fa-solid fa-circle-xmark text-lqvn-red"></i>';
+            document.getElementById('popupTitle').innerText = title;
+            document.getElementById('popupMessage').innerText = message;
+            popup.classList.remove('hidden');
+            setTimeout(() => { content.classList.remove('scale-95', 'opacity-0'); content.classList.add('scale-100', 'opacity-100'); }, 10);
+            document.getElementById('popupBtn').onclick = () => {
+                content.classList.remove('scale-100', 'opacity-100'); content.classList.add('scale-95', 'opacity-0');
+                setTimeout(() => { popup.classList.add('hidden'); if (callback) callback(); }, 300);
+            };
+        }
+
+        onAuthStateChanged(auth, (user) => {
+            if (user) { 
+                currentUser = user; 
+                const name = user.displayName || "Kiện Tướng";
+                document.getElementById('topName').innerText = name;
+                document.getElementById('topAvatar').src = `https://ui-avatars.com/api/?name=${encodeURIComponent(name)}&background=E11D48&color=fff`;
+            } 
+            else { window.location.href = "/dangnhap"; }
+        });
+
+        document.getElementById('btnNapThe').addEventListener('click', () => {
+            const nhaMang = document.getElementById('nhaMang').value;
+            const menhGia = document.getElementById('menhGia').value;
+            const maThe = document.getElementById('maThe').value;
+            const soSeri = document.getElementById('soSeri').value;
+            const btn = document.getElementById('btnNapThe');
+
+            if(!maThe || !soSeri) return showPopup('error', 'Thiếu thông tin', 'Vui lòng nhập đầy đủ Mã thẻ và Số Seri!');
+
+            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> ĐANG XỬ LÝ...';
+            btn.disabled = true;
+
+            const naptheRef = ref(db, 'napthe_requests/' + currentUser.uid);
+            const newRequestRef = push(naptheRef);
+            
+            set(newRequestRef, {
+                nhaMang: nhaMang, menhGia: menhGia, maThe: maThe, soSeri: soSeri, status: "Đang chờ duyệt", timestamp: Date.now()
+            }).then(() => {
+                showPopup('success', 'Gửi Thẻ Thành Công', 'Thẻ của bạn đang được hệ thống xử lý.', () => {
+                    window.location.href = "/lichsu-napthe";
+                });
+            }).catch((error) => {
+                showPopup('error', 'Lỗi Hệ Thống', error.message);
+                btn.innerHTML = 'XÁC NHẬN NẠP THẺ';
+                btn.disabled = false;
+            });
+        });
+    </script>
+</body>
+</html>
