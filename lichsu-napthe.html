@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Lịch Sử Nạp Thẻ - LQVN.VN</title>
+    <link rel="icon" type="image/png" href="https://cdn.vn.garenanow.com/web/kg/home/images/logo-new.png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = { theme: { extend: { fontFamily: { sans: ['Inter', 'sans-serif'] }, colors: { lqvn: { dark: '#0B0E14', card: '#151A23', red: '#E11D48', gold: '#FBBF24' } } } } }
+    </script>
+    <style>
+        ::-webkit-scrollbar { width: 6px; } ::-webkit-scrollbar-track { background: #0B0E14; } ::-webkit-scrollbar-thumb { background: #374151; border-radius: 10px; } ::-webkit-scrollbar-thumb:hover { background: #E11D48; }
+        .glass { background: rgba(21, 26, 35, 0.7); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.05); }
+        .menu-active { background: linear-gradient(to right, rgba(225,29,72,0.15), transparent); border-left: 3px solid #E11D48; color: #fff; }
+    </style>
+</head>
+<body class="bg-lqvn-dark text-gray-200 antialiased pb-20 md:pb-0">
+
+    <header class="glass sticky top-0 z-50">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <a href="/home" class="flex items-center gap-2 group">
+                <img src="https://cdn.vn.garenanow.com/web/kg/home/images/logo-new.png" class="h-10 object-contain drop-shadow-[0_0_8px_rgba(225,29,72,0.6)]">
+                <span class="text-xl font-black text-white hidden sm:block">LQVN.<span class="text-lqvn-red">VN</span></span>
+            </a>
+            <div class="flex items-center gap-3">
+                <div class="text-right hidden sm:block">
+                    <p id="topName" class="text-white font-bold text-sm">...</p>
+                    <p class="text-lqvn-gold font-black text-xs">Số dư: 0đ</p>
+                </div>
+                <img id="topAvatar" src="https://ui-avatars.com/api/?name=U&background=E11D48&color=fff" class="w-10 h-10 rounded-full border-2 border-lqvn-red">
+            </div>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-4 py-8">
+        <div class="flex flex-col md:flex-row gap-6">
+            <div class="w-full md:w-1/4">
+                <div class="glass rounded-2xl overflow-hidden border border-gray-800 p-2">
+                    <div class="flex flex-col space-y-1 pt-2">
+                        <a href="/hoso" class="text-gray-400 hover:text-white hover:bg-gray-800/50 px-4 py-3 rounded-lg font-semibold flex items-center gap-3 transition">
+                            <i class="fa-solid fa-user text-gray-500 w-5"></i> Hồ Sơ Cá Nhân
+                        </a>
+                        <a href="/napthe" class="text-gray-400 hover:text-white hover:bg-gray-800/50 px-4 py-3 rounded-lg font-semibold flex items-center gap-3 transition">
+                            <i class="fa-solid fa-wallet text-gray-500 w-5"></i> Nạp Tiền
+                        </a>
+                        <a href="/lichsu-napthe" class="menu-active px-4 py-3 rounded-lg font-semibold flex items-center gap-3 transition">
+                            <i class="fa-solid fa-clock-rotate-left text-lqvn-red w-5"></i> Lịch Sử Nạp Thẻ
+                        </a>
+                        <a href="/lichsugiaodich" class="text-gray-400 hover:text-white hover:bg-gray-800/50 px-4 py-3 rounded-lg font-semibold flex items-center gap-3 transition">
+                            <i class="fa-solid fa-cart-shopping text-gray-500 w-5"></i> Lịch Sử Mua Nick
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="w-full md:w-3/4">
+                <div class="glass rounded-2xl border border-gray-800 p-6 shadow-lg">
+                    <h2 class="text-2xl font-black text-white uppercase border-l-4 border-lqvn-red pl-3 mb-6">Lịch Sử <span class="text-lqvn-red">Nạp Thẻ</span></h2>
+                    
+                    <div class="overflow-x-auto rounded-xl border border-gray-800">
+                        <table class="w-full text-left text-sm text-gray-400">
+                            <thead class="text-xs uppercase bg-[#151A23] text-gray-300 border-b border-gray-800">
+                                <tr>
+                                    <th class="px-6 py-4">Mã GD</th>
+                                    <th class="px-6 py-4">Thời gian</th>
+                                    <th class="px-6 py-4">Nhà mạng / Mệnh giá</th>
+                                    <th class="px-6 py-4 text-center">Trạng thái</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tableLichSuNap" class="bg-lqvn-dark/50">
+                                <tr><td colspan="4" class="text-center py-6"><i class="fa-solid fa-spinner fa-spin text-lqvn-red text-xl"></i> Đang tải dữ liệu...</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+        import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+        import { getDatabase, ref, get, child } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyBUozdLXZIBh_JZflrwJohU_YbvpFX-UOQ", authDomain: "lqvn-772cf.firebaseapp.com",
+            databaseURL: "https://lqvn-772cf-default-rtdb.asia-southeast1.firebasedatabase.app", projectId: "lqvn-772cf", appId: "1:110517027124:web:c0ac3216be505323f86561"
+        };
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getDatabase(app);
+
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                const name = user.displayName || "Kiện Tướng";
+                document.getElementById('topName').innerText = name;
+                document.getElementById('topAvatar').src = `https://ui-avatars.com/api/?name=${encodeURIComponent(name)}&background=E11D48&color=fff`;
+
+                const tbody = document.getElementById('tableLichSuNap');
+                get(child(ref(db), `napthe_requests/${user.uid}`)).then((snapshot) => {
+                    if (snapshot.exists()) {
+                        tbody.innerHTML = '';
+                        const data = snapshot.val();
+                        const records = Object.keys(data).map(key => ({ id: key, ...data[key] })).reverse();
+
+                        records.forEach(item => {
+                            const date = new Date(item.timestamp).toLocaleString('vi-VN');
+                            let statusClass = "bg-yellow-500/20 text-yellow-500 border-yellow-500/30";
+                            if(item.status === 'Thành công') statusClass = "bg-green-500/20 text-green-500 border-green-500/30";
+                            if(item.status === 'Thẻ sai' || item.status === 'Thất bại') statusClass = "bg-red-500/20 text-red-500 border-red-500/30";
+
+                            tbody.innerHTML += `
+                                <tr class="border-b border-gray-800 hover:bg-[#151A23] transition">
+                                    <td class="px-6 py-4 font-mono text-white">#${item.id.slice(1, 6).toUpperCase()}</td>
+                                    <td class="px-6 py-4">${date}</td>
+                                    <td class="px-6 py-4"><span class="bg-gray-800 text-gray-300 px-2 py-0.5 rounded text-xs mr-2">${item.nhaMang}</span> ${parseInt(item.menhGia).toLocaleString()}đ</td>
+                                    <td class="px-6 py-4 text-center">
+                                        <span class="${statusClass} px-3 py-1 rounded-full text-xs font-bold border">${item.status}</span>
+                                    </td>
+                                </tr>
+                            `;
+                        });
+                    } else {
+                        tbody.innerHTML = '<tr><td colspan="4" class="text-center py-6 text-gray-500">Chưa có giao dịch nạp thẻ nào!</td></tr>';
+                    }
+                }).catch((error) => {
+                    tbody.innerHTML = `<tr><td colspan="4" class="text-center py-6 text-red-500">Lỗi tải dữ liệu: ${error.message}</td></tr>`;
+                });
+            } else {
+                window.location.href = "/dangnhap";
+            }
+        });
+    </script>
+</body>
+</html>
