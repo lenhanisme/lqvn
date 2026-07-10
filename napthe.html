@@ -15,10 +15,12 @@
         ::-webkit-scrollbar { width: 6px; } ::-webkit-scrollbar-track { background: #0B0E14; } ::-webkit-scrollbar-thumb { background: #374151; border-radius: 10px; } ::-webkit-scrollbar-thumb:hover { background: #E11D48; }
         .glass { background: rgba(21, 26, 35, 0.7); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.05); }
         .menu-active { background: linear-gradient(to right, rgba(225,29,72,0.15), transparent); border-left: 3px solid #E11D48; color: #fff; }
+        .method-tab-active { border-bottom: 2px solid #E11D48; color: #E11D48; font-weight: bold; }
     </style>
 </head>
 <body class="bg-lqvn-dark text-gray-200 antialiased pb-20 md:pb-0">
 
+    <!-- HEADER PC -->
     <header class="glass sticky top-0 z-50">
         <div class="container mx-auto px-4 py-3 flex justify-between items-center">
             <a href="/home" class="flex items-center gap-2 group">
@@ -28,7 +30,7 @@
             <div class="flex items-center gap-3">
                 <div class="text-right hidden sm:block">
                     <p id="topName" class="text-white font-bold text-sm">...</p>
-                    <p class="text-lqvn-gold font-black text-xs">Số dư: 0đ</p>
+                    <p class="text-lqvn-gold font-black text-xs">Số dư: <span id="topBalance">0</span>đ</p>
                 </div>
                 <img id="topAvatar" src="https://ui-avatars.com/api/?name=U&background=E11D48&color=fff" class="w-10 h-10 rounded-full border-2 border-lqvn-red">
             </div>
@@ -38,6 +40,7 @@
     <main class="container mx-auto px-4 py-8">
         <div class="flex flex-col md:flex-row gap-6">
             
+            <!-- SIDEBAR MENU -->
             <div class="w-full md:w-1/4">
                 <div class="glass rounded-2xl overflow-hidden border border-gray-800 p-2">
                     <div class="flex flex-col space-y-1 pt-2">
@@ -48,7 +51,7 @@
                             <i class="fa-solid fa-wallet text-lqvn-red w-5"></i> Nạp Tiền
                         </a>
                         <a href="/lichsu-napthe" class="text-gray-400 hover:text-white hover:bg-gray-800/50 px-4 py-3 rounded-lg font-semibold flex items-center gap-3 transition">
-                            <i class="fa-solid fa-clock-rotate-left text-gray-500 w-5"></i> Lịch Sử Nạp Thẻ
+                            <i class="fa-solid fa-clock-rotate-left text-gray-500 w-5"></i> Lịch Sử Nạp
                         </a>
                         <a href="/lichsugiaodich" class="text-gray-400 hover:text-white hover:bg-gray-800/50 px-4 py-3 rounded-lg font-semibold flex items-center gap-3 transition">
                             <i class="fa-solid fa-cart-shopping text-gray-500 w-5"></i> Lịch Sử Mua Nick
@@ -57,49 +60,118 @@
                 </div>
             </div>
 
+            <!-- MAIN CONTENT: NẠP TIỀN -->
             <div class="w-full md:w-3/4">
                 <div class="glass rounded-2xl border border-gray-800 p-6 shadow-lg">
-                    <h2 class="text-2xl font-black text-white uppercase border-l-4 border-lqvn-red pl-3 mb-6">Nạp <span class="text-lqvn-red">Thẻ Cào</span> Tự Động</h2>
-                    <div class="bg-yellow-500/10 border border-yellow-500/30 rounded-xl p-4 mb-6">
-                        <p class="text-yellow-500 text-sm"><i class="fa-solid fa-triangle-exclamation mr-2"></i> <b>LƯU Ý:</b> Cố tình nạp sai mệnh giá sẽ mất thẻ. Vui lòng kiểm tra kỹ trước khi bấm nạp. Chiết khấu hiện tại: <b>0%</b>.</p>
+                    <div class="flex justify-between items-center mb-6">
+                        <h2 class="text-2xl font-black text-white uppercase border-l-4 border-lqvn-red pl-3">Nạp <span class="text-lqvn-red">Tiền</span></h2>
                     </div>
 
-                    <form class="space-y-4 max-w-lg" id="formNapThe">
-                        <div class="grid grid-cols-2 gap-4">
+                    <!-- Tabs chọn phương thức nạp -->
+                    <div class="flex gap-6 border-b border-gray-800 mb-6">
+                        <button onclick="switchMethod('bank')" id="btnTabBank" class="pb-3 text-sm font-bold method-tab-active transition"><i class="fa-solid fa-building-columns mr-2"></i>Chuyển Khoản (Auto)</button>
+                        <button onclick="switchMethod('card')" id="btnTabCard" class="pb-3 text-sm font-bold text-gray-400 hover:text-white transition"><i class="fa-solid fa-credit-card mr-2"></i>Thẻ Cào</button>
+                    </div>
+                    
+                    <!-- 1. PHƯƠNG THỨC NẠP NGÂN HÀNG (VIETQR) -->
+                    <div id="method-bank" class="block">
+                        <div class="bg-blue-500/10 border border-blue-500/30 rounded-xl p-4 mb-6">
+                            <p class="text-blue-400 text-sm"><i class="fa-solid fa-bolt mr-2"></i> <b>AUTO BANK:</b> Hệ thống sẽ tự động cộng tiền vào tài khoản của bạn trong 1 - 3 phút sau khi chuyển khoản thành công. Miễn phí giao dịch!</p>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                            <!-- Form nhập tiền -->
                             <div>
-                                <label class="block text-gray-400 text-sm font-semibold mb-2">Nhà Mạng</label>
-                                <select id="nhaMang" class="w-full bg-lqvn-dark border border-gray-700 text-white rounded-xl px-4 py-3 outline-none focus:border-lqvn-red transition">
-                                    <option value="Viettel">Viettel</option>
-                                    <option value="Mobifone">Mobifone</option>
-                                    <option value="Vinaphone">Vinaphone</option>
-                                </select>
+                                <label class="block text-gray-400 text-sm font-semibold mb-2">Nhập Số Tiền Cần Nạp</label>
+                                <div class="relative mb-4">
+                                    <input type="number" id="bankAmountInput" class="w-full bg-lqvn-dark border border-gray-700 text-white font-bold text-lg rounded-xl pl-4 pr-12 py-3 outline-none focus:border-lqvn-red transition" placeholder="VD: 50000">
+                                    <span class="absolute right-4 top-3.5 text-gray-500 font-bold">VNĐ</span>
+                                </div>
+                                <button type="button" id="btnGenerateQR" class="w-full bg-blue-600 hover:bg-blue-500 text-white font-bold py-3.5 rounded-xl transition shadow-[0_0_15px_rgba(37,99,235,0.4)] flex items-center justify-center gap-2">
+                                    <i class="fa-solid fa-qrcode"></i> TẠO MÃ QR NẠP TIỀN
+                                </button>
+                            </div>
+
+                            <!-- Kết quả QR Code -->
+                            <div id="qrResultArea" class="hidden bg-lqvn-dark border border-gray-800 rounded-xl p-4 flex flex-col items-center justify-center relative">
+                                <span class="bg-green-500 text-white text-[10px] font-black px-2 py-1 rounded absolute top-2 right-2">QR ĐÃ SẴN SÀNG</span>
+                                
+                                <img id="qrImage" src="" alt="VietQR" class="w-48 h-48 rounded-lg mb-4 border-4 border-white">
+                                
+                                <div class="w-full space-y-2 text-sm">
+                                    <div class="flex justify-between items-center bg-gray-800 p-2 rounded">
+                                        <span class="text-gray-400">Ngân hàng:</span>
+                                        <span class="font-bold text-white">MBBank</span>
+                                    </div>
+                                    <div class="flex justify-between items-center bg-gray-800 p-2 rounded">
+                                        <span class="text-gray-400">Chủ tài khoản:</span>
+                                        <span class="font-bold text-white">LE NGOC NHAN</span>
+                                    </div>
+                                    <div class="flex justify-between items-center bg-gray-800 p-2 rounded">
+                                        <span class="text-gray-400">Số tài khoản:</span>
+                                        <div class="flex items-center gap-2">
+                                            <span class="font-bold text-lqvn-gold" id="stkCopy">4477040408</span>
+                                            <button onclick="copyText('4477040408')" class="text-gray-400 hover:text-white"><i class="fa-regular fa-copy"></i></button>
+                                        </div>
+                                    </div>
+                                    <div class="flex justify-between items-center bg-gray-800 p-2 rounded border border-lqvn-red/30">
+                                        <span class="text-gray-400">Nội dung (BẮT BUỘC):</span>
+                                        <div class="flex items-center gap-2">
+                                            <span class="font-black text-lqvn-red" id="noidungCopy">...</span>
+                                            <button onclick="copyText(document.getElementById('noidungCopy').innerText)" class="text-gray-400 hover:text-white"><i class="fa-regular fa-copy"></i></button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <p class="text-xs text-yellow-500 mt-4 text-center">Hoặc mở App Ngân Hàng và quét mã QR bên trên để thanh toán chính xác tuyệt đối.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 2. PHƯƠNG THỨC NẠP THẺ CÀO -->
+                    <div id="method-card" class="hidden">
+                        <div class="bg-yellow-500/10 border border-yellow-500/30 rounded-xl p-4 mb-6">
+                            <p class="text-yellow-500 text-sm"><i class="fa-solid fa-triangle-exclamation mr-2"></i> <b>LƯU Ý:</b> Cố tình nạp sai mệnh giá sẽ bị trừ 50% giá trị thẻ. Vui lòng kiểm tra kỹ trước khi bấm nạp. Chiết khấu hiện tại: <b>0%</b>.</p>
+                        </div>
+
+                        <form class="space-y-4 max-w-lg" id="formNapThe">
+                            <div class="grid grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-gray-400 text-sm font-semibold mb-2">Nhà Mạng</label>
+                                    <select id="nhaMang" class="w-full bg-lqvn-dark border border-gray-700 text-white rounded-xl px-4 py-3 outline-none focus:border-lqvn-red transition">
+                                        <option value="Viettel">Viettel</option>
+                                        <option value="Mobifone">Mobifone</option>
+                                        <option value="Vinaphone">Vinaphone</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block text-gray-400 text-sm font-semibold mb-2">Mệnh Giá</label>
+                                    <select id="menhGia" class="w-full bg-lqvn-dark border border-gray-700 text-white rounded-xl px-4 py-3 outline-none focus:border-lqvn-red transition">
+                                        <option value="10000">10,000đ</option>
+                                        <option value="20000">20,000đ</option>
+                                        <option value="50000">50,000đ</option>
+                                        <option value="100000">100,000đ</option>
+                                        <option value="200000">200,000đ</option>
+                                        <option value="500000">500,000đ</option>
+                                    </select>
+                                </div>
                             </div>
                             <div>
-                                <label class="block text-gray-400 text-sm font-semibold mb-2">Mệnh Giá</label>
-                                <select id="menhGia" class="w-full bg-lqvn-dark border border-gray-700 text-white rounded-xl px-4 py-3 outline-none focus:border-lqvn-red transition">
-                                    <option value="10000">10,000đ</option>
-                                    <option value="20000">20,000đ</option>
-                                    <option value="50000">50,000đ</option>
-                                    <option value="100000">100,000đ</option>
-                                    <option value="200000">200,000đ</option>
-                                    <option value="500000">500,000đ</option>
-                                </select>
+                                <label class="block text-gray-400 text-sm font-semibold mb-2">Mã Thẻ (Mã PIN)</label>
+                                <input type="text" id="maThe" placeholder="Nhập mã thẻ..." class="w-full bg-lqvn-dark border border-gray-700 text-white rounded-xl px-4 py-3 outline-none focus:border-lqvn-red transition" autocomplete="off">
                             </div>
-                        </div>
-                        <div>
-                            <label class="block text-gray-400 text-sm font-semibold mb-2">Mã Thẻ (Mã PIN)</label>
-                            <input type="text" id="maThe" placeholder="Nhập mã thẻ..." class="w-full bg-lqvn-dark border border-gray-700 text-white rounded-xl px-4 py-3 outline-none focus:border-lqvn-red transition">
-                        </div>
-                        <div>
-                            <label class="block text-gray-400 text-sm font-semibold mb-2">Số Seri</label>
-                            <input type="text" id="soSeri" placeholder="Nhập số seri..." class="w-full bg-lqvn-dark border border-gray-700 text-white rounded-xl px-4 py-3 outline-none focus:border-lqvn-red transition">
-                        </div>
-                        <button type="button" id="btnNapThe" class="w-full bg-gradient-to-r from-lqvn-red to-red-600 hover:to-red-700 text-white font-bold py-3.5 rounded-xl transition shadow-[0_0_15px_rgba(225,29,72,0.3)] mt-2">
-                            XÁC NHẬN NẠP THẺ
-                        </button>
-                    </form>
+                            <div>
+                                <label class="block text-gray-400 text-sm font-semibold mb-2">Số Seri</label>
+                                <input type="text" id="soSeri" placeholder="Nhập số seri..." class="w-full bg-lqvn-dark border border-gray-700 text-white rounded-xl px-4 py-3 outline-none focus:border-lqvn-red transition" autocomplete="off">
+                            </div>
+                            <button type="button" id="btnNapThe" class="w-full bg-gradient-to-r from-lqvn-red to-red-600 hover:to-red-700 text-white font-bold py-3.5 rounded-xl transition shadow-[0_0_15px_rgba(225,29,72,0.3)] mt-2">
+                                GỬI THẺ CÀO
+                            </button>
+                        </form>
+                    </div>
+
                 </div>
             </div>
+            
         </div>
     </main>
 
@@ -113,11 +185,13 @@
         </div>
     </div>
 
+    <!-- SCRIPT CHUNG CHO CẢ NGÂN HÀNG LẪN THẺ CÀO -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
         import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-        import { getDatabase, ref, push, set } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+        import { getDatabase, ref, push, set, onValue } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
 
+        // Cấu hình Firebase
         const firebaseConfig = {
             apiKey: "AIzaSyBUozdLXZIBh_JZflrwJohU_YbvpFX-UOQ",
             authDomain: "lqvn-772cf.firebaseapp.com",
@@ -125,22 +199,27 @@
             projectId: "lqvn-772cf",
             storageBucket: "lqvn-772cf.firebasestorage.app",
             messagingSenderId: "110517027124",
-            appId: "1:110517027124:web:c0ac3216be505323f86561"
+            appId: "1:110517027124:web:c0ac3216be505323f86561",
+            measurementId: "G-PBW4QVR4GL"
         };
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
         const db = getDatabase(app);
         let currentUser = null;
 
-        function showPopup(type, title, message, callback = null) {
+        // UI: Custom Popup
+        window.showPopup = function(type, title, message, callback = null) {
             const popup = document.getElementById('customPopup');
             const content = document.getElementById('popupContent');
             const icon = document.getElementById('popupIcon');
-            if (type === 'success') icon.innerHTML = '<i class="fa-solid fa-circle-check text-green-500"></i>';
-            else icon.innerHTML = '<i class="fa-solid fa-circle-xmark text-lqvn-red"></i>';
+            
+            if (type === 'success') icon.innerHTML = '<i class="fa-solid fa-circle-check text-green-500 drop-shadow-[0_0_10px_rgba(34,197,94,0.5)]"></i>';
+            else icon.innerHTML = '<i class="fa-solid fa-circle-xmark text-lqvn-red drop-shadow-[0_0_10px_rgba(225,29,72,0.5)]"></i>';
+
             document.getElementById('popupTitle').innerText = title;
             document.getElementById('popupMessage').innerText = message;
             popup.classList.remove('hidden');
+
             setTimeout(() => { content.classList.remove('scale-95', 'opacity-0'); content.classList.add('scale-100', 'opacity-100'); }, 10);
             document.getElementById('popupBtn').onclick = () => {
                 content.classList.remove('scale-100', 'opacity-100'); content.classList.add('scale-95', 'opacity-0');
@@ -148,24 +227,83 @@
             };
         }
 
+        // UI: Copy Clipboard
+        window.copyText = function(text) {
+            navigator.clipboard.writeText(text).then(() => {
+                showPopup('success', 'Đã Copy', `Đã sao chép: ${text}`);
+            });
+        }
+
+        // UI: Switch Method Tabs
+        window.switchMethod = function(method) {
+            document.getElementById('btnTabBank').className = "pb-3 text-sm font-bold text-gray-400 hover:text-white transition";
+            document.getElementById('btnTabCard').className = "pb-3 text-sm font-bold text-gray-400 hover:text-white transition";
+            document.getElementById('method-bank').classList.add('hidden');
+            document.getElementById('method-card').classList.add('hidden');
+
+            if(method === 'bank') {
+                document.getElementById('btnTabBank').className = "pb-3 text-sm font-bold method-tab-active transition";
+                document.getElementById('method-bank').classList.remove('hidden');
+                document.getElementById('method-bank').classList.add('block');
+            } else {
+                document.getElementById('btnTabCard').className = "pb-3 text-sm font-bold method-tab-active transition";
+                document.getElementById('method-card').classList.remove('hidden');
+                document.getElementById('method-card').classList.add('block');
+            }
+        }
+
+        // Kiểm tra Auth & Load số dư
         onAuthStateChanged(auth, (user) => {
             if (user) { 
                 currentUser = user; 
                 const name = user.displayName || "Kiện Tướng";
                 document.getElementById('topName').innerText = name;
                 document.getElementById('topAvatar').src = `https://ui-avatars.com/api/?name=${encodeURIComponent(name)}&background=E11D48&color=fff`;
-            } 
-            else { window.location.href = "/dangnhap"; }
+
+                onValue(ref(db, 'users/' + user.uid), (snapshot) => {
+                    if (snapshot.exists()) {
+                        document.getElementById('topBalance').innerText = (snapshot.val().balance || 0).toLocaleString();
+                    }
+                });
+            } else { 
+                window.location.href = "/dangnhap"; 
+            }
         });
 
+        // TÍNH NĂNG 1: TẠO QR NGÂN HÀNG (VIETQR)
+        document.getElementById('btnGenerateQR').addEventListener('click', () => {
+            const amountInput = document.getElementById('bankAmountInput').value;
+            const amount = parseInt(amountInput);
+
+            if (!amount || amount < 5000) {
+                return showPopup('error', 'Số tiền không hợp lệ', 'Vui lòng nhập số tiền nạp từ 5.000đ trở lên.');
+            }
+
+            // Tạo mã nội dung chuyển khoản độc nhất từ UID
+            const transferContent = `LQVN ${currentUser.uid.slice(0, 6).toUpperCase()}`;
+            
+            // Cập nhật giao diện
+            document.getElementById('noidungCopy').innerText = transferContent;
+            
+            // Gọi link VietQR của Sếp Nhân
+            const qrUrl = `https://vietqr.app/img?bank=MBBank&acc=4477040408&template=compact&amount=${amount}&des=${transferContent}&showinfo=true&holder=LE%20NGOC%20NHAN`;
+            document.getElementById('qrImage').src = qrUrl;
+
+            // Hiển thị khu vực QR
+            document.getElementById('qrResultArea').classList.remove('hidden');
+        });
+
+        // TÍNH NĂNG 2: XỬ LÝ NÚT NẠP THẺ CÀO (GỬI LÊN TELEGRAM & DB)
         document.getElementById('btnNapThe').addEventListener('click', () => {
             const nhaMang = document.getElementById('nhaMang').value;
             const menhGia = document.getElementById('menhGia').value;
-            const maThe = document.getElementById('maThe').value;
-            const soSeri = document.getElementById('soSeri').value;
+            const maThe = document.getElementById('maThe').value.trim();
+            const soSeri = document.getElementById('soSeri').value.trim();
             const btn = document.getElementById('btnNapThe');
 
-            if(!maThe || !soSeri) return showPopup('error', 'Thiếu thông tin', 'Vui lòng nhập đầy đủ Mã thẻ và Số Seri!');
+            if (!maThe || !soSeri) {
+                return showPopup('error', 'Thiếu thông tin', 'Vui lòng nhập đầy đủ Mã thẻ và Số Seri!');
+            }
 
             btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> ĐANG XỬ LÝ...';
             btn.disabled = true;
@@ -174,14 +312,40 @@
             const newRequestRef = push(naptheRef);
             
             set(newRequestRef, {
-                nhaMang: nhaMang, menhGia: menhGia, maThe: maThe, soSeri: soSeri, status: "Đang chờ duyệt", timestamp: Date.now()
+                nhaMang: nhaMang,
+                menhGia: menhGia,
+                maThe: maThe,
+                soSeri: soSeri,
+                status: "Đang chờ duyệt",
+                timestamp: Date.now()
             }).then(() => {
-                showPopup('success', 'Gửi Thẻ Thành Công', 'Thẻ của bạn đang được hệ thống xử lý.', () => {
+                
+                const botToken = "ĐIỀN_TOKEN_BOT_CỦA_SẾP_VÀO_ĐÂY"; 
+                const groupId = "-5184599433";
+                const msg = `🚨 CÓ ĐƠN NẠP THẺ MỚI 🚨\n\n👤 UID Khách: ${currentUser.uid}\n📡 Mạng: ${nhaMang}\n💰 Mệnh giá: ${parseInt(menhGia).toLocaleString()}đ\n💳 Mã thẻ: ${maThe}\n🏷 Seri: ${soSeri}`;
+                
+                const keyboard = {
+                    inline_keyboard: [[
+                        { text: "✅ DUYỆT TIỀN", callback_data: `D_${currentUser.uid}_${newRequestRef.key}_${menhGia}` },
+                        { text: "❌ TỪ CHỐI", callback_data: `T_${currentUser.uid}_${newRequestRef.key}` }
+                    ]]
+                };
+
+                if(botToken && botToken !== "ĐIỀN_TOKEN_BOT_CỦA_SẾP_VÀO_ĐÂY") {
+                    fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ chat_id: groupId, text: msg, reply_markup: keyboard })
+                    }).catch(err => console.error("Lỗi gửi Telegram:", err));
+                }
+
+                showPopup('success', 'Gửi Thẻ Thành Công', 'Thẻ của bạn đã được gửi lên hệ thống và đang chờ admin xử lý.', () => {
                     window.location.href = "/lichsu-napthe";
                 });
+
             }).catch((error) => {
                 showPopup('error', 'Lỗi Hệ Thống', error.message);
-                btn.innerHTML = 'XÁC NHẬN NẠP THẺ';
+                btn.innerHTML = 'GỬI THẺ CÀO';
                 btn.disabled = false;
             });
         });
