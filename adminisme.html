@@ -4,120 +4,237 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Quản Trị Hệ Thống - LQVN.VN</title>
+    <link rel="icon" type="image/png" href="https://cdn.vn.garenanow.com/web/kg/home/images/logo-new.png">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Inter', 'sans-serif'] },
+                    colors: {
+                        sidebar: '#0F131A', /* Màu nền sidebar tối theo ảnh */
+                        activebg: '#1C2331', /* Màu nền tab đang chọn */
+                        mainbg: '#0B0E14',
+                        cardbg: '#151A23'
+                    }
+                }
+            }
+        }
+    </script>
     <style>
-        body { font-family: 'Inter', sans-serif; background-color: #0F172A; color: #cbd5e1; }
-        ::-webkit-scrollbar { width: 6px; } ::-webkit-scrollbar-track { background: #0F172A; } ::-webkit-scrollbar-thumb { background: #334155; border-radius: 10px; }
-        .sidebar { background-color: #1E293B; border-right: 1px solid #334155; }
-        .glass-card { background-color: #1E293B; border: 1px solid #334155; border-radius: 1rem; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); }
-        .tab-content { display: none; } .tab-content.active { display: block; animation: fadeIn 0.3s; }
+        body { font-family: 'Inter', sans-serif; background-color: #0B0E14; color: #cbd5e1; }
+        ::-webkit-scrollbar { width: 6px; } 
+        ::-webkit-scrollbar-track { background: #0B0E14; } 
+        ::-webkit-scrollbar-thumb { background: #334155; border-radius: 10px; }
+        .glass-card { background-color: #151A23; border: 1px solid #1f2937; border-radius: 1rem; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); }
+        .tab-content { display: none; } 
+        .tab-content.active { display: block; animation: fadeIn 0.3s; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        
+        /* Sidebar Menu Styles */
+        .menu-item { display: flex; align-items: center; justify-content: space-between; padding: 10px 16px; border-radius: 12px; color: #94a3b8; font-weight: 600; font-size: 14px; cursor: pointer; transition: all 0.2s; }
+        .menu-item:hover { color: #ffffff; background-color: rgba(255,255,255,0.05); }
+        .menu-item.active { background-color: #1C2331; color: #ffffff; }
+        .menu-icon-container { display: flex; align-items: center; gap: 12px; }
+        .menu-icon { width: 20px; text-align: center; font-size: 16px; }
+        .section-title { font-size: 11px; font-weight: 700; color: #64748b; text-transform: uppercase; letter-spacing: 0.05em; margin: 20px 16px 8px 16px; }
+        
+        /* Badges */
+        .badge-zero-pink { background-color: rgba(225, 29, 72, 0.2); color: #fb7185; padding: 2px 8px; border-radius: 6px; font-size: 11px; font-weight: bold; }
+        .badge-zero-blue { background-color: rgba(59, 130, 246, 0.2); color: #60a5fa; padding: 2px 8px; border-radius: 6px; font-size: 11px; font-weight: bold; }
+        .badge-beta { background-color: #2563eb; color: #ffffff; padding: 2px 8px; border-radius: 6px; font-size: 11px; font-weight: bold; }
+        .badge-hot { background-color: rgba(217, 119, 6, 0.2); color: #fbbf24; padding: 2px 8px; border-radius: 6px; font-size: 11px; font-weight: bold; }
     </style>
 </head>
 <body class="flex h-screen overflow-hidden">
 
-    <aside class="sidebar w-64 h-full flex flex-col hidden md:flex z-20">
-        <div class="h-16 flex items-center justify-center border-b border-gray-700">
-            <span class="text-xl font-black text-white tracking-widest text-red-500"><i class="fa-solid fa-shield-halved"></i> ADMIN PANEL</span>
+    <!-- SIDEBAR Y HỆT ẢNH MẪU -->
+    <aside class="w-64 h-full bg-sidebar flex flex-col hidden md:flex z-20 border-r border-gray-800">
+        <!-- Khu vực Logo/Title Admin -->
+        <div class="h-16 flex items-center px-6 border-b border-gray-800">
+            <span class="text-lg font-black text-white tracking-widest"><i class="fa-solid fa-shield-halved text-red-500 mr-2"></i> LQVN PANEL</span>
         </div>
-        <nav class="flex-1 px-4 py-6 space-y-2 overflow-y-auto">
-            <p class="text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">Tổng Quan</p>
-            <button onclick="switchAdminTab('dashboard')" class="w-full text-left px-4 py-2.5 rounded-lg text-white bg-blue-600 font-semibold shadow-lg shadow-blue-500/30 transition admin-tab-btn" id="btn-dashboard"><i class="fa-solid fa-chart-pie w-5 mr-2"></i> Thống Kê</button>
-            
-            <p class="text-xs font-bold text-gray-500 uppercase tracking-wider mb-2 mt-6">Quản Lý Giao Dịch</p>
-            <button onclick="switchAdminTab('duyet-the')" class="w-full text-left px-4 py-2.5 rounded-lg text-gray-400 hover:text-white hover:bg-gray-800 font-semibold transition admin-tab-btn" id="btn-duyet-the">
-                <i class="fa-solid fa-money-bill-transfer w-5 mr-2"></i> Duyệt Nạp Thẻ <span class="ml-2 bg-red-500 text-white text-xs px-2 py-0.5 rounded-full" id="theChoDuyet">0</span>
-            </button>
-            <button onclick="switchAdminTab('quan-ly-acc')" class="w-full text-left px-4 py-2.5 rounded-lg text-gray-400 hover:text-white hover:bg-gray-800 font-semibold transition admin-tab-btn" id="btn-quan-ly-acc"><i class="fa-solid fa-gamepad w-5 mr-2"></i> Kho Tài Khoản</button>
-            
-            <p class="text-xs font-bold text-gray-500 uppercase tracking-wider mb-2 mt-6">Hệ Thống</p>
-            <button class="w-full text-left px-4 py-2.5 rounded-lg text-gray-400 hover:text-white hover:bg-gray-800 font-semibold transition"><i class="fa-solid fa-users w-5 mr-2"></i> Quản Lý User</button>
-            <button class="w-full text-left px-4 py-2.5 rounded-lg text-gray-400 hover:text-white hover:bg-gray-800 font-semibold transition"><i class="fa-solid fa-gear w-5 mr-2"></i> Cài Đặt Web</button>
+        
+        <!-- Menu -->
+        <nav class="flex-1 px-3 py-4 overflow-y-auto">
+            <!-- Nhóm 1 -->
+            <div class="space-y-1">
+                <div class="menu-item active" onclick="switchAdminTab('dashboard', this)">
+                    <div class="menu-icon-container">
+                        <i class="fa-solid fa-house menu-icon text-blue-500"></i> Tổng Quan
+                    </div>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-icon-container">
+                        <i class="fa-solid fa-key menu-icon text-yellow-500"></i> Quản Lý Giấy Phép
+                    </div>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-icon-container">
+                        <i class="fa-solid fa-cube menu-icon text-purple-500"></i> Tiện Ích Mở Rộng
+                    </div>
+                </div>
+            </div>
+
+            <!-- Nhóm SẢN PHẨM -->
+            <div class="section-title">SẢN PHẨM</div>
+            <div class="space-y-1">
+                <div class="menu-item" onclick="switchAdminTab('quan-ly-acc', this)">
+                    <div class="menu-icon-container">
+                        <i class="fa-solid fa-store menu-icon text-orange-400"></i> Thêm Acc Game
+                    </div>
+                    <i class="fa-solid fa-chevron-right text-[10px] text-gray-500"></i>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-icon-container">
+                        <i class="fa-solid fa-layer-group menu-icon text-pink-500"></i> Shop Nick v2
+                    </div>
+                    <i class="fa-solid fa-chevron-right text-[10px] text-gray-500"></i>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-icon-container">
+                        <i class="fa-solid fa-box menu-icon text-purple-400"></i> Vật Phẩm
+                    </div>
+                    <span class="badge-zero-pink">0</span>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-icon-container">
+                        <i class="fa-solid fa-briefcase menu-icon text-green-500"></i> Dịch Vụ
+                    </div>
+                    <span class="badge-zero-blue">0</span>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-icon-container">
+                        <i class="fa-solid fa-gamepad menu-icon text-cyan-400"></i> Trò Chơi
+                    </div>
+                    <span class="badge-beta">Beta</span>
+                </div>
+            </div>
+
+            <!-- Nhóm TÀI CHÍNH -->
+            <div class="section-title">TÀI CHÍNH</div>
+            <div class="space-y-1">
+                <div class="menu-item">
+                    <div class="menu-icon-container">
+                        <i class="fa-solid fa-file-invoice menu-icon text-yellow-500"></i> Duyệt Hoá Đơn
+                    </div>
+                    <span class="badge-hot">Hot</span>
+                </div>
+                <div class="menu-item" onclick="switchAdminTab('duyet-the', this)">
+                    <div class="menu-icon-container">
+                        <i class="fa-solid fa-wallet menu-icon text-green-500"></i> Nạp Tiền Thẻ Cào
+                    </div>
+                    <!-- Badge ẩn đếm số thẻ chờ duyệt -->
+                    <span class="bg-red-500 text-white text-[10px] px-2 py-0.5 rounded-full hidden" id="theChoDuyet">0</span>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-icon-container">
+                        <i class="fa-solid fa-money-bill-transfer menu-icon text-purple-500"></i> Cộng/Trừ Tiền
+                    </div>
+                </div>
+            </div>
+
+            <!-- Nhóm NGƯỜI DÙNG -->
+            <div class="section-title">NGƯỜI DÙNG</div>
+            <div class="space-y-1 mb-6">
+                <div class="menu-item">
+                    <div class="menu-icon-container">
+                        <i class="fa-solid fa-user menu-icon text-blue-400"></i> Quản Lý Thành Viên
+                    </div>
+                </div>
+            </div>
         </nav>
     </aside>
 
-    <main class="flex-1 flex flex-col h-full relative overflow-hidden">
-        <header class="h-16 glass-card rounded-none border-t-0 border-l-0 border-r-0 flex items-center justify-between px-6 z-10">
-            <h2 class="text-xl font-bold text-white" id="pageTitle">Bảng Thống Kê</h2>
+    <!-- MAIN CONTENT -->
+    <main class="flex-1 flex flex-col h-full relative overflow-hidden bg-mainbg">
+        <!-- TOP HEADER -->
+        <header class="h-16 glass-card rounded-none border-t-0 border-l-0 border-r-0 flex items-center justify-between px-6 z-10 bg-sidebar/50 backdrop-blur-md">
+            <h2 class="text-xl font-bold text-white uppercase tracking-wide" id="pageTitle">Tổng Quan</h2>
             <div class="flex items-center gap-4">
-                <button class="bg-gray-800 p-2 rounded-full hover:text-white"><i class="fa-solid fa-bell"></i></button>
-                <div class="flex items-center gap-2">
-                    <img src="https://ui-avatars.com/api/?name=Admin&background=E11D48&color=fff" class="w-8 h-8 rounded-full border border-red-500">
-                    <span class="font-bold text-sm text-white">Sếp Nhân</span>
+                <button class="text-gray-400 hover:text-white"><i class="fa-solid fa-bell text-xl"></i></button>
+                <div class="flex items-center gap-3 bg-gray-800/50 px-3 py-1.5 rounded-full cursor-pointer hover:bg-gray-800 transition">
+                    <img src="https://ui-avatars.com/api/?name=Admin&background=E11D48&color=fff" class="w-7 h-7 rounded-full border border-red-500">
+                    <span class="font-bold text-sm text-white">Lê Ngọc Nhân</span>
                 </div>
             </div>
         </header>
 
-        <div class="flex-1 overflow-y-auto p-6">
+        <!-- AREA CONTENT -->
+        <div class="flex-1 overflow-y-auto p-6 md:p-8">
             
+            <!-- TAB 1: THỐNG KÊ (DASHBOARD) -->
             <div id="dashboard" class="tab-content active">
                 <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-                    <div class="glass-card p-6">
+                    <div class="glass-card p-6 border-t-4 border-t-green-500">
                         <div class="text-gray-400 text-sm font-semibold mb-2">Doanh Thu Tháng</div>
                         <div class="text-3xl font-black text-green-400">12.5M <span class="text-sm font-normal text-green-500/50">+15%</span></div>
                     </div>
-                    <div class="glass-card p-6">
+                    <div class="glass-card p-6 border-t-4 border-t-blue-500">
                         <div class="text-gray-400 text-sm font-semibold mb-2">Acc Đã Bán</div>
                         <div class="text-3xl font-black text-blue-400">842</div>
                     </div>
-                    <div class="glass-card p-6">
+                    <div class="glass-card p-6 border-t-4 border-t-purple-500">
                         <div class="text-gray-400 text-sm font-semibold mb-2">Tổng Thành Viên</div>
                         <div class="text-3xl font-black text-purple-400">2,105</div>
                     </div>
-                    <div class="glass-card p-6">
-                        <div class="text-gray-400 text-sm font-semibold mb-2">Lượt Quay Vòng Quay</div>
+                    <div class="glass-card p-6 border-t-4 border-t-yellow-500">
+                        <div class="text-gray-400 text-sm font-semibold mb-2">Lượt Vòng Quay</div>
                         <div class="text-3xl font-black text-yellow-400">5,021</div>
                     </div>
                 </div>
             </div>
 
+            <!-- TAB 2: NẠP TIỀN THẺ CÀO -->
             <div id="duyet-the" class="tab-content">
                 <div class="glass-card p-6">
-                    <h3 class="text-lg font-bold text-white mb-4 border-l-4 border-blue-500 pl-3">Yêu Cầu Nạp Thẻ Gần Đây</h3>
-                    <div class="overflow-x-auto">
+                    <h3 class="text-lg font-bold text-white mb-6 border-l-4 border-green-500 pl-3">Duyệt Yêu Cầu Nạp Thẻ</h3>
+                    <div class="overflow-x-auto rounded-xl border border-gray-800">
                         <table class="w-full text-left text-sm text-gray-400">
-                            <thead class="text-xs uppercase bg-gray-800 text-gray-300">
+                            <thead class="text-xs uppercase bg-[#1A2235] text-gray-300">
                                 <tr>
-                                    <th class="px-4 py-3">UID Khách</th>
-                                    <th class="px-4 py-3">Nhà Mạng / Mệnh Giá</th>
-                                    <th class="px-4 py-3">Mã Thẻ / Seri</th>
-                                    <th class="px-4 py-3">Trạng Thái</th>
-                                    <th class="px-4 py-3 text-right">Hành Động</th>
+                                    <th class="px-6 py-4">UID Khách</th>
+                                    <th class="px-6 py-4">Nhà Mạng / Mệnh Giá</th>
+                                    <th class="px-6 py-4">Mã Thẻ / Seri</th>
+                                    <th class="px-6 py-4 text-center">Trạng Thái</th>
+                                    <th class="px-6 py-4 text-right">Hành Động</th>
                                 </tr>
                             </thead>
-                            <tbody id="adminCardList">
-                                <tr><td colspan="5" class="text-center py-4 text-blue-400"><i class="fa-solid fa-spinner fa-spin"></i> Đang đồng bộ từ Firebase...</td></tr>
+                            <tbody id="adminCardList" class="divide-y divide-gray-800 bg-[#0B0E14]/50">
+                                <tr><td colspan="5" class="text-center py-8 text-blue-400"><i class="fa-solid fa-spinner fa-spin text-2xl"></i><br>Đang đồng bộ...</td></tr>
                             </tbody>
                         </table>
                     </div>
                 </div>
             </div>
 
+            <!-- TAB 3: THÊM ACC GAME -->
             <div id="quan-ly-acc" class="tab-content">
                 <div class="glass-card p-6 max-w-3xl">
-                    <h3 class="text-lg font-bold text-white mb-4 border-l-4 border-red-500 pl-3">Đăng Bán Tài Khoản Mới</h3>
-                    <form onsubmit="event.preventDefault(); alert('Đã thêm thành công!');">
+                    <h3 class="text-lg font-bold text-white mb-6 border-l-4 border-orange-500 pl-3">Thêm Tài Khoản Lên Cửa Hàng</h3>
+                    <form onsubmit="event.preventDefault(); alert('Chức năng đang bảo trì, chờ update API!');">
                         <div class="grid grid-cols-2 gap-4 mb-4">
                             <div>
-                                <label class="block text-sm text-gray-400 mb-1">Loại Game</label>
-                                <select class="w-full bg-gray-800 border border-gray-700 text-white rounded-lg p-2.5 outline-none">
+                                <label class="block text-sm text-gray-400 font-semibold mb-2">Loại Game</label>
+                                <select class="w-full bg-[#0B0E14] border border-gray-700 text-white rounded-xl p-3 outline-none focus:border-orange-500 transition">
                                     <option>Liên Quân Mobile</option>
                                     <option>Roblox</option>
                                 </select>
                             </div>
                             <div>
-                                <label class="block text-sm text-gray-400 mb-1">Giá Bán (VNĐ)</label>
-                                <input type="number" class="w-full bg-gray-800 border border-gray-700 text-white rounded-lg p-2.5 outline-none" placeholder="VD: 50000">
+                                <label class="block text-sm text-gray-400 font-semibold mb-2">Giá Bán (VNĐ)</label>
+                                <input type="number" class="w-full bg-[#0B0E14] border border-gray-700 text-white rounded-xl p-3 outline-none focus:border-orange-500 transition" placeholder="VD: 50000">
                             </div>
                         </div>
-                        <div class="mb-4">
-                            <label class="block text-sm text-gray-400 mb-1">Định dạng (Tài Khoản | Mật Khẩu)</label>
-                            <textarea rows="5" class="w-full bg-gray-800 border border-gray-700 text-white rounded-lg p-3 outline-none font-mono text-sm" placeholder="user1|pass1&#10;user2|pass2"></textarea>
+                        <div class="mb-6">
+                            <label class="block text-sm text-gray-400 font-semibold mb-2">Định dạng (Tài Khoản | Mật Khẩu)</label>
+                            <textarea rows="6" class="w-full bg-[#0B0E14] border border-gray-700 text-white rounded-xl p-4 outline-none focus:border-orange-500 font-mono text-sm transition" placeholder="user1|pass1&#10;user2|pass2"></textarea>
                         </div>
-                        <button type="submit" class="bg-red-600 hover:bg-red-500 text-white font-bold py-2.5 px-6 rounded-lg transition shadow-lg shadow-red-500/30">
-                            <i class="fa-solid fa-upload mr-2"></i> ĐĂNG LÊN SHOP
+                        <button type="submit" class="bg-gradient-to-r from-orange-500 to-red-600 hover:to-red-700 text-white font-bold py-3 px-8 rounded-xl transition shadow-[0_0_15px_rgba(249,115,22,0.3)]">
+                            <i class="fa-solid fa-cloud-arrow-up mr-2"></i> ĐĂNG BÁN NGAY
                         </button>
                     </form>
                 </div>
@@ -126,10 +243,12 @@
         </div>
     </main>
 
+    <!-- FIREBASE SDK & JS LOGIC -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
         import { getDatabase, ref, onValue, update } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
 
+        // CẤU HÌNH API KEY CỦA ANH NHÂN
         const firebaseConfig = {
             apiKey: "AIzaSyBUozdLXZIBh_JZflrwJohU_YbvpFX-UOQ",
             authDomain: "lqvn-772cf.firebaseapp.com",
@@ -137,79 +256,93 @@
             projectId: "lqvn-772cf",
             appId: "1:110517027124:web:c0ac3216be505323f86561"
         };
+        
         const app = initializeApp(firebaseConfig);
         const db = getDatabase(app);
 
-        // Đọc toàn bộ bảng napthe_requests (Yêu cầu Rule Firebase phải mở cho Admin)
+        // Đọc dữ liệu nạp thẻ theo thời gian thực
         const requestsRef = ref(db, 'napthe_requests');
         onValue(requestsRef, (snapshot) => {
             const tbody = document.getElementById('adminCardList');
+            const badgeChoDuyet = document.getElementById('theChoDuyet');
             tbody.innerHTML = '';
             let countPending = 0;
 
             if (snapshot.exists()) {
                 const allUsersData = snapshot.val();
                 
-                // Lặp qua từng UID của khách
                 Object.keys(allUsersData).forEach(uid => {
                     const userRequests = allUsersData[uid];
                     
-                    // Lặp qua từng thẻ của khách đó
                     Object.keys(userRequests).forEach(reqId => {
                         const req = userRequests[reqId];
                         
                         if(req.status === "Đang chờ duyệt") countPending++;
 
                         let actionButtons = '';
+                        let statusColor = "bg-gray-700 text-gray-300 border-gray-600";
+                        
                         if(req.status === "Đang chờ duyệt") {
+                            statusColor = "bg-yellow-500/20 text-yellow-500 border-yellow-500/30";
                             actionButtons = `
-                                <button onclick="updateCardStatus('${uid}', '${reqId}', 'Thành công', ${req.menhGia})" class="text-green-400 hover:text-green-300 mr-3 px-2 py-1 bg-green-500/10 rounded tooltip" title="Duyệt & Cộng tiền"><i class="fa-solid fa-check"></i></button>
-                                <button onclick="updateCardStatus('${uid}', '${reqId}', 'Thẻ sai', 0)" class="text-red-400 hover:text-red-300 px-2 py-1 bg-red-500/10 rounded tooltip" title="Từ chối"><i class="fa-solid fa-xmark"></i></button>
+                                <button onclick="updateCardStatus('${uid}', '${reqId}', 'Thành công', ${req.menhGia})" class="text-green-500 hover:text-green-400 mr-2 px-3 py-1.5 bg-green-500/10 hover:bg-green-500/20 rounded-lg transition" title="Duyệt & Cộng tiền"><i class="fa-solid fa-check"></i> Duyệt</button>
+                                <button onclick="updateCardStatus('${uid}', '${reqId}', 'Thẻ sai', 0)" class="text-red-500 hover:text-red-400 px-3 py-1.5 bg-red-500/10 hover:bg-red-500/20 rounded-lg transition" title="Từ chối"><i class="fa-solid fa-xmark"></i> Sai</button>
                             `;
+                        } else if(req.status === "Thành công") {
+                            statusColor = "bg-green-500/20 text-green-500 border-green-500/30";
+                        } else {
+                            statusColor = "bg-red-500/20 text-red-500 border-red-500/30";
                         }
 
                         tbody.innerHTML += `
-                            <tr class="border-b border-gray-700 hover:bg-gray-800 transition">
-                                <td class="px-4 py-3 text-xs text-gray-500 font-mono">${uid.slice(0, 8)}...</td>
-                                <td class="px-4 py-3"><span class="font-bold text-white">${req.nhaMang}</span> - <span class="text-yellow-400">${parseInt(req.menhGia).toLocaleString()}đ</span></td>
-                                <td class="px-4 py-3 font-mono text-white text-xs">Mã: ${req.maThe}<br>SR: ${req.soSeri}</td>
-                                <td class="px-4 py-3"><span class="text-xs px-2 py-1 rounded bg-gray-700">${req.status}</span></td>
-                                <td class="px-4 py-3 text-right">${actionButtons}</td>
+                            <tr class="hover:bg-gray-800/50 transition">
+                                <td class="px-6 py-4 text-xs text-gray-500 font-mono">${uid.slice(0, 10)}...</td>
+                                <td class="px-6 py-4"><span class="font-bold text-white bg-gray-800 px-2 py-1 rounded text-xs mr-2">${req.nhaMang}</span> <span class="text-yellow-400 font-bold">${parseInt(req.menhGia).toLocaleString()}đ</span></td>
+                                <td class="px-6 py-4 font-mono text-gray-300 text-xs">Mã: <span class="text-white">${req.maThe}</span><br>SR: <span class="text-white">${req.soSeri}</span></td>
+                                <td class="px-6 py-4 text-center"><span class="text-xs px-3 py-1 rounded-full font-bold border ${statusColor}">${req.status}</span></td>
+                                <td class="px-6 py-4 text-right flex justify-end">${actionButtons}</td>
                             </tr>
                         `;
                     });
                 });
             } else {
-                tbody.innerHTML = '<tr><td colspan="5" class="text-center py-4 text-gray-500">Trống! Chưa có ai nạp thẻ.</td></tr>';
+                tbody.innerHTML = '<tr><td colspan="5" class="text-center py-8 text-gray-500">Chưa có dữ liệu nạp thẻ trên hệ thống.</td></tr>';
             }
-            document.getElementById('theChoDuyet').innerText = countPending;
+            
+            // Cập nhật số đếm thẻ chờ duyệt trên menu
+            if (countPending > 0) {
+                badgeChoDuyet.innerText = countPending;
+                badgeChoDuyet.classList.remove('hidden');
+            } else {
+                badgeChoDuyet.classList.add('hidden');
+            }
         });
 
-        // Hàm xử lý UI chuyển tab
-        window.switchAdminTab = function(tabId) {
+        // Hàm chuyển tab
+        window.switchAdminTab = function(tabId, element) {
+            // Xóa active tất cả các tab
             document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
-            document.getElementById(tabId).classList.add('active');
+            document.querySelectorAll('.menu-item').forEach(el => el.classList.remove('active'));
             
-            document.querySelectorAll('.admin-tab-btn').forEach(el => {
-                el.className = "w-full text-left px-4 py-2.5 rounded-lg text-gray-400 hover:text-white hover:bg-gray-800 font-semibold transition admin-tab-btn";
-            });
-            const activeBtn = document.getElementById('btn-' + tabId);
-            activeBtn.className = "w-full text-left px-4 py-2.5 rounded-lg text-white bg-blue-600 font-semibold shadow-lg shadow-blue-500/30 transition admin-tab-btn";
-
-            const titles = {'dashboard':'Bảng Thống Kê', 'duyet-the':'Duyệt Thẻ Cào', 'quan-ly-acc':'Quản Lý Kho Nick'};
-            document.getElementById('pageTitle').innerText = titles[tabId];
+            // Active tab được chọn
+            document.getElementById(tabId).classList.add('active');
+            if(element) element.classList.add('active');
+            
+            // Đổi Title
+            const titles = {'dashboard':'Tổng Quan', 'duyet-the':'Nạp Tiền Thẻ Cào', 'quan-ly-acc':'Thêm Acc Game'};
+            if(titles[tabId]) document.getElementById('pageTitle').innerText = titles[tabId];
         }
 
-        // Đính hàm cập nhật trạng thái thẻ lên window để HTML gọi được
+        // Cập nhật trạng thái thẻ
         window.updateCardStatus = function(uid, reqId, status, addBalance) {
-            if(!confirm(`Xác nhận đánh dấu thẻ này là: ${status}?`)) return;
+            if(!confirm(`Bạn chắc chắn muốn đánh dấu thẻ này là: ${status}?`)) return;
             
             const updates = {};
             updates[`napthe_requests/${uid}/${reqId}/status`] = status;
             
             update(ref(db), updates).then(() => {
-                // Nếu là Thành công -> Gọi Code cộng tiền cho user (Phần cộng tiền cần viết thêm Cloud Function cho an toàn, nhưng demo web tĩnh thì viết luôn DB ở đây cũng được nếu Admin có quyền write).
-                alert(`Đã cập nhật trạng thái thành: ${status}`);
+                // TODO: Logic cộng tiền cho user (Thêm trường balance vào db users và update)
+                // update(ref(db, `users/${uid}`), { balance: increment(addBalance) })
             }).catch(error => alert("Lỗi: " + error.message));
         }
     </script>
